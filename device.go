@@ -183,9 +183,7 @@ func NewDevice(params DeviceParams) (*Device, error) {
 
 	getCapabilities := device.GetCapabilities{Category: []onvif.CapabilityCategory{"All"}}
 
-	var getCapabilitiesResponse device.GetCapabilitiesResponse
-
-	resp, err := dev.CallMethod(getCapabilities, &getCapabilitiesResponse)
+	resp, err := dev.CallMethod(getCapabilities, nil)
 
 	if err != nil {
 		return nil, errors.New("camera is not available at " + dev.params.Xaddr + " or it does not support ONVIF services")
