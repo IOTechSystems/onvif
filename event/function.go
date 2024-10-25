@@ -10,90 +10,90 @@ package event
 
 type CreatePullPointSubscriptionFunction struct{}
 
-func (_ *CreatePullPointSubscriptionFunction) Request() interface{} {
+func (_ *CreatePullPointSubscriptionFunction) Request() any {
 	return &CreatePullPointSubscription{}
 }
-func (_ *CreatePullPointSubscriptionFunction) Response() interface{} {
+func (_ *CreatePullPointSubscriptionFunction) Response() any {
 	return &CreatePullPointSubscriptionResponse{}
 }
 
 type GetEventPropertiesFunction struct{}
 
-func (_ *GetEventPropertiesFunction) Request() interface{} {
+func (_ *GetEventPropertiesFunction) Request() any {
 	return &GetEventProperties{}
 }
-func (_ *GetEventPropertiesFunction) Response() interface{} {
+func (_ *GetEventPropertiesFunction) Response() any {
 	return &GetEventPropertiesResponse{}
 }
 
 type GetServiceCapabilitiesFunction struct{}
 
-func (_ *GetServiceCapabilitiesFunction) Request() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Request() any {
 	return &GetServiceCapabilities{}
 }
-func (_ *GetServiceCapabilitiesFunction) Response() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Response() any {
 	return &GetServiceCapabilitiesResponse{}
 }
 
 type PullMessagesFunction struct{}
 
-func (_ *PullMessagesFunction) Request() interface{} {
+func (_ *PullMessagesFunction) Request() any {
 	return &PullMessages{}
 }
-func (_ *PullMessagesFunction) Response() interface{} {
+func (_ *PullMessagesFunction) Response() any {
 	return &PullMessagesResponse{}
 }
 
 type RenewFunction struct{}
 
-func (_ *RenewFunction) Request() interface{} {
+func (_ *RenewFunction) Request() any {
 	return &Renew{}
 }
-func (_ *RenewFunction) Response() interface{} {
+func (_ *RenewFunction) Response() any {
 	return &RenewResponse{}
 }
 
 type SeekFunction struct{}
 
-func (_ *SeekFunction) Request() interface{} {
+func (_ *SeekFunction) Request() any {
 	return &Seek{}
 }
-func (_ *SeekFunction) Response() interface{} {
+func (_ *SeekFunction) Response() any {
 	return &SeekResponse{}
 }
 
 type SetSynchronizationPointFunction struct{}
 
-func (_ *SetSynchronizationPointFunction) Request() interface{} {
+func (_ *SetSynchronizationPointFunction) Request() any {
 	return &SetSynchronizationPoint{}
 }
-func (_ *SetSynchronizationPointFunction) Response() interface{} {
+func (_ *SetSynchronizationPointFunction) Response() any {
 	return &SetSynchronizationPointResponse{}
 }
 
 type SubscribeFunction struct{}
 
-func (_ *SubscribeFunction) Request() interface{} {
+func (_ *SubscribeFunction) Request() any {
 	return &Subscribe{}
 }
-func (_ *SubscribeFunction) Response() interface{} {
+func (_ *SubscribeFunction) Response() any {
 	return &SubscribeResponse{}
 }
 
 type SubscriptionReferenceFunction struct{}
 
-func (_ *SubscriptionReferenceFunction) Request() interface{} {
+func (_ *SubscriptionReferenceFunction) Request() any {
 	return &SubscriptionReference{}
 }
-func (_ *SubscriptionReferenceFunction) Response() interface{} {
+func (_ *SubscriptionReferenceFunction) Response() any {
 	return &SubscriptionReferenceResponse{}
 }
 
 type UnsubscribeFunction struct{}
 
-func (_ *UnsubscribeFunction) Request() interface{} {
+func (_ *UnsubscribeFunction) Request() any {
 	return &Unsubscribe{}
 }
-func (_ *UnsubscribeFunction) Response() interface{} {
+func (_ *UnsubscribeFunction) Response() any {
 	return &UnsubscribeResponse{}
 }

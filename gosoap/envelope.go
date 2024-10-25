@@ -1,8 +1,9 @@
 package gosoap
 
 import (
-	"encoding/xml"
 	"fmt"
+
+	"github.com/nbio/xml"
 )
 
 type SOAPEnvelope struct {
@@ -14,14 +15,14 @@ type SOAPEnvelope struct {
 type SOAPHeader struct {
 	XMLName xml.Name `xml:"http://www.w3.org/2003/05/soap-envelope Header"`
 
-	Headers []interface{}
+	Headers []any
 }
 
 type SOAPBody struct {
 	XMLName xml.Name `xml:"http://www.w3.org/2003/05/soap-envelope Body"`
 
-	Fault   *SOAPFault  `xml:",omitempty"`
-	Content interface{} `xml:",omitempty"`
+	Fault   *SOAPFault `xml:",omitempty"`
+	Content any        `xml:",omitempty"`
 }
 
 type SOAPFault struct {
@@ -112,7 +113,7 @@ func (fault *SOAPFault) String() string {
 	return msg
 }
 
-func NewSOAPEnvelope(content interface{}) *SOAPEnvelope {
+func NewSOAPEnvelope(content any) *SOAPEnvelope {
 	return &SOAPEnvelope{
 		Body: SOAPBody{
 			Content: content,

@@ -3,8 +3,8 @@ package media2
 //go:generate python3 ../python/gen_commands.py
 
 import (
-	"github.com/IOTechSystems/onvif/xsd"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	"github.com/secure-passage/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 type GetProfiles struct {

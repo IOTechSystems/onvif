@@ -10,99 +10,99 @@ package imaging
 
 type GetCurrentPresetFunction struct{}
 
-func (_ *GetCurrentPresetFunction) Request() interface{} {
+func (_ *GetCurrentPresetFunction) Request() any {
 	return &GetCurrentPreset{}
 }
-func (_ *GetCurrentPresetFunction) Response() interface{} {
+func (_ *GetCurrentPresetFunction) Response() any {
 	return &GetCurrentPresetResponse{}
 }
 
 type GetImagingSettingsFunction struct{}
 
-func (_ *GetImagingSettingsFunction) Request() interface{} {
+func (_ *GetImagingSettingsFunction) Request() any {
 	return &GetImagingSettings{}
 }
-func (_ *GetImagingSettingsFunction) Response() interface{} {
+func (_ *GetImagingSettingsFunction) Response() any {
 	return &GetImagingSettingsResponse{}
 }
 
 type GetMoveOptionsFunction struct{}
 
-func (_ *GetMoveOptionsFunction) Request() interface{} {
+func (_ *GetMoveOptionsFunction) Request() any {
 	return &GetMoveOptions{}
 }
-func (_ *GetMoveOptionsFunction) Response() interface{} {
+func (_ *GetMoveOptionsFunction) Response() any {
 	return &GetMoveOptionsResponse{}
 }
 
 type GetOptionsFunction struct{}
 
-func (_ *GetOptionsFunction) Request() interface{} {
+func (_ *GetOptionsFunction) Request() any {
 	return &GetOptions{}
 }
-func (_ *GetOptionsFunction) Response() interface{} {
+func (_ *GetOptionsFunction) Response() any {
 	return &GetOptionsResponse{}
 }
 
 type GetPresetsFunction struct{}
 
-func (_ *GetPresetsFunction) Request() interface{} {
+func (_ *GetPresetsFunction) Request() any {
 	return &GetPresets{}
 }
-func (_ *GetPresetsFunction) Response() interface{} {
+func (_ *GetPresetsFunction) Response() any {
 	return &GetPresetsResponse{}
 }
 
 type GetServiceCapabilitiesFunction struct{}
 
-func (_ *GetServiceCapabilitiesFunction) Request() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Request() any {
 	return &GetServiceCapabilities{}
 }
-func (_ *GetServiceCapabilitiesFunction) Response() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Response() any {
 	return &GetServiceCapabilitiesResponse{}
 }
 
 type GetStatusFunction struct{}
 
-func (_ *GetStatusFunction) Request() interface{} {
+func (_ *GetStatusFunction) Request() any {
 	return &GetStatus{}
 }
-func (_ *GetStatusFunction) Response() interface{} {
+func (_ *GetStatusFunction) Response() any {
 	return &GetStatusResponse{}
 }
 
 type MoveFunction struct{}
 
-func (_ *MoveFunction) Request() interface{} {
+func (_ *MoveFunction) Request() any {
 	return &Move{}
 }
-func (_ *MoveFunction) Response() interface{} {
+func (_ *MoveFunction) Response() any {
 	return &MoveResponse{}
 }
 
 type SetCurrentPresetFunction struct{}
 
-func (_ *SetCurrentPresetFunction) Request() interface{} {
+func (_ *SetCurrentPresetFunction) Request() any {
 	return &SetCurrentPreset{}
 }
-func (_ *SetCurrentPresetFunction) Response() interface{} {
+func (_ *SetCurrentPresetFunction) Response() any {
 	return &SetCurrentPresetResponse{}
 }
 
 type SetImagingSettingsFunction struct{}
 
-func (_ *SetImagingSettingsFunction) Request() interface{} {
+func (_ *SetImagingSettingsFunction) Request() any {
 	return &SetImagingSettings{}
 }
-func (_ *SetImagingSettingsFunction) Response() interface{} {
+func (_ *SetImagingSettingsFunction) Response() any {
 	return &SetImagingSettingsResponse{}
 }
 
 type StopFunction struct{}
 
-func (_ *StopFunction) Request() interface{} {
+func (_ *StopFunction) Request() any {
 	return &Stop{}
 }
-func (_ *StopFunction) Response() interface{} {
+func (_ *StopFunction) Response() any {
 	return &StopResponse{}
 }

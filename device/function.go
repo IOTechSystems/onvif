@@ -10,810 +10,810 @@ package device
 
 type AddIPAddressFilterFunction struct{}
 
-func (_ *AddIPAddressFilterFunction) Request() interface{} {
+func (_ *AddIPAddressFilterFunction) Request() any {
 	return &AddIPAddressFilter{}
 }
-func (_ *AddIPAddressFilterFunction) Response() interface{} {
+func (_ *AddIPAddressFilterFunction) Response() any {
 	return &AddIPAddressFilterResponse{}
 }
 
 type AddScopesFunction struct{}
 
-func (_ *AddScopesFunction) Request() interface{} {
+func (_ *AddScopesFunction) Request() any {
 	return &AddScopes{}
 }
-func (_ *AddScopesFunction) Response() interface{} {
+func (_ *AddScopesFunction) Response() any {
 	return &AddScopesResponse{}
 }
 
 type CreateCertificateFunction struct{}
 
-func (_ *CreateCertificateFunction) Request() interface{} {
+func (_ *CreateCertificateFunction) Request() any {
 	return &CreateCertificate{}
 }
-func (_ *CreateCertificateFunction) Response() interface{} {
+func (_ *CreateCertificateFunction) Response() any {
 	return &CreateCertificateResponse{}
 }
 
 type CreateDot1XConfigurationFunction struct{}
 
-func (_ *CreateDot1XConfigurationFunction) Request() interface{} {
+func (_ *CreateDot1XConfigurationFunction) Request() any {
 	return &CreateDot1XConfiguration{}
 }
-func (_ *CreateDot1XConfigurationFunction) Response() interface{} {
+func (_ *CreateDot1XConfigurationFunction) Response() any {
 	return &CreateDot1XConfigurationResponse{}
 }
 
 type CreateStorageConfigurationFunction struct{}
 
-func (_ *CreateStorageConfigurationFunction) Request() interface{} {
+func (_ *CreateStorageConfigurationFunction) Request() any {
 	return &CreateStorageConfiguration{}
 }
-func (_ *CreateStorageConfigurationFunction) Response() interface{} {
+func (_ *CreateStorageConfigurationFunction) Response() any {
 	return &CreateStorageConfigurationResponse{}
 }
 
 type CreateUsersFunction struct{}
 
-func (_ *CreateUsersFunction) Request() interface{} {
+func (_ *CreateUsersFunction) Request() any {
 	return &CreateUsers{}
 }
-func (_ *CreateUsersFunction) Response() interface{} {
+func (_ *CreateUsersFunction) Response() any {
 	return &CreateUsersResponse{}
 }
 
 type DeleteCertificatesFunction struct{}
 
-func (_ *DeleteCertificatesFunction) Request() interface{} {
+func (_ *DeleteCertificatesFunction) Request() any {
 	return &DeleteCertificates{}
 }
-func (_ *DeleteCertificatesFunction) Response() interface{} {
+func (_ *DeleteCertificatesFunction) Response() any {
 	return &DeleteCertificatesResponse{}
 }
 
 type DeleteDot1XConfigurationFunction struct{}
 
-func (_ *DeleteDot1XConfigurationFunction) Request() interface{} {
+func (_ *DeleteDot1XConfigurationFunction) Request() any {
 	return &DeleteDot1XConfiguration{}
 }
-func (_ *DeleteDot1XConfigurationFunction) Response() interface{} {
+func (_ *DeleteDot1XConfigurationFunction) Response() any {
 	return &DeleteDot1XConfigurationResponse{}
 }
 
 type DeleteGeoLocationFunction struct{}
 
-func (_ *DeleteGeoLocationFunction) Request() interface{} {
+func (_ *DeleteGeoLocationFunction) Request() any {
 	return &DeleteGeoLocation{}
 }
-func (_ *DeleteGeoLocationFunction) Response() interface{} {
+func (_ *DeleteGeoLocationFunction) Response() any {
 	return &DeleteGeoLocationResponse{}
 }
 
 type DeleteStorageConfigurationFunction struct{}
 
-func (_ *DeleteStorageConfigurationFunction) Request() interface{} {
+func (_ *DeleteStorageConfigurationFunction) Request() any {
 	return &DeleteStorageConfiguration{}
 }
-func (_ *DeleteStorageConfigurationFunction) Response() interface{} {
+func (_ *DeleteStorageConfigurationFunction) Response() any {
 	return &DeleteStorageConfigurationResponse{}
 }
 
 type DeleteUsersFunction struct{}
 
-func (_ *DeleteUsersFunction) Request() interface{} {
+func (_ *DeleteUsersFunction) Request() any {
 	return &DeleteUsers{}
 }
-func (_ *DeleteUsersFunction) Response() interface{} {
+func (_ *DeleteUsersFunction) Response() any {
 	return &DeleteUsersResponse{}
 }
 
 type GetAccessPolicyFunction struct{}
 
-func (_ *GetAccessPolicyFunction) Request() interface{} {
+func (_ *GetAccessPolicyFunction) Request() any {
 	return &GetAccessPolicy{}
 }
-func (_ *GetAccessPolicyFunction) Response() interface{} {
+func (_ *GetAccessPolicyFunction) Response() any {
 	return &GetAccessPolicyResponse{}
 }
 
 type GetCACertificatesFunction struct{}
 
-func (_ *GetCACertificatesFunction) Request() interface{} {
+func (_ *GetCACertificatesFunction) Request() any {
 	return &GetCACertificates{}
 }
-func (_ *GetCACertificatesFunction) Response() interface{} {
+func (_ *GetCACertificatesFunction) Response() any {
 	return &GetCACertificatesResponse{}
 }
 
 type GetCapabilitiesFunction struct{}
 
-func (_ *GetCapabilitiesFunction) Request() interface{} {
+func (_ *GetCapabilitiesFunction) Request() any {
 	return &GetCapabilities{}
 }
-func (_ *GetCapabilitiesFunction) Response() interface{} {
+func (_ *GetCapabilitiesFunction) Response() any {
 	return &GetCapabilitiesResponse{}
 }
 
 type GetCertificateInformationFunction struct{}
 
-func (_ *GetCertificateInformationFunction) Request() interface{} {
+func (_ *GetCertificateInformationFunction) Request() any {
 	return &GetCertificateInformation{}
 }
-func (_ *GetCertificateInformationFunction) Response() interface{} {
+func (_ *GetCertificateInformationFunction) Response() any {
 	return &GetCertificateInformationResponse{}
 }
 
 type GetCertificatesFunction struct{}
 
-func (_ *GetCertificatesFunction) Request() interface{} {
+func (_ *GetCertificatesFunction) Request() any {
 	return &GetCertificates{}
 }
-func (_ *GetCertificatesFunction) Response() interface{} {
+func (_ *GetCertificatesFunction) Response() any {
 	return &GetCertificatesResponse{}
 }
 
 type GetCertificatesStatusFunction struct{}
 
-func (_ *GetCertificatesStatusFunction) Request() interface{} {
+func (_ *GetCertificatesStatusFunction) Request() any {
 	return &GetCertificatesStatus{}
 }
-func (_ *GetCertificatesStatusFunction) Response() interface{} {
+func (_ *GetCertificatesStatusFunction) Response() any {
 	return &GetCertificatesStatusResponse{}
 }
 
 type GetClientCertificateModeFunction struct{}
 
-func (_ *GetClientCertificateModeFunction) Request() interface{} {
+func (_ *GetClientCertificateModeFunction) Request() any {
 	return &GetClientCertificateMode{}
 }
-func (_ *GetClientCertificateModeFunction) Response() interface{} {
+func (_ *GetClientCertificateModeFunction) Response() any {
 	return &GetClientCertificateModeResponse{}
 }
 
 type GetDNSFunction struct{}
 
-func (_ *GetDNSFunction) Request() interface{} {
+func (_ *GetDNSFunction) Request() any {
 	return &GetDNS{}
 }
-func (_ *GetDNSFunction) Response() interface{} {
+func (_ *GetDNSFunction) Response() any {
 	return &GetDNSResponse{}
 }
 
 type GetDPAddressesFunction struct{}
 
-func (_ *GetDPAddressesFunction) Request() interface{} {
+func (_ *GetDPAddressesFunction) Request() any {
 	return &GetDPAddresses{}
 }
-func (_ *GetDPAddressesFunction) Response() interface{} {
+func (_ *GetDPAddressesFunction) Response() any {
 	return &GetDPAddressesResponse{}
 }
 
 type GetDeviceInformationFunction struct{}
 
-func (_ *GetDeviceInformationFunction) Request() interface{} {
+func (_ *GetDeviceInformationFunction) Request() any {
 	return &GetDeviceInformation{}
 }
-func (_ *GetDeviceInformationFunction) Response() interface{} {
+func (_ *GetDeviceInformationFunction) Response() any {
 	return &GetDeviceInformationResponse{}
 }
 
 type GetDiscoveryModeFunction struct{}
 
-func (_ *GetDiscoveryModeFunction) Request() interface{} {
+func (_ *GetDiscoveryModeFunction) Request() any {
 	return &GetDiscoveryMode{}
 }
-func (_ *GetDiscoveryModeFunction) Response() interface{} {
+func (_ *GetDiscoveryModeFunction) Response() any {
 	return &GetDiscoveryModeResponse{}
 }
 
 type GetDot11CapabilitiesFunction struct{}
 
-func (_ *GetDot11CapabilitiesFunction) Request() interface{} {
+func (_ *GetDot11CapabilitiesFunction) Request() any {
 	return &GetDot11Capabilities{}
 }
-func (_ *GetDot11CapabilitiesFunction) Response() interface{} {
+func (_ *GetDot11CapabilitiesFunction) Response() any {
 	return &GetDot11CapabilitiesResponse{}
 }
 
 type GetDot11StatusFunction struct{}
 
-func (_ *GetDot11StatusFunction) Request() interface{} {
+func (_ *GetDot11StatusFunction) Request() any {
 	return &GetDot11Status{}
 }
-func (_ *GetDot11StatusFunction) Response() interface{} {
+func (_ *GetDot11StatusFunction) Response() any {
 	return &GetDot11StatusResponse{}
 }
 
 type GetDot1XConfigurationFunction struct{}
 
-func (_ *GetDot1XConfigurationFunction) Request() interface{} {
+func (_ *GetDot1XConfigurationFunction) Request() any {
 	return &GetDot1XConfiguration{}
 }
-func (_ *GetDot1XConfigurationFunction) Response() interface{} {
+func (_ *GetDot1XConfigurationFunction) Response() any {
 	return &GetDot1XConfigurationResponse{}
 }
 
 type GetDot1XConfigurationsFunction struct{}
 
-func (_ *GetDot1XConfigurationsFunction) Request() interface{} {
+func (_ *GetDot1XConfigurationsFunction) Request() any {
 	return &GetDot1XConfigurations{}
 }
-func (_ *GetDot1XConfigurationsFunction) Response() interface{} {
+func (_ *GetDot1XConfigurationsFunction) Response() any {
 	return &GetDot1XConfigurationsResponse{}
 }
 
 type GetDynamicDNSFunction struct{}
 
-func (_ *GetDynamicDNSFunction) Request() interface{} {
+func (_ *GetDynamicDNSFunction) Request() any {
 	return &GetDynamicDNS{}
 }
-func (_ *GetDynamicDNSFunction) Response() interface{} {
+func (_ *GetDynamicDNSFunction) Response() any {
 	return &GetDynamicDNSResponse{}
 }
 
 type GetEndpointReferenceFunction struct{}
 
-func (_ *GetEndpointReferenceFunction) Request() interface{} {
+func (_ *GetEndpointReferenceFunction) Request() any {
 	return &GetEndpointReference{}
 }
-func (_ *GetEndpointReferenceFunction) Response() interface{} {
+func (_ *GetEndpointReferenceFunction) Response() any {
 	return &GetEndpointReferenceResponse{}
 }
 
 type GetGeoLocationFunction struct{}
 
-func (_ *GetGeoLocationFunction) Request() interface{} {
+func (_ *GetGeoLocationFunction) Request() any {
 	return &GetGeoLocation{}
 }
-func (_ *GetGeoLocationFunction) Response() interface{} {
+func (_ *GetGeoLocationFunction) Response() any {
 	return &GetGeoLocationResponse{}
 }
 
 type GetHostnameFunction struct{}
 
-func (_ *GetHostnameFunction) Request() interface{} {
+func (_ *GetHostnameFunction) Request() any {
 	return &GetHostname{}
 }
-func (_ *GetHostnameFunction) Response() interface{} {
+func (_ *GetHostnameFunction) Response() any {
 	return &GetHostnameResponse{}
 }
 
 type GetIPAddressFilterFunction struct{}
 
-func (_ *GetIPAddressFilterFunction) Request() interface{} {
+func (_ *GetIPAddressFilterFunction) Request() any {
 	return &GetIPAddressFilter{}
 }
-func (_ *GetIPAddressFilterFunction) Response() interface{} {
+func (_ *GetIPAddressFilterFunction) Response() any {
 	return &GetIPAddressFilterResponse{}
 }
 
 type GetNTPFunction struct{}
 
-func (_ *GetNTPFunction) Request() interface{} {
+func (_ *GetNTPFunction) Request() any {
 	return &GetNTP{}
 }
-func (_ *GetNTPFunction) Response() interface{} {
+func (_ *GetNTPFunction) Response() any {
 	return &GetNTPResponse{}
 }
 
 type GetNetworkDefaultGatewayFunction struct{}
 
-func (_ *GetNetworkDefaultGatewayFunction) Request() interface{} {
+func (_ *GetNetworkDefaultGatewayFunction) Request() any {
 	return &GetNetworkDefaultGateway{}
 }
-func (_ *GetNetworkDefaultGatewayFunction) Response() interface{} {
+func (_ *GetNetworkDefaultGatewayFunction) Response() any {
 	return &GetNetworkDefaultGatewayResponse{}
 }
 
 type GetNetworkInterfacesFunction struct{}
 
-func (_ *GetNetworkInterfacesFunction) Request() interface{} {
+func (_ *GetNetworkInterfacesFunction) Request() any {
 	return &GetNetworkInterfaces{}
 }
-func (_ *GetNetworkInterfacesFunction) Response() interface{} {
+func (_ *GetNetworkInterfacesFunction) Response() any {
 	return &GetNetworkInterfacesResponse{}
 }
 
 type GetNetworkProtocolsFunction struct{}
 
-func (_ *GetNetworkProtocolsFunction) Request() interface{} {
+func (_ *GetNetworkProtocolsFunction) Request() any {
 	return &GetNetworkProtocols{}
 }
-func (_ *GetNetworkProtocolsFunction) Response() interface{} {
+func (_ *GetNetworkProtocolsFunction) Response() any {
 	return &GetNetworkProtocolsResponse{}
 }
 
 type GetPkcs10RequestFunction struct{}
 
-func (_ *GetPkcs10RequestFunction) Request() interface{} {
+func (_ *GetPkcs10RequestFunction) Request() any {
 	return &GetPkcs10Request{}
 }
-func (_ *GetPkcs10RequestFunction) Response() interface{} {
+func (_ *GetPkcs10RequestFunction) Response() any {
 	return &GetPkcs10RequestResponse{}
 }
 
 type GetRelayOutputsFunction struct{}
 
-func (_ *GetRelayOutputsFunction) Request() interface{} {
+func (_ *GetRelayOutputsFunction) Request() any {
 	return &GetRelayOutputs{}
 }
-func (_ *GetRelayOutputsFunction) Response() interface{} {
+func (_ *GetRelayOutputsFunction) Response() any {
 	return &GetRelayOutputsResponse{}
 }
 
 type GetRemoteDiscoveryModeFunction struct{}
 
-func (_ *GetRemoteDiscoveryModeFunction) Request() interface{} {
+func (_ *GetRemoteDiscoveryModeFunction) Request() any {
 	return &GetRemoteDiscoveryMode{}
 }
-func (_ *GetRemoteDiscoveryModeFunction) Response() interface{} {
+func (_ *GetRemoteDiscoveryModeFunction) Response() any {
 	return &GetRemoteDiscoveryModeResponse{}
 }
 
 type GetRemoteUserFunction struct{}
 
-func (_ *GetRemoteUserFunction) Request() interface{} {
+func (_ *GetRemoteUserFunction) Request() any {
 	return &GetRemoteUser{}
 }
-func (_ *GetRemoteUserFunction) Response() interface{} {
+func (_ *GetRemoteUserFunction) Response() any {
 	return &GetRemoteUserResponse{}
 }
 
 type GetScopesFunction struct{}
 
-func (_ *GetScopesFunction) Request() interface{} {
+func (_ *GetScopesFunction) Request() any {
 	return &GetScopes{}
 }
-func (_ *GetScopesFunction) Response() interface{} {
+func (_ *GetScopesFunction) Response() any {
 	return &GetScopesResponse{}
 }
 
 type GetServiceCapabilitiesFunction struct{}
 
-func (_ *GetServiceCapabilitiesFunction) Request() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Request() any {
 	return &GetServiceCapabilities{}
 }
-func (_ *GetServiceCapabilitiesFunction) Response() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Response() any {
 	return &GetServiceCapabilitiesResponse{}
 }
 
 type GetServicesFunction struct{}
 
-func (_ *GetServicesFunction) Request() interface{} {
+func (_ *GetServicesFunction) Request() any {
 	return &GetServices{}
 }
-func (_ *GetServicesFunction) Response() interface{} {
+func (_ *GetServicesFunction) Response() any {
 	return &GetServicesResponse{}
 }
 
 type GetStorageConfigurationFunction struct{}
 
-func (_ *GetStorageConfigurationFunction) Request() interface{} {
+func (_ *GetStorageConfigurationFunction) Request() any {
 	return &GetStorageConfiguration{}
 }
-func (_ *GetStorageConfigurationFunction) Response() interface{} {
+func (_ *GetStorageConfigurationFunction) Response() any {
 	return &GetStorageConfigurationResponse{}
 }
 
 type GetStorageConfigurationsFunction struct{}
 
-func (_ *GetStorageConfigurationsFunction) Request() interface{} {
+func (_ *GetStorageConfigurationsFunction) Request() any {
 	return &GetStorageConfigurations{}
 }
-func (_ *GetStorageConfigurationsFunction) Response() interface{} {
+func (_ *GetStorageConfigurationsFunction) Response() any {
 	return &GetStorageConfigurationsResponse{}
 }
 
 type GetSystemBackupFunction struct{}
 
-func (_ *GetSystemBackupFunction) Request() interface{} {
+func (_ *GetSystemBackupFunction) Request() any {
 	return &GetSystemBackup{}
 }
-func (_ *GetSystemBackupFunction) Response() interface{} {
+func (_ *GetSystemBackupFunction) Response() any {
 	return &GetSystemBackupResponse{}
 }
 
 type GetSystemDateAndTimeFunction struct{}
 
-func (_ *GetSystemDateAndTimeFunction) Request() interface{} {
+func (_ *GetSystemDateAndTimeFunction) Request() any {
 	return &GetSystemDateAndTime{}
 }
-func (_ *GetSystemDateAndTimeFunction) Response() interface{} {
+func (_ *GetSystemDateAndTimeFunction) Response() any {
 	return &GetSystemDateAndTimeResponse{}
 }
 
 type GetSystemLogFunction struct{}
 
-func (_ *GetSystemLogFunction) Request() interface{} {
+func (_ *GetSystemLogFunction) Request() any {
 	return &GetSystemLog{}
 }
-func (_ *GetSystemLogFunction) Response() interface{} {
+func (_ *GetSystemLogFunction) Response() any {
 	return &GetSystemLogResponse{}
 }
 
 type GetSystemSupportInformationFunction struct{}
 
-func (_ *GetSystemSupportInformationFunction) Request() interface{} {
+func (_ *GetSystemSupportInformationFunction) Request() any {
 	return &GetSystemSupportInformation{}
 }
-func (_ *GetSystemSupportInformationFunction) Response() interface{} {
+func (_ *GetSystemSupportInformationFunction) Response() any {
 	return &GetSystemSupportInformationResponse{}
 }
 
 type GetSystemUrisFunction struct{}
 
-func (_ *GetSystemUrisFunction) Request() interface{} {
+func (_ *GetSystemUrisFunction) Request() any {
 	return &GetSystemUris{}
 }
-func (_ *GetSystemUrisFunction) Response() interface{} {
+func (_ *GetSystemUrisFunction) Response() any {
 	return &GetSystemUrisResponse{}
 }
 
 type GetUsersFunction struct{}
 
-func (_ *GetUsersFunction) Request() interface{} {
+func (_ *GetUsersFunction) Request() any {
 	return &GetUsers{}
 }
-func (_ *GetUsersFunction) Response() interface{} {
+func (_ *GetUsersFunction) Response() any {
 	return &GetUsersResponse{}
 }
 
 type GetWsdlUrlFunction struct{}
 
-func (_ *GetWsdlUrlFunction) Request() interface{} {
+func (_ *GetWsdlUrlFunction) Request() any {
 	return &GetWsdlUrl{}
 }
-func (_ *GetWsdlUrlFunction) Response() interface{} {
+func (_ *GetWsdlUrlFunction) Response() any {
 	return &GetWsdlUrlResponse{}
 }
 
 type GetZeroConfigurationFunction struct{}
 
-func (_ *GetZeroConfigurationFunction) Request() interface{} {
+func (_ *GetZeroConfigurationFunction) Request() any {
 	return &GetZeroConfiguration{}
 }
-func (_ *GetZeroConfigurationFunction) Response() interface{} {
+func (_ *GetZeroConfigurationFunction) Response() any {
 	return &GetZeroConfigurationResponse{}
 }
 
 type LoadCACertificatesFunction struct{}
 
-func (_ *LoadCACertificatesFunction) Request() interface{} {
+func (_ *LoadCACertificatesFunction) Request() any {
 	return &LoadCACertificates{}
 }
-func (_ *LoadCACertificatesFunction) Response() interface{} {
+func (_ *LoadCACertificatesFunction) Response() any {
 	return &LoadCACertificatesResponse{}
 }
 
 type LoadCertificateWithPrivateKeyFunction struct{}
 
-func (_ *LoadCertificateWithPrivateKeyFunction) Request() interface{} {
+func (_ *LoadCertificateWithPrivateKeyFunction) Request() any {
 	return &LoadCertificateWithPrivateKey{}
 }
-func (_ *LoadCertificateWithPrivateKeyFunction) Response() interface{} {
+func (_ *LoadCertificateWithPrivateKeyFunction) Response() any {
 	return &LoadCertificateWithPrivateKeyResponse{}
 }
 
 type LoadCertificatesFunction struct{}
 
-func (_ *LoadCertificatesFunction) Request() interface{} {
+func (_ *LoadCertificatesFunction) Request() any {
 	return &LoadCertificates{}
 }
-func (_ *LoadCertificatesFunction) Response() interface{} {
+func (_ *LoadCertificatesFunction) Response() any {
 	return &LoadCertificatesResponse{}
 }
 
 type RemoveIPAddressFilterFunction struct{}
 
-func (_ *RemoveIPAddressFilterFunction) Request() interface{} {
+func (_ *RemoveIPAddressFilterFunction) Request() any {
 	return &RemoveIPAddressFilter{}
 }
-func (_ *RemoveIPAddressFilterFunction) Response() interface{} {
+func (_ *RemoveIPAddressFilterFunction) Response() any {
 	return &RemoveIPAddressFilterResponse{}
 }
 
 type RemoveScopesFunction struct{}
 
-func (_ *RemoveScopesFunction) Request() interface{} {
+func (_ *RemoveScopesFunction) Request() any {
 	return &RemoveScopes{}
 }
-func (_ *RemoveScopesFunction) Response() interface{} {
+func (_ *RemoveScopesFunction) Response() any {
 	return &RemoveScopesResponse{}
 }
 
 type RestoreSystemFunction struct{}
 
-func (_ *RestoreSystemFunction) Request() interface{} {
+func (_ *RestoreSystemFunction) Request() any {
 	return &RestoreSystem{}
 }
-func (_ *RestoreSystemFunction) Response() interface{} {
+func (_ *RestoreSystemFunction) Response() any {
 	return &RestoreSystemResponse{}
 }
 
 type ScanAvailableDot11NetworksFunction struct{}
 
-func (_ *ScanAvailableDot11NetworksFunction) Request() interface{} {
+func (_ *ScanAvailableDot11NetworksFunction) Request() any {
 	return &ScanAvailableDot11Networks{}
 }
-func (_ *ScanAvailableDot11NetworksFunction) Response() interface{} {
+func (_ *ScanAvailableDot11NetworksFunction) Response() any {
 	return &ScanAvailableDot11NetworksResponse{}
 }
 
 type SendAuxiliaryCommandFunction struct{}
 
-func (_ *SendAuxiliaryCommandFunction) Request() interface{} {
+func (_ *SendAuxiliaryCommandFunction) Request() any {
 	return &SendAuxiliaryCommand{}
 }
-func (_ *SendAuxiliaryCommandFunction) Response() interface{} {
+func (_ *SendAuxiliaryCommandFunction) Response() any {
 	return &SendAuxiliaryCommandResponse{}
 }
 
 type SetAccessPolicyFunction struct{}
 
-func (_ *SetAccessPolicyFunction) Request() interface{} {
+func (_ *SetAccessPolicyFunction) Request() any {
 	return &SetAccessPolicy{}
 }
-func (_ *SetAccessPolicyFunction) Response() interface{} {
+func (_ *SetAccessPolicyFunction) Response() any {
 	return &SetAccessPolicyResponse{}
 }
 
 type SetCertificatesStatusFunction struct{}
 
-func (_ *SetCertificatesStatusFunction) Request() interface{} {
+func (_ *SetCertificatesStatusFunction) Request() any {
 	return &SetCertificatesStatus{}
 }
-func (_ *SetCertificatesStatusFunction) Response() interface{} {
+func (_ *SetCertificatesStatusFunction) Response() any {
 	return &SetCertificatesStatusResponse{}
 }
 
 type SetClientCertificateModeFunction struct{}
 
-func (_ *SetClientCertificateModeFunction) Request() interface{} {
+func (_ *SetClientCertificateModeFunction) Request() any {
 	return &SetClientCertificateMode{}
 }
-func (_ *SetClientCertificateModeFunction) Response() interface{} {
+func (_ *SetClientCertificateModeFunction) Response() any {
 	return &SetClientCertificateModeResponse{}
 }
 
 type SetDNSFunction struct{}
 
-func (_ *SetDNSFunction) Request() interface{} {
+func (_ *SetDNSFunction) Request() any {
 	return &SetDNS{}
 }
-func (_ *SetDNSFunction) Response() interface{} {
+func (_ *SetDNSFunction) Response() any {
 	return &SetDNSResponse{}
 }
 
 type SetDPAddressesFunction struct{}
 
-func (_ *SetDPAddressesFunction) Request() interface{} {
+func (_ *SetDPAddressesFunction) Request() any {
 	return &SetDPAddresses{}
 }
-func (_ *SetDPAddressesFunction) Response() interface{} {
+func (_ *SetDPAddressesFunction) Response() any {
 	return &SetDPAddressesResponse{}
 }
 
 type SetDiscoveryModeFunction struct{}
 
-func (_ *SetDiscoveryModeFunction) Request() interface{} {
+func (_ *SetDiscoveryModeFunction) Request() any {
 	return &SetDiscoveryMode{}
 }
-func (_ *SetDiscoveryModeFunction) Response() interface{} {
+func (_ *SetDiscoveryModeFunction) Response() any {
 	return &SetDiscoveryModeResponse{}
 }
 
 type SetDot1XConfigurationFunction struct{}
 
-func (_ *SetDot1XConfigurationFunction) Request() interface{} {
+func (_ *SetDot1XConfigurationFunction) Request() any {
 	return &SetDot1XConfiguration{}
 }
-func (_ *SetDot1XConfigurationFunction) Response() interface{} {
+func (_ *SetDot1XConfigurationFunction) Response() any {
 	return &SetDot1XConfigurationResponse{}
 }
 
 type SetDynamicDNSFunction struct{}
 
-func (_ *SetDynamicDNSFunction) Request() interface{} {
+func (_ *SetDynamicDNSFunction) Request() any {
 	return &SetDynamicDNS{}
 }
-func (_ *SetDynamicDNSFunction) Response() interface{} {
+func (_ *SetDynamicDNSFunction) Response() any {
 	return &SetDynamicDNSResponse{}
 }
 
 type SetGeoLocationFunction struct{}
 
-func (_ *SetGeoLocationFunction) Request() interface{} {
+func (_ *SetGeoLocationFunction) Request() any {
 	return &SetGeoLocation{}
 }
-func (_ *SetGeoLocationFunction) Response() interface{} {
+func (_ *SetGeoLocationFunction) Response() any {
 	return &SetGeoLocationResponse{}
 }
 
 type SetHostnameFunction struct{}
 
-func (_ *SetHostnameFunction) Request() interface{} {
+func (_ *SetHostnameFunction) Request() any {
 	return &SetHostname{}
 }
-func (_ *SetHostnameFunction) Response() interface{} {
+func (_ *SetHostnameFunction) Response() any {
 	return &SetHostnameResponse{}
 }
 
 type SetHostnameFromDHCPFunction struct{}
 
-func (_ *SetHostnameFromDHCPFunction) Request() interface{} {
+func (_ *SetHostnameFromDHCPFunction) Request() any {
 	return &SetHostnameFromDHCP{}
 }
-func (_ *SetHostnameFromDHCPFunction) Response() interface{} {
+func (_ *SetHostnameFromDHCPFunction) Response() any {
 	return &SetHostnameFromDHCPResponse{}
 }
 
 type SetIPAddressFilterFunction struct{}
 
-func (_ *SetIPAddressFilterFunction) Request() interface{} {
+func (_ *SetIPAddressFilterFunction) Request() any {
 	return &SetIPAddressFilter{}
 }
-func (_ *SetIPAddressFilterFunction) Response() interface{} {
+func (_ *SetIPAddressFilterFunction) Response() any {
 	return &SetIPAddressFilterResponse{}
 }
 
 type SetNTPFunction struct{}
 
-func (_ *SetNTPFunction) Request() interface{} {
+func (_ *SetNTPFunction) Request() any {
 	return &SetNTP{}
 }
-func (_ *SetNTPFunction) Response() interface{} {
+func (_ *SetNTPFunction) Response() any {
 	return &SetNTPResponse{}
 }
 
 type SetNetworkDefaultGatewayFunction struct{}
 
-func (_ *SetNetworkDefaultGatewayFunction) Request() interface{} {
+func (_ *SetNetworkDefaultGatewayFunction) Request() any {
 	return &SetNetworkDefaultGateway{}
 }
-func (_ *SetNetworkDefaultGatewayFunction) Response() interface{} {
+func (_ *SetNetworkDefaultGatewayFunction) Response() any {
 	return &SetNetworkDefaultGatewayResponse{}
 }
 
 type SetNetworkInterfacesFunction struct{}
 
-func (_ *SetNetworkInterfacesFunction) Request() interface{} {
+func (_ *SetNetworkInterfacesFunction) Request() any {
 	return &SetNetworkInterfaces{}
 }
-func (_ *SetNetworkInterfacesFunction) Response() interface{} {
+func (_ *SetNetworkInterfacesFunction) Response() any {
 	return &SetNetworkInterfacesResponse{}
 }
 
 type SetNetworkProtocolsFunction struct{}
 
-func (_ *SetNetworkProtocolsFunction) Request() interface{} {
+func (_ *SetNetworkProtocolsFunction) Request() any {
 	return &SetNetworkProtocols{}
 }
-func (_ *SetNetworkProtocolsFunction) Response() interface{} {
+func (_ *SetNetworkProtocolsFunction) Response() any {
 	return &SetNetworkProtocolsResponse{}
 }
 
 type SetRelayOutputSettingsFunction struct{}
 
-func (_ *SetRelayOutputSettingsFunction) Request() interface{} {
+func (_ *SetRelayOutputSettingsFunction) Request() any {
 	return &SetRelayOutputSettings{}
 }
-func (_ *SetRelayOutputSettingsFunction) Response() interface{} {
+func (_ *SetRelayOutputSettingsFunction) Response() any {
 	return &SetRelayOutputSettingsResponse{}
 }
 
 type SetRelayOutputStateFunction struct{}
 
-func (_ *SetRelayOutputStateFunction) Request() interface{} {
+func (_ *SetRelayOutputStateFunction) Request() any {
 	return &SetRelayOutputState{}
 }
-func (_ *SetRelayOutputStateFunction) Response() interface{} {
+func (_ *SetRelayOutputStateFunction) Response() any {
 	return &SetRelayOutputStateResponse{}
 }
 
 type SetRemoteDiscoveryModeFunction struct{}
 
-func (_ *SetRemoteDiscoveryModeFunction) Request() interface{} {
+func (_ *SetRemoteDiscoveryModeFunction) Request() any {
 	return &SetRemoteDiscoveryMode{}
 }
-func (_ *SetRemoteDiscoveryModeFunction) Response() interface{} {
+func (_ *SetRemoteDiscoveryModeFunction) Response() any {
 	return &SetRemoteDiscoveryModeResponse{}
 }
 
 type SetRemoteUserFunction struct{}
 
-func (_ *SetRemoteUserFunction) Request() interface{} {
+func (_ *SetRemoteUserFunction) Request() any {
 	return &SetRemoteUser{}
 }
-func (_ *SetRemoteUserFunction) Response() interface{} {
+func (_ *SetRemoteUserFunction) Response() any {
 	return &SetRemoteUserResponse{}
 }
 
 type SetScopesFunction struct{}
 
-func (_ *SetScopesFunction) Request() interface{} {
+func (_ *SetScopesFunction) Request() any {
 	return &SetScopes{}
 }
-func (_ *SetScopesFunction) Response() interface{} {
+func (_ *SetScopesFunction) Response() any {
 	return &SetScopesResponse{}
 }
 
 type SetStorageConfigurationFunction struct{}
 
-func (_ *SetStorageConfigurationFunction) Request() interface{} {
+func (_ *SetStorageConfigurationFunction) Request() any {
 	return &SetStorageConfiguration{}
 }
-func (_ *SetStorageConfigurationFunction) Response() interface{} {
+func (_ *SetStorageConfigurationFunction) Response() any {
 	return &SetStorageConfigurationResponse{}
 }
 
 type SetSystemDateAndTimeFunction struct{}
 
-func (_ *SetSystemDateAndTimeFunction) Request() interface{} {
+func (_ *SetSystemDateAndTimeFunction) Request() any {
 	return &SetSystemDateAndTime{}
 }
-func (_ *SetSystemDateAndTimeFunction) Response() interface{} {
+func (_ *SetSystemDateAndTimeFunction) Response() any {
 	return &SetSystemDateAndTimeResponse{}
 }
 
 type SetSystemFactoryDefaultFunction struct{}
 
-func (_ *SetSystemFactoryDefaultFunction) Request() interface{} {
+func (_ *SetSystemFactoryDefaultFunction) Request() any {
 	return &SetSystemFactoryDefault{}
 }
-func (_ *SetSystemFactoryDefaultFunction) Response() interface{} {
+func (_ *SetSystemFactoryDefaultFunction) Response() any {
 	return &SetSystemFactoryDefaultResponse{}
 }
 
 type SetUserFunction struct{}
 
-func (_ *SetUserFunction) Request() interface{} {
+func (_ *SetUserFunction) Request() any {
 	return &SetUser{}
 }
-func (_ *SetUserFunction) Response() interface{} {
+func (_ *SetUserFunction) Response() any {
 	return &SetUserResponse{}
 }
 
 type SetZeroConfigurationFunction struct{}
 
-func (_ *SetZeroConfigurationFunction) Request() interface{} {
+func (_ *SetZeroConfigurationFunction) Request() any {
 	return &SetZeroConfiguration{}
 }
-func (_ *SetZeroConfigurationFunction) Response() interface{} {
+func (_ *SetZeroConfigurationFunction) Response() any {
 	return &SetZeroConfigurationResponse{}
 }
 
 type StartFirmwareUpgradeFunction struct{}
 
-func (_ *StartFirmwareUpgradeFunction) Request() interface{} {
+func (_ *StartFirmwareUpgradeFunction) Request() any {
 	return &StartFirmwareUpgrade{}
 }
-func (_ *StartFirmwareUpgradeFunction) Response() interface{} {
+func (_ *StartFirmwareUpgradeFunction) Response() any {
 	return &StartFirmwareUpgradeResponse{}
 }
 
 type StartSystemRestoreFunction struct{}
 
-func (_ *StartSystemRestoreFunction) Request() interface{} {
+func (_ *StartSystemRestoreFunction) Request() any {
 	return &StartSystemRestore{}
 }
-func (_ *StartSystemRestoreFunction) Response() interface{} {
+func (_ *StartSystemRestoreFunction) Response() any {
 	return &StartSystemRestoreResponse{}
 }
 
 type SystemRebootFunction struct{}
 
-func (_ *SystemRebootFunction) Request() interface{} {
+func (_ *SystemRebootFunction) Request() any {
 	return &SystemReboot{}
 }
-func (_ *SystemRebootFunction) Response() interface{} {
+func (_ *SystemRebootFunction) Response() any {
 	return &SystemRebootResponse{}
 }
 
 type UpgradeSystemFirmwareFunction struct{}
 
-func (_ *UpgradeSystemFirmwareFunction) Request() interface{} {
+func (_ *UpgradeSystemFirmwareFunction) Request() any {
 	return &UpgradeSystemFirmware{}
 }
-func (_ *UpgradeSystemFirmwareFunction) Response() interface{} {
+func (_ *UpgradeSystemFirmwareFunction) Response() any {
 	return &UpgradeSystemFirmwareResponse{}
 }

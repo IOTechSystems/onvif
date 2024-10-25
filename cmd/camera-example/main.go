@@ -2,16 +2,16 @@ package main
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
-	"github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/gosoap"
-	"github.com/IOTechSystems/onvif/networking"
-
 	"github.com/gin-gonic/gin"
+	"github.com/nbio/xml"
+
+	"github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/gosoap"
+	"github.com/secure-passage/onvif/networking"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func RunApi() {
 
 	router.POST("/:service/:function", func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
-		//c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+		// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 		serviceName := c.Param("service")
 		functionName := c.Param("function")
@@ -34,7 +34,7 @@ func RunApi() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		dev, err := onvif.NewDevice(onvif.DeviceParams{
+		dev, _ := onvif.NewDevice(onvif.DeviceParams{
 			Xaddr:    xaddr,
 			Username: username,
 			Password: pass,
@@ -47,7 +47,7 @@ func RunApi() {
 		}
 	})
 
-	router.Run()
+	_ = router.Run()
 }
 
 func CallOnvifFunction(dev *onvif.Device, serviceName, functionName, acceptedData string) (string, error) {
@@ -84,7 +84,9 @@ func CallOnvifFunction(dev *onvif.Device, serviceName, functionName, acceptedDat
 		return "", err
 	}
 
-	rsp, err := ioutil.ReadAll(servResp.Body)
+	defer servResp.Body.Close()
+
+	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
 		return "", err
 	}
@@ -95,20 +97,21 @@ func CallOnvifFunction(dev *onvif.Device, serviceName, functionName, acceptedDat
 		return "", err
 	}
 
+	var jsonData []byte
+
 	if responseEnvelope.Body.Fault != nil {
-		jsonData, err := json.Marshal(responseEnvelope.Body.Fault)
+		jsonData, err = json.Marshal(responseEnvelope.Body.Fault)
 		if err != nil {
 			return "", err
 		}
 		return string(jsonData), nil
 	} else {
-		jsonData, err := json.Marshal(responseEnvelope.Body.Content)
+		jsonData, err = json.Marshal(responseEnvelope.Body.Content)
 		if err != nil {
 			return "", err
 		}
 		return string(jsonData), nil
 	}
-
 }
 
 func functionByServiceAndFunctionName(serviceName, functionName string) (onvif.Function, error) {

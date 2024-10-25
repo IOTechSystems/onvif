@@ -3,20 +3,23 @@ package onvif
 import (
 	"bytes"
 	"encoding/json"
-	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"reflect"
 	"strconv"
 	"strings"
 
-	"github.com/IOTechSystems/onvif/device"
-	"github.com/IOTechSystems/onvif/gosoap"
+	"github.com/nbio/xml"
+
+	"github.com/secure-passage/onvif/xsd/onvif"
+
 	"github.com/beevik/etree"
+
+	"github.com/secure-passage/onvif/device"
+	"github.com/secure-passage/onvif/gosoap"
 )
 
 // Xlmns XML Scheam
@@ -139,7 +142,7 @@ func (dev *Device) SetDeviceInfoFromScopes(scopes []string) {
 }
 
 func readResponse(resp *http.Response) string {
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -149,10 +152,10 @@ func readResponse(resp *http.Response) string {
 func (dev *Device) getSupportedServices(resp *http.Response) {
 	doc := etree.NewDocument()
 
-	data, _ := ioutil.ReadAll(resp.Body)
+	data, _ := io.ReadAll(resp.Body)
 
 	if err := doc.ReadFromBytes(data); err != nil {
-		//log.Println(err.Error())
+		// log.Println(err.Error())
 		return
 	}
 	services := doc.FindElements("./Envelope/Body/GetCapabilitiesResponse/Capabilities/*/XAddr")
@@ -180,19 +183,23 @@ func NewDevice(params DeviceParams) (*Device, error) {
 
 	getCapabilities := device.GetCapabilities{Category: []onvif.CapabilityCategory{"All"}}
 
-	resp, err := dev.CallMethod(getCapabilities)
+	var getCapabilitiesResponse device.GetCapabilitiesResponse
+
+	resp, err := dev.CallMethod(getCapabilities, &getCapabilitiesResponse)
 
 	if err != nil || resp.StatusCode != http.StatusOK {
 		return nil, errors.New("camera is not available at " + dev.params.Xaddr + " or it does not support ONVIF services")
 	}
+
+	defer resp.Body.Close()
 
 	dev.getSupportedServices(resp)
 	return dev, nil
 }
 
 func (dev *Device) addEndpoint(Key, Value string) {
-	//use lowCaseKey
-	//make key having ability to handle Mixed Case for Different vendor devcie (e.g. Events EVENTS, events)
+	// use lowCaseKey
+	// make key having ability to handle Mixed Case for Different vendor devcie (e.g. Events EVENTS, events)
 	lowCaseKey := strings.ToLower(Key)
 
 	// Replace host with host from device params.
@@ -217,7 +224,7 @@ func (dev *Device) GetEndpoint(name string) string {
 func (dev *Device) buildMethodSOAP(msg string) (gosoap.SoapMessage, error) {
 	doc := etree.NewDocument()
 	if err := doc.ReadFromString(msg); err != nil {
-		//log.Println("Got error")
+		// log.Println("Got error")
 
 		return "", err
 	}
@@ -231,15 +238,14 @@ func (dev *Device) buildMethodSOAP(msg string) (gosoap.SoapMessage, error) {
 
 // getEndpoint functions get the target service endpoint in a better way
 func (dev *Device) getEndpoint(endpoint string) (string, error) {
-
 	// common condition, endpointMark in map we use this.
 	if endpointURL, bFound := dev.endpoints[endpoint]; bFound {
 		return endpointURL, nil
 	}
 
-	//but ,if we have endpoint like event、analytic
-	//and sametime the Targetkey like : events、analytics
-	//we use fuzzy way to find the best match url
+	// but ,if we have endpoint like event、analytic
+	// and sametime the Targetkey like : events、analytics
+	// we use fuzzy way to find the best match url
 	var endpointURL string
 	for targetKey := range dev.endpoints {
 		if strings.Contains(targetKey, endpoint) {
@@ -252,26 +258,44 @@ func (dev *Device) getEndpoint(endpoint string) (string, error) {
 
 // CallMethod functions call an method, defined <method> struct.
 // You should use Authenticate method to call authorized requests.
-func (dev *Device) CallMethod(method interface{}) (*http.Response, error) {
-	pkgPath := strings.Split(reflect.TypeOf(method).PkgPath(), "/")
+func (dev *Device) CallMethod(request, response any) (*http.Response, error) {
+	pkgPath := strings.Split(reflect.TypeOf(request).PkgPath(), "/")
 	pkg := strings.ToLower(pkgPath[len(pkgPath)-1])
 
 	endpoint, err := dev.getEndpoint(pkg)
 	if err != nil {
 		return nil, err
 	}
-	requestBody, err := xml.Marshal(method)
+
+	requestBody, err := xml.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
-	return dev.SendSoap(endpoint, string(requestBody))
+
+	responseBody, err := dev.SendSoap(endpoint, string(requestBody))
+	if err != nil {
+		return responseBody, err
+	}
+
+	if response == nil {
+		return responseBody, nil
+	}
+
+	defer responseBody.Body.Close()
+
+	data, err := io.ReadAll(responseBody.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseBody, xml.Unmarshal(data, response)
 }
 
 func (dev *Device) GetDeviceParams() DeviceParams {
 	return dev.params
 }
 
-func (dev *Device) GetEndpointByRequestStruct(requestStruct interface{}) (string, error) {
+func (dev *Device) GetEndpointByRequestStruct(requestStruct any) (string, error) {
 	pkgPath := strings.Split(reflect.TypeOf(requestStruct).Elem().PkgPath(), "/")
 	pkg := strings.ToLower(pkgPath[len(pkgPath)-1])
 
@@ -282,29 +306,28 @@ func (dev *Device) GetEndpointByRequestStruct(requestStruct interface{}) (string
 	return endpoint, err
 }
 
-func (dev *Device) SendSoap(endpoint string, xmlRequestBody string) (resp *http.Response, err error) {
+func (dev *Device) SendSoap(endpoint string, xmlRequestBody string) (*http.Response, error) {
 	soap := gosoap.NewEmptySOAP()
 	soap.AddStringBodyContent(xmlRequestBody)
 	soap.AddRootNamespaces(Xlmns)
+
 	if dev.params.AuthMode == UsernameTokenAuth || dev.params.AuthMode == Both {
 		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
 	}
 
 	if dev.params.AuthMode == DigestAuth || dev.params.AuthMode == Both {
-		resp, err = dev.digestClient.Do(http.MethodPost, endpoint, soap.String())
-	} else {
-		var req *http.Request
-		req, err = createHttpRequest(http.MethodPost, endpoint, soap.String())
-		if err != nil {
-			return nil, err
-		}
-		resp, err = dev.params.HttpClient.Do(req)
+		return dev.digestClient.Do(http.MethodPost, endpoint, soap.String())
 	}
-	return resp, err
+
+	req, err := createHttpRequest(http.MethodPost, endpoint, soap.String())
+	if err != nil {
+		return nil, err
+	}
+	return dev.params.HttpClient.Do(req)
 }
 
-func createHttpRequest(httpMethod string, endpoint string, soap string) (req *http.Request, err error) {
-	req, err = http.NewRequest(httpMethod, endpoint, bytes.NewBufferString(soap))
+func createHttpRequest(httpMethod string, endpoint string, soap string) (*http.Request, error) {
+	req, err := http.NewRequest(httpMethod, endpoint, bytes.NewBufferString(soap))
 	if err != nil {
 		return nil, err
 	}
@@ -312,7 +335,7 @@ func createHttpRequest(httpMethod string, endpoint string, soap string) (req *ht
 	return req, nil
 }
 
-func (dev *Device) CallOnvifFunction(serviceName, functionName string, data []byte) (interface{}, error) {
+func (dev *Device) CallOnvifFunction(serviceName, functionName string, data []byte) (any, error) {
 	function, err := FunctionByServiceAndFunctionName(serviceName, functionName)
 	if err != nil {
 		return nil, err
@@ -339,7 +362,7 @@ func (dev *Device) CallOnvifFunction(serviceName, functionName string, data []by
 	}
 	defer servResp.Body.Close()
 
-	rsp, err := ioutil.ReadAll(servResp.Body)
+	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -362,7 +385,7 @@ func (dev *Device) CallOnvifFunction(serviceName, functionName string, data []by
 	return responseEnvelope.Body.Content, nil
 }
 
-func createRequest(function Function, data []byte) (interface{}, error) {
+func createRequest(function Function, data []byte) (any, error) {
 	request := function.Request()
 	if len(data) > 0 {
 		err := json.Unmarshal(data, request)
@@ -385,31 +408,28 @@ func createResponse(function Function, data []byte) (*gosoap.SOAPEnvelope, error
 
 // SendGetSnapshotRequest sends the Get request to retrieve the snapshot from the Onvif camera
 // The parameter url is come from the "GetSnapshotURI" command.
-func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err error) {
+func (dev *Device) SendGetSnapshotRequest(url string) (*http.Response, error) {
 	soap := gosoap.NewEmptySOAP()
 	soap.AddRootNamespaces(Xlmns)
-	if dev.params.AuthMode == UsernameTokenAuth {
+
+	switch dev.params.AuthMode {
+	case UsernameTokenAuth:
 		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
-		var req *http.Request
-		req, err = createHttpRequest(http.MethodGet, url, soap.String())
+		req, err := createHttpRequest(http.MethodGet, url, soap.String())
 		if err != nil {
 			return nil, err
 		}
 		// Basic auth might work for some camera
 		req.SetBasicAuth(dev.params.Username, dev.params.Password)
-		resp, err = dev.params.HttpClient.Do(req)
-
-	} else if dev.params.AuthMode == DigestAuth || dev.params.AuthMode == Both {
+		return dev.params.HttpClient.Do(req)
+	case DigestAuth, Both:
 		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
-		resp, err = dev.digestClient.Do(http.MethodGet, url, soap.String())
-
-	} else {
-		var req *http.Request
-		req, err = createHttpRequest(http.MethodGet, url, soap.String())
+		return dev.digestClient.Do(http.MethodGet, url, soap.String())
+	default:
+		req, err := createHttpRequest(http.MethodGet, url, soap.String())
 		if err != nil {
 			return nil, err
 		}
-		resp, err = dev.params.HttpClient.Do(req)
+		return dev.params.HttpClient.Do(req)
 	}
-	return resp, err
 }

@@ -1,12 +1,14 @@
 package main
 
 import (
-	"encoding/xml"
-	"github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/event"
-	"github.com/IOTechSystems/onvif/xsd"
-	"io/ioutil"
+	"io"
 	"log"
+
+	"github.com/nbio/xml"
+
+	"github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/event"
+	"github.com/secure-passage/onvif/xsd"
 )
 
 // === Geovision ===
@@ -58,8 +60,8 @@ import (
 func main() {
 	dev, err := onvif.NewDevice(onvif.DeviceParams{
 		Xaddr: "192.168.12.148", // BOSCH
-		//Xaddr:    "192.168.12.149", // Geovision
-		//Xaddr: "192.168.12.123", //Hikvision
+		// Xaddr:    "192.168.12.149", // Geovision
+		// Xaddr: "192.168.12.123", //Hikvision
 		Username: "administrator",
 		Password: "Password1!",
 		AuthMode: onvif.UsernameTokenAuth,
@@ -74,8 +76,8 @@ func main() {
 	}
 
 	endPoint := "http://192.168.12.148/Web_Service?Idx=0" // BOSCH
-	//endPoint := "http://192.168.12.149:80/onvif/events" // Geovision
-	//endPoint := "http://192.168.12.123/onvif/Events/PullSubManager_2021-12-02T06:07:58Z_0"
+	// endPoint := "http://192.168.12.149:80/onvif/events" // Geovision
+	// endPoint := "http://192.168.12.123/onvif/Events/PullSubManager_2021-12-02T06:07:58Z_0"
 	requestBody, err := xml.Marshal(pullMessage)
 	if err != nil {
 		log.Fatalln(err)
@@ -84,7 +86,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("fail to CallMethod:", err)
 	}
-	bs, _ := ioutil.ReadAll(res.Body)
+	bs, _ := io.ReadAll(res.Body)
 
 	log.Printf(">> Result: %+v \n %s", res.StatusCode, bs)
 }

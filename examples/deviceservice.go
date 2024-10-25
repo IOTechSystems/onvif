@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 
-	goonvif "github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/device"
-	"github.com/IOTechSystems/onvif/gosoap"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	goonvif "github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/device"
+	"github.com/secure-passage/onvif/gosoap"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 )
 
 func readResponse(resp *http.Response) string {
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -26,7 +26,7 @@ func readResponse(resp *http.Response) string {
 }
 
 func main() {
-	//Getting an camera instance
+	// Getting an camera instance
 	dev, err := goonvif.NewDevice(goonvif.DeviceParams{
 		Xaddr:      "192.168.13.14:80",
 		Username:   login,
@@ -37,7 +37,7 @@ func main() {
 		panic(err)
 	}
 
-	//Preparing commands
+	// Preparing commands
 	UserLevel := onvif.UserLevel("User")
 	systemDateAndTyme := device.GetSystemDateAndTime{}
 	getCapabilities := device.GetCapabilities{Category: []onvif.CapabilityCategory{"All"}}
@@ -51,25 +51,25 @@ func main() {
 		},
 	}
 
-	//Commands execution
-	systemDateAndTymeResponse, err := dev.CallMethod(systemDateAndTyme)
+	// Commands execution
+	systemDateAndTymeResponse, err := dev.CallMethod(systemDateAndTyme, nil)
 	if err != nil {
 		log.Println(err)
 	} else {
 		fmt.Println(readResponse(systemDateAndTymeResponse))
 	}
-	getCapabilitiesResponse, err := dev.CallMethod(getCapabilities)
+	getCapabilitiesResponse, err := dev.CallMethod(getCapabilities, nil)
 	if err != nil {
 		log.Println(err)
 	} else {
 		fmt.Println(readResponse(getCapabilitiesResponse))
 	}
-	createUserResponse, err := dev.CallMethod(createUser)
+	createUserResponse, err := dev.CallMethod(createUser, nil)
 	if err != nil {
 		log.Println(err)
 	} else {
 		/*
-			You could use https://github.com/IOTechSystems/onvif/gosoap for pretty printing response
+			You could use https://github.com/secure-passage/onvif/gosoap for pretty printing response
 		*/
 		fmt.Println(gosoap.SoapMessage(readResponse(createUserResponse)).StringIndent())
 	}

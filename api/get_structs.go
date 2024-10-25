@@ -3,12 +3,12 @@ package api
 import (
 	"errors"
 
-	"github.com/IOTechSystems/onvif/device"
-	"github.com/IOTechSystems/onvif/media"
-	"github.com/IOTechSystems/onvif/ptz"
+	"github.com/secure-passage/onvif/device"
+	"github.com/secure-passage/onvif/media"
+	"github.com/secure-passage/onvif/ptz"
 )
 
-func getPTZStructByName(name string) (interface{}, error) {
+func getPTZStructByName(name string) (any, error) {
 	switch name {
 	case "GetServiceCapabilities":
 		return &ptz.GetServiceCapabilities{}, nil
@@ -71,7 +71,7 @@ func getPTZStructByName(name string) (interface{}, error) {
 	}
 }
 
-func getDeviceStructByName(name string) (interface{}, error) {
+func getDeviceStructByName(name string) (any, error) {
 	switch name {
 	case "GetServices":
 		return &device.GetServices{}, nil
@@ -258,7 +258,7 @@ func getDeviceStructByName(name string) (interface{}, error) {
 	}
 }
 
-func getMediaStructByName(name string) (interface{}, error) {
+func getMediaStructByName(name string) (any, error) {
 	switch name {
 	case "GetServiceCapabilities":
 		return &media.GetServiceCapabilities{}, nil
@@ -421,5 +421,4 @@ func getMediaStructByName(name string) (interface{}, error) {
 	default:
 		return nil, errors.New("there is no such method in the Media service")
 	}
-
 }

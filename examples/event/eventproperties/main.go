@@ -1,16 +1,17 @@
 package main
 
 import (
-	"github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/event"
-	"io/ioutil"
+	"io"
 	"log"
+
+	"github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/event"
 )
 
 func main() {
 	dev, err := onvif.NewDevice(onvif.DeviceParams{
 		Xaddr: "192.168.12.148", // BOSCH
-		//Xaddr:    "192.168.12.149", // Geovision
+		// Xaddr:    "192.168.12.149", // Geovision
 		Username: "administrator",
 		Password: "Password1!",
 	})
@@ -18,11 +19,11 @@ func main() {
 		log.Fatalln("fail to new device:", err)
 	}
 	// CreateUsers
-	res, err := dev.CallMethod(event.GetEventProperties{})
+	res, err := dev.CallMethod(event.GetEventProperties{}, nil)
 	if err != nil {
 		log.Fatalln("fail to CallMethod:", err)
 	}
-	bs, _ := ioutil.ReadAll(res.Body)
+	bs, _ := io.ReadAll(res.Body)
 
 	log.Printf(">> Result: %+v \n %s", res.StatusCode, bs)
 }

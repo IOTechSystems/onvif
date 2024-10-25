@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" name="WS-BaseNotification" targetNamespace="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  name="WS-BaseNotification" targetNamespace="http://docs.oasis-open.org/wsn/bw-2"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:import namespace="http://docs.oasis-open.org/wsrf/rw-2" location="http://docs.oasis-open.org/wsrf/rw-2.wsdl" />
   <wsdl:types>
     <xsd:schema>

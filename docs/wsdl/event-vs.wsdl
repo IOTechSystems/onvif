@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://www.onvif.org/ver10/events/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+                  xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  targetNamespace="http://www.onvif.org/ver10/events/wsdl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:import namespace="http://docs.oasis-open.org/wsn/bw-2" location="bw-2-vs-mod.wsdl" />
   <wsdl:types>
     <xs:schema elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/events/wsdl" version="2.6">

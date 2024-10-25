@@ -22,10 +22,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/IOTechSystems/onvif"
 	"github.com/beevik/etree"
 	"github.com/google/uuid"
 	"golang.org/x/net/ipv4"
+
+	"github.com/secure-passage/onvif"
 )
 
 const (
@@ -165,7 +166,9 @@ func SendUDPMulticast(msg string, interfaceName string) ([]string, error) {
 
 	// keep reading from the PacketConn until the read deadline expires or an error occurs
 	for {
-		n, _, _, err := p.ReadFrom(b)
+		var n int
+
+		n, _, _, err = p.ReadFrom(b)
 		if err != nil {
 			// ErrDeadlineExceeded is expected once the read timeout is expired
 			if !errors.Is(err, os.ErrDeadlineExceeded) {

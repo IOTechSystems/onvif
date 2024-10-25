@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/IOTechSystems/onvif/xsd/iso8601"
+	"github.com/secure-passage/onvif/xsd/iso8601"
 )
 
 /*
@@ -180,7 +180,7 @@ func (tp Decimal) NewDecimal(data string) Decimal {
 	TODO: Look at time.Duration go type
 */
 
-//Duration alias for AnySimpleType
+// Duration alias for AnySimpleType
 type Duration AnySimpleType
 
 /*
@@ -200,7 +200,7 @@ func (tp Duration) NewDateTime(years, months, days, hours, minutes, seconds stri
 		log.Fatalln(err)
 	}
 
-	//fmt.Println(i.ISO8601Duration())
+	// fmt.Println(i.ISO8601Duration())
 
 	return Duration(i.ISO8601Duration())
 }
@@ -300,7 +300,7 @@ type GYearMonth AnySimpleType
 */
 func (tp GYearMonth) NewGYearMonth(time time.Time) GYearMonth {
 	return GYearMonth(fmt.Sprint("", time.Year(), "-", time.Month()))
-	//return GYearMonth(time.Format("2004-04-05:00"))
+	// return GYearMonth(time.Format("2004-04-05:00"))
 }
 
 /*
@@ -322,7 +322,7 @@ type GYear AnySimpleType
 */
 func (tp GYear) NewGYear(time time.Time) GYear {
 	return GYear(fmt.Sprint("", time.Year()))
-	//return GYearMonth(time.Format("2004-04-05:00"))
+	// return GYearMonth(time.Format("2004-04-05:00"))
 }
 
 /*
@@ -471,8 +471,8 @@ func (tp QName) NewQName(prefix, local string) QName {
 	return QName(result)
 }
 
-//TODO: NOTATION datatype
-//type NOTATION AnySimpleType
+// TODO: NOTATION datatype
+// type NOTATION AnySimpleType
 
 /*
    Derived types
@@ -480,7 +480,7 @@ func (tp QName) NewQName(prefix, local string) QName {
 
 type NormalizedString String
 
-//TODO: check normalization
+// TODO: check normalization
 func (tp NormalizedString) NewNormalizedString(data string) (NormalizedString, error) {
 	if strings.ContainsAny(data, "\r\n\t<>&") {
 		return NormalizedString(""), errors.New("String " + data + "  contains forbidden symbols")
@@ -493,7 +493,7 @@ type Token NormalizedString
 func (tp Token) NewToken(data NormalizedString) (Token, error) {
 	trailing_leading_whitespaces := regexp.MustCompile(`^[\s\p{Zs}]+|[\s\p{Zs}]+$`)
 	multiple_whitespaces := regexp.MustCompile(`[\s\p{Zs}]{2,}`)
-	//Removing trailing and leading whitespaces and multiple spaces
+	// Removing trailing and leading whitespaces and multiple spaces
 	/*final := re_leadclose_whtsp.ReplaceAllString(data, "")
 	final = re_inside_whtsp.ReplaceAllString(final, " ")*/
 	if strings.ContainsAny(string(data), "\r\n\t<>&") || trailing_leading_whitespaces.MatchString(string(data)) || multiple_whitespaces.MatchString(string(data)) {
@@ -506,7 +506,7 @@ func (tp Token) NewToken(data NormalizedString) (Token, error) {
 type Language Token
 
 func (tp Language) NewLanguage(data Token) (Language, error) {
-	//Pattern was given from https://www.w3.org/2001/05/datatypes.xsd
+	// Pattern was given from https://www.w3.org/2001/05/datatypes.xsd
 	rgxp := regexp.MustCompile(`([a-zA-Z]{2}|[iI]-[a-zA-Z]+|[xX]-[a-zA-Z]{1,8})(-[a-zA-Z]{1,8})*`)
 	if rgxp.MatchString(string(data)) {
 		return Language(""), errors.New("String does not match pattern ([a-zA-Z]{2}|[iI]-[a-zA-Z]+|[xX]-[a-zA-Z]{1,8})(-[a-zA-Z]{1,8})*")
@@ -516,7 +516,7 @@ func (tp Language) NewLanguage(data Token) (Language, error) {
 
 type NMTOKEN Token
 
-//TODO: check for valid symbols: https://www.w3.org/TR/xml/#NT-Nmtoken
+// TODO: check for valid symbols: https://www.w3.org/TR/xml/#NT-Nmtoken
 func (tp NMTOKEN) NewNMTOKEN(data string) NMTOKEN {
 	return NMTOKEN(data)
 }
@@ -525,27 +525,25 @@ type NMTOKENS []NMTOKEN
 
 func (tp NMTOKENS) NewNMTOKENS(data []NMTOKEN) NMTOKENS {
 	result := make(NMTOKENS, len(data))
-	for i, j := range data {
-		result[i] = j
-	}
+	copy(result, data)
 	return result
 }
 
 type Name Token
 
-//TODO: implements https://www.w3.org/TR/xml/#NT-Name
+// TODO: implements https://www.w3.org/TR/xml/#NT-Name
 func (tp Name) NewName(data Token) Name {
 	return Name(data)
 }
 
 type NCName Name
 
-//TODO: https://www.w3.org/TR/REC-xml/#NT-Name and https://www.w3.org/TR/xml-names/#NT-NCName
+// TODO: https://www.w3.org/TR/REC-xml/#NT-Name and https://www.w3.org/TR/xml-names/#NT-NCName
 func (tp NCName) NewNCName(data Name) NCName {
 	return NCName(data)
 }
 
-//TODO: improve next types to correspond to XMLSchema
+// TODO: improve next types to correspond to XMLSchema
 type ID NCName
 
 func (tp ID) NewID(data NCName) ID {
@@ -562,9 +560,7 @@ type IDREFS []IDREF
 
 func (tp IDREFS) NewIDREFS(data []IDREF) IDREFS {
 	result := make(IDREFS, len(data))
-	for i, j := range data {
-		result[i] = j
-	}
+	copy(result, data)
 	return result
 }
 
@@ -578,9 +574,7 @@ type ENTITIES []ENTITY
 
 func (tp ENTITIES) NewENTITIES(data []ENTITY) ENTITIES {
 	result := make(ENTITIES, len(data))
-	for i, j := range data {
-		result[i] = j
-	}
+	copy(result, data)
 	return result
 }
 
@@ -594,7 +588,7 @@ type NonPositiveInteger int64
 
 func (tp NonPositiveInteger) NewNonPositiveInteger(data int64) (NonPositiveInteger, error) {
 	if data > 0 {
-		return 0, errors.New("Value must be less or equal to 0")
+		return 0, errors.New("value must be less or equal to 0")
 	}
 	return NonPositiveInteger(data), nil
 }
@@ -603,7 +597,7 @@ type NegativeInteger int64
 
 func (tp NegativeInteger) NewNegativeInteger(data int64) (NegativeInteger, error) {
 	if data >= 0 {
-		return 0, errors.New("Value must be less than 0")
+		return 0, errors.New("value must be less than 0")
 	}
 	return NegativeInteger(data), nil
 }
@@ -636,7 +630,7 @@ type NonNegativeInteger int64
 
 func (tp NonNegativeInteger) NewNonNegativeInteger(data int64) (NonNegativeInteger, error) {
 	if data > 0 {
-		return 0, errors.New("Value must be more or equal to 0")
+		return 0, errors.New("value must be more or equal to 0")
 	}
 	return NonNegativeInteger(data), nil
 }
@@ -669,7 +663,7 @@ type PositiveInteger int64
 
 func (tp PositiveInteger) NewPositiveInteger(data int64) (PositiveInteger, error) {
 	if data >= 0 {
-		return 0, errors.New("Value must be more than 0")
+		return 0, errors.New("value must be more than 0")
 	}
 	return PositiveInteger(data), nil
 }

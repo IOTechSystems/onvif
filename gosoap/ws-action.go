@@ -1,10 +1,10 @@
 package gosoap
 
 import (
-	"encoding/xml"
+	"github.com/nbio/xml"
 )
 
-//Xlmns XML Scheam
+// Xlmns XML Scheam
 var actionHeaders = map[string]string{
 	"wsnt:Subscribe":     "http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/SubscribeRequest",
 	"ResumeSubscription": "http://docs.oasis-open.org/wsn/bw-2/PausableSubscriptionManager/ResumeSubscriptionRequest",
@@ -17,9 +17,9 @@ var actionHeaders = map[string]string{
 	Action Type in Header
 *************************/
 
-//Action type
+// Action type
 type Action struct {
-	//XMLName xml.Name  `xml:"wsse:Security"`
+	// XMLName xml.Name  `xml:"wsse:Security"`
 	XMLName   xml.Name `xml:"wsa:Action"`
 	Operation string   `xml:",chardata"`
 }
@@ -30,9 +30,8 @@ type Action struct {
    </wsa:Action>
 */
 
-//NewAction get a new Action Section
+// NewAction get a new Action Section
 func NewAction(key, value string) Action {
-
 	/** Generating Nonce sequence **/
 	auth := Action{
 

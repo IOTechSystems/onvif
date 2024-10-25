@@ -10,252 +10,252 @@ package ptz
 
 type AbsoluteMoveFunction struct{}
 
-func (_ *AbsoluteMoveFunction) Request() interface{} {
+func (_ *AbsoluteMoveFunction) Request() any {
 	return &AbsoluteMove{}
 }
-func (_ *AbsoluteMoveFunction) Response() interface{} {
+func (_ *AbsoluteMoveFunction) Response() any {
 	return &AbsoluteMoveResponse{}
 }
 
 type ContinuousMoveFunction struct{}
 
-func (_ *ContinuousMoveFunction) Request() interface{} {
+func (_ *ContinuousMoveFunction) Request() any {
 	return &ContinuousMove{}
 }
-func (_ *ContinuousMoveFunction) Response() interface{} {
+func (_ *ContinuousMoveFunction) Response() any {
 	return &ContinuousMoveResponse{}
 }
 
 type CreatePresetTourFunction struct{}
 
-func (_ *CreatePresetTourFunction) Request() interface{} {
+func (_ *CreatePresetTourFunction) Request() any {
 	return &CreatePresetTour{}
 }
-func (_ *CreatePresetTourFunction) Response() interface{} {
+func (_ *CreatePresetTourFunction) Response() any {
 	return &CreatePresetTourResponse{}
 }
 
 type GeoMoveFunction struct{}
 
-func (_ *GeoMoveFunction) Request() interface{} {
+func (_ *GeoMoveFunction) Request() any {
 	return &GeoMove{}
 }
-func (_ *GeoMoveFunction) Response() interface{} {
+func (_ *GeoMoveFunction) Response() any {
 	return &GeoMoveResponse{}
 }
 
 type GetCompatibleConfigurationsFunction struct{}
 
-func (_ *GetCompatibleConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleConfigurationsFunction) Request() any {
 	return &GetCompatibleConfigurations{}
 }
-func (_ *GetCompatibleConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleConfigurationsFunction) Response() any {
 	return &GetCompatibleConfigurationsResponse{}
 }
 
 type GetConfigurationFunction struct{}
 
-func (_ *GetConfigurationFunction) Request() interface{} {
+func (_ *GetConfigurationFunction) Request() any {
 	return &GetConfiguration{}
 }
-func (_ *GetConfigurationFunction) Response() interface{} {
+func (_ *GetConfigurationFunction) Response() any {
 	return &GetConfigurationResponse{}
 }
 
 type GetConfigurationOptionsFunction struct{}
 
-func (_ *GetConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetConfigurationOptionsFunction) Request() any {
 	return &GetConfigurationOptions{}
 }
-func (_ *GetConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetConfigurationOptionsFunction) Response() any {
 	return &GetConfigurationOptionsResponse{}
 }
 
 type GetConfigurationsFunction struct{}
 
-func (_ *GetConfigurationsFunction) Request() interface{} {
+func (_ *GetConfigurationsFunction) Request() any {
 	return &GetConfigurations{}
 }
-func (_ *GetConfigurationsFunction) Response() interface{} {
+func (_ *GetConfigurationsFunction) Response() any {
 	return &GetConfigurationsResponse{}
 }
 
 type GetNodeFunction struct{}
 
-func (_ *GetNodeFunction) Request() interface{} {
+func (_ *GetNodeFunction) Request() any {
 	return &GetNode{}
 }
-func (_ *GetNodeFunction) Response() interface{} {
+func (_ *GetNodeFunction) Response() any {
 	return &GetNodeResponse{}
 }
 
 type GetNodesFunction struct{}
 
-func (_ *GetNodesFunction) Request() interface{} {
+func (_ *GetNodesFunction) Request() any {
 	return &GetNodes{}
 }
-func (_ *GetNodesFunction) Response() interface{} {
+func (_ *GetNodesFunction) Response() any {
 	return &GetNodesResponse{}
 }
 
 type GetPresetTourFunction struct{}
 
-func (_ *GetPresetTourFunction) Request() interface{} {
+func (_ *GetPresetTourFunction) Request() any {
 	return &GetPresetTour{}
 }
-func (_ *GetPresetTourFunction) Response() interface{} {
+func (_ *GetPresetTourFunction) Response() any {
 	return &GetPresetTourResponse{}
 }
 
 type GetPresetTourOptionsFunction struct{}
 
-func (_ *GetPresetTourOptionsFunction) Request() interface{} {
+func (_ *GetPresetTourOptionsFunction) Request() any {
 	return &GetPresetTourOptions{}
 }
-func (_ *GetPresetTourOptionsFunction) Response() interface{} {
+func (_ *GetPresetTourOptionsFunction) Response() any {
 	return &GetPresetTourOptionsResponse{}
 }
 
 type GetPresetToursFunction struct{}
 
-func (_ *GetPresetToursFunction) Request() interface{} {
+func (_ *GetPresetToursFunction) Request() any {
 	return &GetPresetTours{}
 }
-func (_ *GetPresetToursFunction) Response() interface{} {
+func (_ *GetPresetToursFunction) Response() any {
 	return &GetPresetToursResponse{}
 }
 
 type GetPresetsFunction struct{}
 
-func (_ *GetPresetsFunction) Request() interface{} {
+func (_ *GetPresetsFunction) Request() any {
 	return &GetPresets{}
 }
-func (_ *GetPresetsFunction) Response() interface{} {
+func (_ *GetPresetsFunction) Response() any {
 	return &GetPresetsResponse{}
 }
 
 type GetServiceCapabilitiesFunction struct{}
 
-func (_ *GetServiceCapabilitiesFunction) Request() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Request() any {
 	return &GetServiceCapabilities{}
 }
-func (_ *GetServiceCapabilitiesFunction) Response() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Response() any {
 	return &GetServiceCapabilitiesResponse{}
 }
 
 type GetStatusFunction struct{}
 
-func (_ *GetStatusFunction) Request() interface{} {
+func (_ *GetStatusFunction) Request() any {
 	return &GetStatus{}
 }
-func (_ *GetStatusFunction) Response() interface{} {
+func (_ *GetStatusFunction) Response() any {
 	return &GetStatusResponse{}
 }
 
 type GotoHomePositionFunction struct{}
 
-func (_ *GotoHomePositionFunction) Request() interface{} {
+func (_ *GotoHomePositionFunction) Request() any {
 	return &GotoHomePosition{}
 }
-func (_ *GotoHomePositionFunction) Response() interface{} {
+func (_ *GotoHomePositionFunction) Response() any {
 	return &GotoHomePositionResponse{}
 }
 
 type GotoPresetFunction struct{}
 
-func (_ *GotoPresetFunction) Request() interface{} {
+func (_ *GotoPresetFunction) Request() any {
 	return &GotoPreset{}
 }
-func (_ *GotoPresetFunction) Response() interface{} {
+func (_ *GotoPresetFunction) Response() any {
 	return &GotoPresetResponse{}
 }
 
 type ModifyPresetTourFunction struct{}
 
-func (_ *ModifyPresetTourFunction) Request() interface{} {
+func (_ *ModifyPresetTourFunction) Request() any {
 	return &ModifyPresetTour{}
 }
-func (_ *ModifyPresetTourFunction) Response() interface{} {
+func (_ *ModifyPresetTourFunction) Response() any {
 	return &ModifyPresetTourResponse{}
 }
 
 type OperatePresetTourFunction struct{}
 
-func (_ *OperatePresetTourFunction) Request() interface{} {
+func (_ *OperatePresetTourFunction) Request() any {
 	return &OperatePresetTour{}
 }
-func (_ *OperatePresetTourFunction) Response() interface{} {
+func (_ *OperatePresetTourFunction) Response() any {
 	return &OperatePresetTourResponse{}
 }
 
 type RelativeMoveFunction struct{}
 
-func (_ *RelativeMoveFunction) Request() interface{} {
+func (_ *RelativeMoveFunction) Request() any {
 	return &RelativeMove{}
 }
-func (_ *RelativeMoveFunction) Response() interface{} {
+func (_ *RelativeMoveFunction) Response() any {
 	return &RelativeMoveResponse{}
 }
 
 type RemovePresetFunction struct{}
 
-func (_ *RemovePresetFunction) Request() interface{} {
+func (_ *RemovePresetFunction) Request() any {
 	return &RemovePreset{}
 }
-func (_ *RemovePresetFunction) Response() interface{} {
+func (_ *RemovePresetFunction) Response() any {
 	return &RemovePresetResponse{}
 }
 
 type RemovePresetTourFunction struct{}
 
-func (_ *RemovePresetTourFunction) Request() interface{} {
+func (_ *RemovePresetTourFunction) Request() any {
 	return &RemovePresetTour{}
 }
-func (_ *RemovePresetTourFunction) Response() interface{} {
+func (_ *RemovePresetTourFunction) Response() any {
 	return &RemovePresetTourResponse{}
 }
 
 type SendAuxiliaryCommandFunction struct{}
 
-func (_ *SendAuxiliaryCommandFunction) Request() interface{} {
+func (_ *SendAuxiliaryCommandFunction) Request() any {
 	return &SendAuxiliaryCommand{}
 }
-func (_ *SendAuxiliaryCommandFunction) Response() interface{} {
+func (_ *SendAuxiliaryCommandFunction) Response() any {
 	return &SendAuxiliaryCommandResponse{}
 }
 
 type SetConfigurationFunction struct{}
 
-func (_ *SetConfigurationFunction) Request() interface{} {
+func (_ *SetConfigurationFunction) Request() any {
 	return &SetConfiguration{}
 }
-func (_ *SetConfigurationFunction) Response() interface{} {
+func (_ *SetConfigurationFunction) Response() any {
 	return &SetConfigurationResponse{}
 }
 
 type SetHomePositionFunction struct{}
 
-func (_ *SetHomePositionFunction) Request() interface{} {
+func (_ *SetHomePositionFunction) Request() any {
 	return &SetHomePosition{}
 }
-func (_ *SetHomePositionFunction) Response() interface{} {
+func (_ *SetHomePositionFunction) Response() any {
 	return &SetHomePositionResponse{}
 }
 
 type SetPresetFunction struct{}
 
-func (_ *SetPresetFunction) Request() interface{} {
+func (_ *SetPresetFunction) Request() any {
 	return &SetPreset{}
 }
-func (_ *SetPresetFunction) Response() interface{} {
+func (_ *SetPresetFunction) Response() any {
 	return &SetPresetResponse{}
 }
 
 type StopFunction struct{}
 
-func (_ *StopFunction) Request() interface{} {
+func (_ *StopFunction) Request() any {
 	return &Stop{}
 }
-func (_ *StopFunction) Response() interface{} {
+func (_ *StopFunction) Response() any {
 	return &StopResponse{}
 }

@@ -10,189 +10,189 @@ package recording
 
 type CreateRecordingFunction struct{}
 
-func (_ *CreateRecordingFunction) Request() interface{} {
+func (_ *CreateRecordingFunction) Request() any {
 	return &CreateRecording{}
 }
-func (_ *CreateRecordingFunction) Response() interface{} {
+func (_ *CreateRecordingFunction) Response() any {
 	return &CreateRecordingResponse{}
 }
 
 type CreateRecordingJobFunction struct{}
 
-func (_ *CreateRecordingJobFunction) Request() interface{} {
+func (_ *CreateRecordingJobFunction) Request() any {
 	return &CreateRecordingJob{}
 }
-func (_ *CreateRecordingJobFunction) Response() interface{} {
+func (_ *CreateRecordingJobFunction) Response() any {
 	return &CreateRecordingJobResponse{}
 }
 
 type CreateTrackFunction struct{}
 
-func (_ *CreateTrackFunction) Request() interface{} {
+func (_ *CreateTrackFunction) Request() any {
 	return &CreateTrack{}
 }
-func (_ *CreateTrackFunction) Response() interface{} {
+func (_ *CreateTrackFunction) Response() any {
 	return &CreateTrackResponse{}
 }
 
 type DeleteRecordingFunction struct{}
 
-func (_ *DeleteRecordingFunction) Request() interface{} {
+func (_ *DeleteRecordingFunction) Request() any {
 	return &DeleteRecording{}
 }
-func (_ *DeleteRecordingFunction) Response() interface{} {
+func (_ *DeleteRecordingFunction) Response() any {
 	return &DeleteRecordingResponse{}
 }
 
 type DeleteRecordingJobFunction struct{}
 
-func (_ *DeleteRecordingJobFunction) Request() interface{} {
+func (_ *DeleteRecordingJobFunction) Request() any {
 	return &DeleteRecordingJob{}
 }
-func (_ *DeleteRecordingJobFunction) Response() interface{} {
+func (_ *DeleteRecordingJobFunction) Response() any {
 	return &DeleteRecordingJobResponse{}
 }
 
 type DeleteTrackFunction struct{}
 
-func (_ *DeleteTrackFunction) Request() interface{} {
+func (_ *DeleteTrackFunction) Request() any {
 	return &DeleteTrack{}
 }
-func (_ *DeleteTrackFunction) Response() interface{} {
+func (_ *DeleteTrackFunction) Response() any {
 	return &DeleteTrackResponse{}
 }
 
 type ExportRecordedDataFunction struct{}
 
-func (_ *ExportRecordedDataFunction) Request() interface{} {
+func (_ *ExportRecordedDataFunction) Request() any {
 	return &ExportRecordedData{}
 }
-func (_ *ExportRecordedDataFunction) Response() interface{} {
+func (_ *ExportRecordedDataFunction) Response() any {
 	return &ExportRecordedDataResponse{}
 }
 
 type GetExportRecordedDataStateFunction struct{}
 
-func (_ *GetExportRecordedDataStateFunction) Request() interface{} {
+func (_ *GetExportRecordedDataStateFunction) Request() any {
 	return &GetExportRecordedDataState{}
 }
-func (_ *GetExportRecordedDataStateFunction) Response() interface{} {
+func (_ *GetExportRecordedDataStateFunction) Response() any {
 	return &GetExportRecordedDataStateResponse{}
 }
 
 type GetRecordingConfigurationFunction struct{}
 
-func (_ *GetRecordingConfigurationFunction) Request() interface{} {
+func (_ *GetRecordingConfigurationFunction) Request() any {
 	return &GetRecordingConfiguration{}
 }
-func (_ *GetRecordingConfigurationFunction) Response() interface{} {
+func (_ *GetRecordingConfigurationFunction) Response() any {
 	return &GetRecordingConfigurationResponse{}
 }
 
 type GetRecordingJobConfigurationFunction struct{}
 
-func (_ *GetRecordingJobConfigurationFunction) Request() interface{} {
+func (_ *GetRecordingJobConfigurationFunction) Request() any {
 	return &GetRecordingJobConfiguration{}
 }
-func (_ *GetRecordingJobConfigurationFunction) Response() interface{} {
+func (_ *GetRecordingJobConfigurationFunction) Response() any {
 	return &GetRecordingJobConfigurationResponse{}
 }
 
 type GetRecordingJobStateFunction struct{}
 
-func (_ *GetRecordingJobStateFunction) Request() interface{} {
+func (_ *GetRecordingJobStateFunction) Request() any {
 	return &GetRecordingJobState{}
 }
-func (_ *GetRecordingJobStateFunction) Response() interface{} {
+func (_ *GetRecordingJobStateFunction) Response() any {
 	return &GetRecordingJobStateResponse{}
 }
 
 type GetRecordingJobsFunction struct{}
 
-func (_ *GetRecordingJobsFunction) Request() interface{} {
+func (_ *GetRecordingJobsFunction) Request() any {
 	return &GetRecordingJobs{}
 }
-func (_ *GetRecordingJobsFunction) Response() interface{} {
+func (_ *GetRecordingJobsFunction) Response() any {
 	return &GetRecordingJobsResponse{}
 }
 
 type GetRecordingOptionsFunction struct{}
 
-func (_ *GetRecordingOptionsFunction) Request() interface{} {
+func (_ *GetRecordingOptionsFunction) Request() any {
 	return &GetRecordingOptions{}
 }
-func (_ *GetRecordingOptionsFunction) Response() interface{} {
+func (_ *GetRecordingOptionsFunction) Response() any {
 	return &GetRecordingOptionsResponse{}
 }
 
 type GetRecordingsFunction struct{}
 
-func (_ *GetRecordingsFunction) Request() interface{} {
+func (_ *GetRecordingsFunction) Request() any {
 	return &GetRecordings{}
 }
-func (_ *GetRecordingsFunction) Response() interface{} {
+func (_ *GetRecordingsFunction) Response() any {
 	return &GetRecordingsResponse{}
 }
 
 type GetServiceCapabilitiesFunction struct{}
 
-func (_ *GetServiceCapabilitiesFunction) Request() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Request() any {
 	return &GetServiceCapabilities{}
 }
-func (_ *GetServiceCapabilitiesFunction) Response() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Response() any {
 	return &GetServiceCapabilitiesResponse{}
 }
 
 type GetTrackConfigurationFunction struct{}
 
-func (_ *GetTrackConfigurationFunction) Request() interface{} {
+func (_ *GetTrackConfigurationFunction) Request() any {
 	return &GetTrackConfiguration{}
 }
-func (_ *GetTrackConfigurationFunction) Response() interface{} {
+func (_ *GetTrackConfigurationFunction) Response() any {
 	return &GetTrackConfigurationResponse{}
 }
 
 type SetRecordingConfigurationFunction struct{}
 
-func (_ *SetRecordingConfigurationFunction) Request() interface{} {
+func (_ *SetRecordingConfigurationFunction) Request() any {
 	return &SetRecordingConfiguration{}
 }
-func (_ *SetRecordingConfigurationFunction) Response() interface{} {
+func (_ *SetRecordingConfigurationFunction) Response() any {
 	return &SetRecordingConfigurationResponse{}
 }
 
 type SetRecordingJobConfigurationFunction struct{}
 
-func (_ *SetRecordingJobConfigurationFunction) Request() interface{} {
+func (_ *SetRecordingJobConfigurationFunction) Request() any {
 	return &SetRecordingJobConfiguration{}
 }
-func (_ *SetRecordingJobConfigurationFunction) Response() interface{} {
+func (_ *SetRecordingJobConfigurationFunction) Response() any {
 	return &SetRecordingJobConfigurationResponse{}
 }
 
 type SetRecordingJobModeFunction struct{}
 
-func (_ *SetRecordingJobModeFunction) Request() interface{} {
+func (_ *SetRecordingJobModeFunction) Request() any {
 	return &SetRecordingJobMode{}
 }
-func (_ *SetRecordingJobModeFunction) Response() interface{} {
+func (_ *SetRecordingJobModeFunction) Response() any {
 	return &SetRecordingJobModeResponse{}
 }
 
 type SetTrackConfigurationFunction struct{}
 
-func (_ *SetTrackConfigurationFunction) Request() interface{} {
+func (_ *SetTrackConfigurationFunction) Request() any {
 	return &SetTrackConfiguration{}
 }
-func (_ *SetTrackConfigurationFunction) Response() interface{} {
+func (_ *SetTrackConfigurationFunction) Response() any {
 	return &SetTrackConfigurationResponse{}
 }
 
 type StopExportRecordedDataFunction struct{}
 
-func (_ *StopExportRecordedDataFunction) Request() interface{} {
+func (_ *StopExportRecordedDataFunction) Request() any {
 	return &StopExportRecordedData{}
 }
-func (_ *StopExportRecordedDataFunction) Response() interface{} {
+func (_ *StopExportRecordedDataFunction) Response() any {
 	return &StopExportRecordedDataResponse{}
 }

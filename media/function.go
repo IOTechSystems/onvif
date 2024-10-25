@@ -10,711 +10,711 @@ package media
 
 type AddAudioDecoderConfigurationFunction struct{}
 
-func (_ *AddAudioDecoderConfigurationFunction) Request() interface{} {
+func (_ *AddAudioDecoderConfigurationFunction) Request() any {
 	return &AddAudioDecoderConfiguration{}
 }
-func (_ *AddAudioDecoderConfigurationFunction) Response() interface{} {
+func (_ *AddAudioDecoderConfigurationFunction) Response() any {
 	return &AddAudioDecoderConfigurationResponse{}
 }
 
 type AddAudioEncoderConfigurationFunction struct{}
 
-func (_ *AddAudioEncoderConfigurationFunction) Request() interface{} {
+func (_ *AddAudioEncoderConfigurationFunction) Request() any {
 	return &AddAudioEncoderConfiguration{}
 }
-func (_ *AddAudioEncoderConfigurationFunction) Response() interface{} {
+func (_ *AddAudioEncoderConfigurationFunction) Response() any {
 	return &AddAudioEncoderConfigurationResponse{}
 }
 
 type AddAudioOutputConfigurationFunction struct{}
 
-func (_ *AddAudioOutputConfigurationFunction) Request() interface{} {
+func (_ *AddAudioOutputConfigurationFunction) Request() any {
 	return &AddAudioOutputConfiguration{}
 }
-func (_ *AddAudioOutputConfigurationFunction) Response() interface{} {
+func (_ *AddAudioOutputConfigurationFunction) Response() any {
 	return &AddAudioOutputConfigurationResponse{}
 }
 
 type AddAudioSourceConfigurationFunction struct{}
 
-func (_ *AddAudioSourceConfigurationFunction) Request() interface{} {
+func (_ *AddAudioSourceConfigurationFunction) Request() any {
 	return &AddAudioSourceConfiguration{}
 }
-func (_ *AddAudioSourceConfigurationFunction) Response() interface{} {
+func (_ *AddAudioSourceConfigurationFunction) Response() any {
 	return &AddAudioSourceConfigurationResponse{}
 }
 
 type AddMetadataConfigurationFunction struct{}
 
-func (_ *AddMetadataConfigurationFunction) Request() interface{} {
+func (_ *AddMetadataConfigurationFunction) Request() any {
 	return &AddMetadataConfiguration{}
 }
-func (_ *AddMetadataConfigurationFunction) Response() interface{} {
+func (_ *AddMetadataConfigurationFunction) Response() any {
 	return &AddMetadataConfigurationResponse{}
 }
 
 type AddPTZConfigurationFunction struct{}
 
-func (_ *AddPTZConfigurationFunction) Request() interface{} {
+func (_ *AddPTZConfigurationFunction) Request() any {
 	return &AddPTZConfiguration{}
 }
-func (_ *AddPTZConfigurationFunction) Response() interface{} {
+func (_ *AddPTZConfigurationFunction) Response() any {
 	return &AddPTZConfigurationResponse{}
 }
 
 type AddVideoAnalyticsConfigurationFunction struct{}
 
-func (_ *AddVideoAnalyticsConfigurationFunction) Request() interface{} {
+func (_ *AddVideoAnalyticsConfigurationFunction) Request() any {
 	return &AddVideoAnalyticsConfiguration{}
 }
-func (_ *AddVideoAnalyticsConfigurationFunction) Response() interface{} {
+func (_ *AddVideoAnalyticsConfigurationFunction) Response() any {
 	return &AddVideoAnalyticsConfigurationResponse{}
 }
 
 type AddVideoEncoderConfigurationFunction struct{}
 
-func (_ *AddVideoEncoderConfigurationFunction) Request() interface{} {
+func (_ *AddVideoEncoderConfigurationFunction) Request() any {
 	return &AddVideoEncoderConfiguration{}
 }
-func (_ *AddVideoEncoderConfigurationFunction) Response() interface{} {
+func (_ *AddVideoEncoderConfigurationFunction) Response() any {
 	return &AddVideoEncoderConfigurationResponse{}
 }
 
 type AddVideoSourceConfigurationFunction struct{}
 
-func (_ *AddVideoSourceConfigurationFunction) Request() interface{} {
+func (_ *AddVideoSourceConfigurationFunction) Request() any {
 	return &AddVideoSourceConfiguration{}
 }
-func (_ *AddVideoSourceConfigurationFunction) Response() interface{} {
+func (_ *AddVideoSourceConfigurationFunction) Response() any {
 	return &AddVideoSourceConfigurationResponse{}
 }
 
 type CreateOSDFunction struct{}
 
-func (_ *CreateOSDFunction) Request() interface{} {
+func (_ *CreateOSDFunction) Request() any {
 	return &CreateOSD{}
 }
-func (_ *CreateOSDFunction) Response() interface{} {
+func (_ *CreateOSDFunction) Response() any {
 	return &CreateOSDResponse{}
 }
 
 type CreateProfileFunction struct{}
 
-func (_ *CreateProfileFunction) Request() interface{} {
+func (_ *CreateProfileFunction) Request() any {
 	return &CreateProfile{}
 }
-func (_ *CreateProfileFunction) Response() interface{} {
+func (_ *CreateProfileFunction) Response() any {
 	return &CreateProfileResponse{}
 }
 
 type DeleteOSDFunction struct{}
 
-func (_ *DeleteOSDFunction) Request() interface{} {
+func (_ *DeleteOSDFunction) Request() any {
 	return &DeleteOSD{}
 }
-func (_ *DeleteOSDFunction) Response() interface{} {
+func (_ *DeleteOSDFunction) Response() any {
 	return &DeleteOSDResponse{}
 }
 
 type DeleteProfileFunction struct{}
 
-func (_ *DeleteProfileFunction) Request() interface{} {
+func (_ *DeleteProfileFunction) Request() any {
 	return &DeleteProfile{}
 }
-func (_ *DeleteProfileFunction) Response() interface{} {
+func (_ *DeleteProfileFunction) Response() any {
 	return &DeleteProfileResponse{}
 }
 
 type GetAudioDecoderConfigurationFunction struct{}
 
-func (_ *GetAudioDecoderConfigurationFunction) Request() interface{} {
+func (_ *GetAudioDecoderConfigurationFunction) Request() any {
 	return &GetAudioDecoderConfiguration{}
 }
-func (_ *GetAudioDecoderConfigurationFunction) Response() interface{} {
+func (_ *GetAudioDecoderConfigurationFunction) Response() any {
 	return &GetAudioDecoderConfigurationResponse{}
 }
 
 type GetAudioDecoderConfigurationOptionsFunction struct{}
 
-func (_ *GetAudioDecoderConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetAudioDecoderConfigurationOptionsFunction) Request() any {
 	return &GetAudioDecoderConfigurationOptions{}
 }
-func (_ *GetAudioDecoderConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetAudioDecoderConfigurationOptionsFunction) Response() any {
 	return &GetAudioDecoderConfigurationOptionsResponse{}
 }
 
 type GetAudioDecoderConfigurationsFunction struct{}
 
-func (_ *GetAudioDecoderConfigurationsFunction) Request() interface{} {
+func (_ *GetAudioDecoderConfigurationsFunction) Request() any {
 	return &GetAudioDecoderConfigurations{}
 }
-func (_ *GetAudioDecoderConfigurationsFunction) Response() interface{} {
+func (_ *GetAudioDecoderConfigurationsFunction) Response() any {
 	return &GetAudioDecoderConfigurationsResponse{}
 }
 
 type GetAudioEncoderConfigurationFunction struct{}
 
-func (_ *GetAudioEncoderConfigurationFunction) Request() interface{} {
+func (_ *GetAudioEncoderConfigurationFunction) Request() any {
 	return &GetAudioEncoderConfiguration{}
 }
-func (_ *GetAudioEncoderConfigurationFunction) Response() interface{} {
+func (_ *GetAudioEncoderConfigurationFunction) Response() any {
 	return &GetAudioEncoderConfigurationResponse{}
 }
 
 type GetAudioEncoderConfigurationOptionsFunction struct{}
 
-func (_ *GetAudioEncoderConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetAudioEncoderConfigurationOptionsFunction) Request() any {
 	return &GetAudioEncoderConfigurationOptions{}
 }
-func (_ *GetAudioEncoderConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetAudioEncoderConfigurationOptionsFunction) Response() any {
 	return &GetAudioEncoderConfigurationOptionsResponse{}
 }
 
 type GetAudioEncoderConfigurationsFunction struct{}
 
-func (_ *GetAudioEncoderConfigurationsFunction) Request() interface{} {
+func (_ *GetAudioEncoderConfigurationsFunction) Request() any {
 	return &GetAudioEncoderConfigurations{}
 }
-func (_ *GetAudioEncoderConfigurationsFunction) Response() interface{} {
+func (_ *GetAudioEncoderConfigurationsFunction) Response() any {
 	return &GetAudioEncoderConfigurationsResponse{}
 }
 
 type GetAudioOutputConfigurationFunction struct{}
 
-func (_ *GetAudioOutputConfigurationFunction) Request() interface{} {
+func (_ *GetAudioOutputConfigurationFunction) Request() any {
 	return &GetAudioOutputConfiguration{}
 }
-func (_ *GetAudioOutputConfigurationFunction) Response() interface{} {
+func (_ *GetAudioOutputConfigurationFunction) Response() any {
 	return &GetAudioOutputConfigurationResponse{}
 }
 
 type GetAudioOutputConfigurationOptionsFunction struct{}
 
-func (_ *GetAudioOutputConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetAudioOutputConfigurationOptionsFunction) Request() any {
 	return &GetAudioOutputConfigurationOptions{}
 }
-func (_ *GetAudioOutputConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetAudioOutputConfigurationOptionsFunction) Response() any {
 	return &GetAudioOutputConfigurationOptionsResponse{}
 }
 
 type GetAudioOutputConfigurationsFunction struct{}
 
-func (_ *GetAudioOutputConfigurationsFunction) Request() interface{} {
+func (_ *GetAudioOutputConfigurationsFunction) Request() any {
 	return &GetAudioOutputConfigurations{}
 }
-func (_ *GetAudioOutputConfigurationsFunction) Response() interface{} {
+func (_ *GetAudioOutputConfigurationsFunction) Response() any {
 	return &GetAudioOutputConfigurationsResponse{}
 }
 
 type GetAudioOutputsFunction struct{}
 
-func (_ *GetAudioOutputsFunction) Request() interface{} {
+func (_ *GetAudioOutputsFunction) Request() any {
 	return &GetAudioOutputs{}
 }
-func (_ *GetAudioOutputsFunction) Response() interface{} {
+func (_ *GetAudioOutputsFunction) Response() any {
 	return &GetAudioOutputsResponse{}
 }
 
 type GetAudioSourceConfigurationFunction struct{}
 
-func (_ *GetAudioSourceConfigurationFunction) Request() interface{} {
+func (_ *GetAudioSourceConfigurationFunction) Request() any {
 	return &GetAudioSourceConfiguration{}
 }
-func (_ *GetAudioSourceConfigurationFunction) Response() interface{} {
+func (_ *GetAudioSourceConfigurationFunction) Response() any {
 	return &GetAudioSourceConfigurationResponse{}
 }
 
 type GetAudioSourceConfigurationOptionsFunction struct{}
 
-func (_ *GetAudioSourceConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetAudioSourceConfigurationOptionsFunction) Request() any {
 	return &GetAudioSourceConfigurationOptions{}
 }
-func (_ *GetAudioSourceConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetAudioSourceConfigurationOptionsFunction) Response() any {
 	return &GetAudioSourceConfigurationOptionsResponse{}
 }
 
 type GetAudioSourceConfigurationsFunction struct{}
 
-func (_ *GetAudioSourceConfigurationsFunction) Request() interface{} {
+func (_ *GetAudioSourceConfigurationsFunction) Request() any {
 	return &GetAudioSourceConfigurations{}
 }
-func (_ *GetAudioSourceConfigurationsFunction) Response() interface{} {
+func (_ *GetAudioSourceConfigurationsFunction) Response() any {
 	return &GetAudioSourceConfigurationsResponse{}
 }
 
 type GetAudioSourcesFunction struct{}
 
-func (_ *GetAudioSourcesFunction) Request() interface{} {
+func (_ *GetAudioSourcesFunction) Request() any {
 	return &GetAudioSources{}
 }
-func (_ *GetAudioSourcesFunction) Response() interface{} {
+func (_ *GetAudioSourcesFunction) Response() any {
 	return &GetAudioSourcesResponse{}
 }
 
 type GetCompatibleAudioDecoderConfigurationsFunction struct{}
 
-func (_ *GetCompatibleAudioDecoderConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleAudioDecoderConfigurationsFunction) Request() any {
 	return &GetCompatibleAudioDecoderConfigurations{}
 }
-func (_ *GetCompatibleAudioDecoderConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleAudioDecoderConfigurationsFunction) Response() any {
 	return &GetCompatibleAudioDecoderConfigurationsResponse{}
 }
 
 type GetCompatibleAudioEncoderConfigurationsFunction struct{}
 
-func (_ *GetCompatibleAudioEncoderConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleAudioEncoderConfigurationsFunction) Request() any {
 	return &GetCompatibleAudioEncoderConfigurations{}
 }
-func (_ *GetCompatibleAudioEncoderConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleAudioEncoderConfigurationsFunction) Response() any {
 	return &GetCompatibleAudioEncoderConfigurationsResponse{}
 }
 
 type GetCompatibleAudioOutputConfigurationsFunction struct{}
 
-func (_ *GetCompatibleAudioOutputConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleAudioOutputConfigurationsFunction) Request() any {
 	return &GetCompatibleAudioOutputConfigurations{}
 }
-func (_ *GetCompatibleAudioOutputConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleAudioOutputConfigurationsFunction) Response() any {
 	return &GetCompatibleAudioOutputConfigurationsResponse{}
 }
 
 type GetCompatibleAudioSourceConfigurationsFunction struct{}
 
-func (_ *GetCompatibleAudioSourceConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleAudioSourceConfigurationsFunction) Request() any {
 	return &GetCompatibleAudioSourceConfigurations{}
 }
-func (_ *GetCompatibleAudioSourceConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleAudioSourceConfigurationsFunction) Response() any {
 	return &GetCompatibleAudioSourceConfigurationsResponse{}
 }
 
 type GetCompatibleMetadataConfigurationsFunction struct{}
 
-func (_ *GetCompatibleMetadataConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleMetadataConfigurationsFunction) Request() any {
 	return &GetCompatibleMetadataConfigurations{}
 }
-func (_ *GetCompatibleMetadataConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleMetadataConfigurationsFunction) Response() any {
 	return &GetCompatibleMetadataConfigurationsResponse{}
 }
 
 type GetCompatibleVideoAnalyticsConfigurationsFunction struct{}
 
-func (_ *GetCompatibleVideoAnalyticsConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleVideoAnalyticsConfigurationsFunction) Request() any {
 	return &GetCompatibleVideoAnalyticsConfigurations{}
 }
-func (_ *GetCompatibleVideoAnalyticsConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleVideoAnalyticsConfigurationsFunction) Response() any {
 	return &GetCompatibleVideoAnalyticsConfigurationsResponse{}
 }
 
 type GetCompatibleVideoEncoderConfigurationsFunction struct{}
 
-func (_ *GetCompatibleVideoEncoderConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleVideoEncoderConfigurationsFunction) Request() any {
 	return &GetCompatibleVideoEncoderConfigurations{}
 }
-func (_ *GetCompatibleVideoEncoderConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleVideoEncoderConfigurationsFunction) Response() any {
 	return &GetCompatibleVideoEncoderConfigurationsResponse{}
 }
 
 type GetCompatibleVideoSourceConfigurationsFunction struct{}
 
-func (_ *GetCompatibleVideoSourceConfigurationsFunction) Request() interface{} {
+func (_ *GetCompatibleVideoSourceConfigurationsFunction) Request() any {
 	return &GetCompatibleVideoSourceConfigurations{}
 }
-func (_ *GetCompatibleVideoSourceConfigurationsFunction) Response() interface{} {
+func (_ *GetCompatibleVideoSourceConfigurationsFunction) Response() any {
 	return &GetCompatibleVideoSourceConfigurationsResponse{}
 }
 
 type GetGuaranteedNumberOfVideoEncoderInstancesFunction struct{}
 
-func (_ *GetGuaranteedNumberOfVideoEncoderInstancesFunction) Request() interface{} {
+func (_ *GetGuaranteedNumberOfVideoEncoderInstancesFunction) Request() any {
 	return &GetGuaranteedNumberOfVideoEncoderInstances{}
 }
-func (_ *GetGuaranteedNumberOfVideoEncoderInstancesFunction) Response() interface{} {
+func (_ *GetGuaranteedNumberOfVideoEncoderInstancesFunction) Response() any {
 	return &GetGuaranteedNumberOfVideoEncoderInstancesResponse{}
 }
 
 type GetMetadataConfigurationFunction struct{}
 
-func (_ *GetMetadataConfigurationFunction) Request() interface{} {
+func (_ *GetMetadataConfigurationFunction) Request() any {
 	return &GetMetadataConfiguration{}
 }
-func (_ *GetMetadataConfigurationFunction) Response() interface{} {
+func (_ *GetMetadataConfigurationFunction) Response() any {
 	return &GetMetadataConfigurationResponse{}
 }
 
 type GetMetadataConfigurationOptionsFunction struct{}
 
-func (_ *GetMetadataConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetMetadataConfigurationOptionsFunction) Request() any {
 	return &GetMetadataConfigurationOptions{}
 }
-func (_ *GetMetadataConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetMetadataConfigurationOptionsFunction) Response() any {
 	return &GetMetadataConfigurationOptionsResponse{}
 }
 
 type GetMetadataConfigurationsFunction struct{}
 
-func (_ *GetMetadataConfigurationsFunction) Request() interface{} {
+func (_ *GetMetadataConfigurationsFunction) Request() any {
 	return &GetMetadataConfigurations{}
 }
-func (_ *GetMetadataConfigurationsFunction) Response() interface{} {
+func (_ *GetMetadataConfigurationsFunction) Response() any {
 	return &GetMetadataConfigurationsResponse{}
 }
 
 type GetOSDFunction struct{}
 
-func (_ *GetOSDFunction) Request() interface{} {
+func (_ *GetOSDFunction) Request() any {
 	return &GetOSD{}
 }
-func (_ *GetOSDFunction) Response() interface{} {
+func (_ *GetOSDFunction) Response() any {
 	return &GetOSDResponse{}
 }
 
 type GetOSDOptionsFunction struct{}
 
-func (_ *GetOSDOptionsFunction) Request() interface{} {
+func (_ *GetOSDOptionsFunction) Request() any {
 	return &GetOSDOptions{}
 }
-func (_ *GetOSDOptionsFunction) Response() interface{} {
+func (_ *GetOSDOptionsFunction) Response() any {
 	return &GetOSDOptionsResponse{}
 }
 
 type GetOSDsFunction struct{}
 
-func (_ *GetOSDsFunction) Request() interface{} {
+func (_ *GetOSDsFunction) Request() any {
 	return &GetOSDs{}
 }
-func (_ *GetOSDsFunction) Response() interface{} {
+func (_ *GetOSDsFunction) Response() any {
 	return &GetOSDsResponse{}
 }
 
 type GetProfileFunction struct{}
 
-func (_ *GetProfileFunction) Request() interface{} {
+func (_ *GetProfileFunction) Request() any {
 	return &GetProfile{}
 }
-func (_ *GetProfileFunction) Response() interface{} {
+func (_ *GetProfileFunction) Response() any {
 	return &GetProfileResponse{}
 }
 
 type GetProfilesFunction struct{}
 
-func (_ *GetProfilesFunction) Request() interface{} {
+func (_ *GetProfilesFunction) Request() any {
 	return &GetProfiles{}
 }
-func (_ *GetProfilesFunction) Response() interface{} {
+func (_ *GetProfilesFunction) Response() any {
 	return &GetProfilesResponse{}
 }
 
 type GetServiceCapabilitiesFunction struct{}
 
-func (_ *GetServiceCapabilitiesFunction) Request() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Request() any {
 	return &GetServiceCapabilities{}
 }
-func (_ *GetServiceCapabilitiesFunction) Response() interface{} {
+func (_ *GetServiceCapabilitiesFunction) Response() any {
 	return &GetServiceCapabilitiesResponse{}
 }
 
 type GetSnapshotUriFunction struct{}
 
-func (_ *GetSnapshotUriFunction) Request() interface{} {
+func (_ *GetSnapshotUriFunction) Request() any {
 	return &GetSnapshotUri{}
 }
-func (_ *GetSnapshotUriFunction) Response() interface{} {
+func (_ *GetSnapshotUriFunction) Response() any {
 	return &GetSnapshotUriResponse{}
 }
 
 type GetStreamUriFunction struct{}
 
-func (_ *GetStreamUriFunction) Request() interface{} {
+func (_ *GetStreamUriFunction) Request() any {
 	return &GetStreamUri{}
 }
-func (_ *GetStreamUriFunction) Response() interface{} {
+func (_ *GetStreamUriFunction) Response() any {
 	return &GetStreamUriResponse{}
 }
 
 type GetVideoAnalyticsConfigurationFunction struct{}
 
-func (_ *GetVideoAnalyticsConfigurationFunction) Request() interface{} {
+func (_ *GetVideoAnalyticsConfigurationFunction) Request() any {
 	return &GetVideoAnalyticsConfiguration{}
 }
-func (_ *GetVideoAnalyticsConfigurationFunction) Response() interface{} {
+func (_ *GetVideoAnalyticsConfigurationFunction) Response() any {
 	return &GetVideoAnalyticsConfigurationResponse{}
 }
 
 type GetVideoAnalyticsConfigurationsFunction struct{}
 
-func (_ *GetVideoAnalyticsConfigurationsFunction) Request() interface{} {
+func (_ *GetVideoAnalyticsConfigurationsFunction) Request() any {
 	return &GetVideoAnalyticsConfigurations{}
 }
-func (_ *GetVideoAnalyticsConfigurationsFunction) Response() interface{} {
+func (_ *GetVideoAnalyticsConfigurationsFunction) Response() any {
 	return &GetVideoAnalyticsConfigurationsResponse{}
 }
 
 type GetVideoEncoderConfigurationFunction struct{}
 
-func (_ *GetVideoEncoderConfigurationFunction) Request() interface{} {
+func (_ *GetVideoEncoderConfigurationFunction) Request() any {
 	return &GetVideoEncoderConfiguration{}
 }
-func (_ *GetVideoEncoderConfigurationFunction) Response() interface{} {
+func (_ *GetVideoEncoderConfigurationFunction) Response() any {
 	return &GetVideoEncoderConfigurationResponse{}
 }
 
 type GetVideoEncoderConfigurationOptionsFunction struct{}
 
-func (_ *GetVideoEncoderConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetVideoEncoderConfigurationOptionsFunction) Request() any {
 	return &GetVideoEncoderConfigurationOptions{}
 }
-func (_ *GetVideoEncoderConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetVideoEncoderConfigurationOptionsFunction) Response() any {
 	return &GetVideoEncoderConfigurationOptionsResponse{}
 }
 
 type GetVideoEncoderConfigurationsFunction struct{}
 
-func (_ *GetVideoEncoderConfigurationsFunction) Request() interface{} {
+func (_ *GetVideoEncoderConfigurationsFunction) Request() any {
 	return &GetVideoEncoderConfigurations{}
 }
-func (_ *GetVideoEncoderConfigurationsFunction) Response() interface{} {
+func (_ *GetVideoEncoderConfigurationsFunction) Response() any {
 	return &GetVideoEncoderConfigurationsResponse{}
 }
 
 type GetVideoSourceConfigurationFunction struct{}
 
-func (_ *GetVideoSourceConfigurationFunction) Request() interface{} {
+func (_ *GetVideoSourceConfigurationFunction) Request() any {
 	return &GetVideoSourceConfiguration{}
 }
-func (_ *GetVideoSourceConfigurationFunction) Response() interface{} {
+func (_ *GetVideoSourceConfigurationFunction) Response() any {
 	return &GetVideoSourceConfigurationResponse{}
 }
 
 type GetVideoSourceConfigurationOptionsFunction struct{}
 
-func (_ *GetVideoSourceConfigurationOptionsFunction) Request() interface{} {
+func (_ *GetVideoSourceConfigurationOptionsFunction) Request() any {
 	return &GetVideoSourceConfigurationOptions{}
 }
-func (_ *GetVideoSourceConfigurationOptionsFunction) Response() interface{} {
+func (_ *GetVideoSourceConfigurationOptionsFunction) Response() any {
 	return &GetVideoSourceConfigurationOptionsResponse{}
 }
 
 type GetVideoSourceConfigurationsFunction struct{}
 
-func (_ *GetVideoSourceConfigurationsFunction) Request() interface{} {
+func (_ *GetVideoSourceConfigurationsFunction) Request() any {
 	return &GetVideoSourceConfigurations{}
 }
-func (_ *GetVideoSourceConfigurationsFunction) Response() interface{} {
+func (_ *GetVideoSourceConfigurationsFunction) Response() any {
 	return &GetVideoSourceConfigurationsResponse{}
 }
 
 type GetVideoSourceModesFunction struct{}
 
-func (_ *GetVideoSourceModesFunction) Request() interface{} {
+func (_ *GetVideoSourceModesFunction) Request() any {
 	return &GetVideoSourceModes{}
 }
-func (_ *GetVideoSourceModesFunction) Response() interface{} {
+func (_ *GetVideoSourceModesFunction) Response() any {
 	return &GetVideoSourceModesResponse{}
 }
 
 type GetVideoSourcesFunction struct{}
 
-func (_ *GetVideoSourcesFunction) Request() interface{} {
+func (_ *GetVideoSourcesFunction) Request() any {
 	return &GetVideoSources{}
 }
-func (_ *GetVideoSourcesFunction) Response() interface{} {
+func (_ *GetVideoSourcesFunction) Response() any {
 	return &GetVideoSourcesResponse{}
 }
 
 type RemoveAudioDecoderConfigurationFunction struct{}
 
-func (_ *RemoveAudioDecoderConfigurationFunction) Request() interface{} {
+func (_ *RemoveAudioDecoderConfigurationFunction) Request() any {
 	return &RemoveAudioDecoderConfiguration{}
 }
-func (_ *RemoveAudioDecoderConfigurationFunction) Response() interface{} {
+func (_ *RemoveAudioDecoderConfigurationFunction) Response() any {
 	return &RemoveAudioDecoderConfigurationResponse{}
 }
 
 type RemoveAudioEncoderConfigurationFunction struct{}
 
-func (_ *RemoveAudioEncoderConfigurationFunction) Request() interface{} {
+func (_ *RemoveAudioEncoderConfigurationFunction) Request() any {
 	return &RemoveAudioEncoderConfiguration{}
 }
-func (_ *RemoveAudioEncoderConfigurationFunction) Response() interface{} {
+func (_ *RemoveAudioEncoderConfigurationFunction) Response() any {
 	return &RemoveAudioEncoderConfigurationResponse{}
 }
 
 type RemoveAudioOutputConfigurationFunction struct{}
 
-func (_ *RemoveAudioOutputConfigurationFunction) Request() interface{} {
+func (_ *RemoveAudioOutputConfigurationFunction) Request() any {
 	return &RemoveAudioOutputConfiguration{}
 }
-func (_ *RemoveAudioOutputConfigurationFunction) Response() interface{} {
+func (_ *RemoveAudioOutputConfigurationFunction) Response() any {
 	return &RemoveAudioOutputConfigurationResponse{}
 }
 
 type RemoveAudioSourceConfigurationFunction struct{}
 
-func (_ *RemoveAudioSourceConfigurationFunction) Request() interface{} {
+func (_ *RemoveAudioSourceConfigurationFunction) Request() any {
 	return &RemoveAudioSourceConfiguration{}
 }
-func (_ *RemoveAudioSourceConfigurationFunction) Response() interface{} {
+func (_ *RemoveAudioSourceConfigurationFunction) Response() any {
 	return &RemoveAudioSourceConfigurationResponse{}
 }
 
 type RemoveMetadataConfigurationFunction struct{}
 
-func (_ *RemoveMetadataConfigurationFunction) Request() interface{} {
+func (_ *RemoveMetadataConfigurationFunction) Request() any {
 	return &RemoveMetadataConfiguration{}
 }
-func (_ *RemoveMetadataConfigurationFunction) Response() interface{} {
+func (_ *RemoveMetadataConfigurationFunction) Response() any {
 	return &RemoveMetadataConfigurationResponse{}
 }
 
 type RemovePTZConfigurationFunction struct{}
 
-func (_ *RemovePTZConfigurationFunction) Request() interface{} {
+func (_ *RemovePTZConfigurationFunction) Request() any {
 	return &RemovePTZConfiguration{}
 }
-func (_ *RemovePTZConfigurationFunction) Response() interface{} {
+func (_ *RemovePTZConfigurationFunction) Response() any {
 	return &RemovePTZConfigurationResponse{}
 }
 
 type RemoveVideoAnalyticsConfigurationFunction struct{}
 
-func (_ *RemoveVideoAnalyticsConfigurationFunction) Request() interface{} {
+func (_ *RemoveVideoAnalyticsConfigurationFunction) Request() any {
 	return &RemoveVideoAnalyticsConfiguration{}
 }
-func (_ *RemoveVideoAnalyticsConfigurationFunction) Response() interface{} {
+func (_ *RemoveVideoAnalyticsConfigurationFunction) Response() any {
 	return &RemoveVideoAnalyticsConfigurationResponse{}
 }
 
 type RemoveVideoEncoderConfigurationFunction struct{}
 
-func (_ *RemoveVideoEncoderConfigurationFunction) Request() interface{} {
+func (_ *RemoveVideoEncoderConfigurationFunction) Request() any {
 	return &RemoveVideoEncoderConfiguration{}
 }
-func (_ *RemoveVideoEncoderConfigurationFunction) Response() interface{} {
+func (_ *RemoveVideoEncoderConfigurationFunction) Response() any {
 	return &RemoveVideoEncoderConfigurationResponse{}
 }
 
 type RemoveVideoSourceConfigurationFunction struct{}
 
-func (_ *RemoveVideoSourceConfigurationFunction) Request() interface{} {
+func (_ *RemoveVideoSourceConfigurationFunction) Request() any {
 	return &RemoveVideoSourceConfiguration{}
 }
-func (_ *RemoveVideoSourceConfigurationFunction) Response() interface{} {
+func (_ *RemoveVideoSourceConfigurationFunction) Response() any {
 	return &RemoveVideoSourceConfigurationResponse{}
 }
 
 type SetAudioDecoderConfigurationFunction struct{}
 
-func (_ *SetAudioDecoderConfigurationFunction) Request() interface{} {
+func (_ *SetAudioDecoderConfigurationFunction) Request() any {
 	return &SetAudioDecoderConfiguration{}
 }
-func (_ *SetAudioDecoderConfigurationFunction) Response() interface{} {
+func (_ *SetAudioDecoderConfigurationFunction) Response() any {
 	return &SetAudioDecoderConfigurationResponse{}
 }
 
 type SetAudioEncoderConfigurationFunction struct{}
 
-func (_ *SetAudioEncoderConfigurationFunction) Request() interface{} {
+func (_ *SetAudioEncoderConfigurationFunction) Request() any {
 	return &SetAudioEncoderConfiguration{}
 }
-func (_ *SetAudioEncoderConfigurationFunction) Response() interface{} {
+func (_ *SetAudioEncoderConfigurationFunction) Response() any {
 	return &SetAudioEncoderConfigurationResponse{}
 }
 
 type SetAudioOutputConfigurationFunction struct{}
 
-func (_ *SetAudioOutputConfigurationFunction) Request() interface{} {
+func (_ *SetAudioOutputConfigurationFunction) Request() any {
 	return &SetAudioOutputConfiguration{}
 }
-func (_ *SetAudioOutputConfigurationFunction) Response() interface{} {
+func (_ *SetAudioOutputConfigurationFunction) Response() any {
 	return &SetAudioOutputConfigurationResponse{}
 }
 
 type SetAudioSourceConfigurationFunction struct{}
 
-func (_ *SetAudioSourceConfigurationFunction) Request() interface{} {
+func (_ *SetAudioSourceConfigurationFunction) Request() any {
 	return &SetAudioSourceConfiguration{}
 }
-func (_ *SetAudioSourceConfigurationFunction) Response() interface{} {
+func (_ *SetAudioSourceConfigurationFunction) Response() any {
 	return &SetAudioSourceConfigurationResponse{}
 }
 
 type SetMetadataConfigurationFunction struct{}
 
-func (_ *SetMetadataConfigurationFunction) Request() interface{} {
+func (_ *SetMetadataConfigurationFunction) Request() any {
 	return &SetMetadataConfiguration{}
 }
-func (_ *SetMetadataConfigurationFunction) Response() interface{} {
+func (_ *SetMetadataConfigurationFunction) Response() any {
 	return &SetMetadataConfigurationResponse{}
 }
 
 type SetOSDFunction struct{}
 
-func (_ *SetOSDFunction) Request() interface{} {
+func (_ *SetOSDFunction) Request() any {
 	return &SetOSD{}
 }
-func (_ *SetOSDFunction) Response() interface{} {
+func (_ *SetOSDFunction) Response() any {
 	return &SetOSDResponse{}
 }
 
 type SetSynchronizationPointFunction struct{}
 
-func (_ *SetSynchronizationPointFunction) Request() interface{} {
+func (_ *SetSynchronizationPointFunction) Request() any {
 	return &SetSynchronizationPoint{}
 }
-func (_ *SetSynchronizationPointFunction) Response() interface{} {
+func (_ *SetSynchronizationPointFunction) Response() any {
 	return &SetSynchronizationPointResponse{}
 }
 
 type SetVideoAnalyticsConfigurationFunction struct{}
 
-func (_ *SetVideoAnalyticsConfigurationFunction) Request() interface{} {
+func (_ *SetVideoAnalyticsConfigurationFunction) Request() any {
 	return &SetVideoAnalyticsConfiguration{}
 }
-func (_ *SetVideoAnalyticsConfigurationFunction) Response() interface{} {
+func (_ *SetVideoAnalyticsConfigurationFunction) Response() any {
 	return &SetVideoAnalyticsConfigurationResponse{}
 }
 
 type SetVideoEncoderConfigurationFunction struct{}
 
-func (_ *SetVideoEncoderConfigurationFunction) Request() interface{} {
+func (_ *SetVideoEncoderConfigurationFunction) Request() any {
 	return &SetVideoEncoderConfiguration{}
 }
-func (_ *SetVideoEncoderConfigurationFunction) Response() interface{} {
+func (_ *SetVideoEncoderConfigurationFunction) Response() any {
 	return &SetVideoEncoderConfigurationResponse{}
 }
 
 type SetVideoSourceConfigurationFunction struct{}
 
-func (_ *SetVideoSourceConfigurationFunction) Request() interface{} {
+func (_ *SetVideoSourceConfigurationFunction) Request() any {
 	return &SetVideoSourceConfiguration{}
 }
-func (_ *SetVideoSourceConfigurationFunction) Response() interface{} {
+func (_ *SetVideoSourceConfigurationFunction) Response() any {
 	return &SetVideoSourceConfigurationResponse{}
 }
 
 type SetVideoSourceModeFunction struct{}
 
-func (_ *SetVideoSourceModeFunction) Request() interface{} {
+func (_ *SetVideoSourceModeFunction) Request() any {
 	return &SetVideoSourceMode{}
 }
-func (_ *SetVideoSourceModeFunction) Response() interface{} {
+func (_ *SetVideoSourceModeFunction) Response() any {
 	return &SetVideoSourceModeResponse{}
 }
 
 type StartMulticastStreamingFunction struct{}
 
-func (_ *StartMulticastStreamingFunction) Request() interface{} {
+func (_ *StartMulticastStreamingFunction) Request() any {
 	return &StartMulticastStreaming{}
 }
-func (_ *StartMulticastStreamingFunction) Response() interface{} {
+func (_ *StartMulticastStreamingFunction) Response() any {
 	return &StartMulticastStreamingResponse{}
 }
 
 type StopMulticastStreamingFunction struct{}
 
-func (_ *StopMulticastStreamingFunction) Request() interface{} {
+func (_ *StopMulticastStreamingFunction) Request() any {
 	return &StopMulticastStreaming{}
 }
-func (_ *StopMulticastStreamingFunction) Response() interface{} {
+func (_ *StopMulticastStreamingFunction) Response() any {
 	return &StopMulticastStreamingResponse{}
 }

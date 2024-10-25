@@ -1,12 +1,14 @@
 package event
 
 import (
-	"encoding/xml"
 	"testing"
 
-	"github.com/IOTechSystems/onvif/xsd"
+	"github.com/nbio/xml"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/secure-passage/onvif/xsd"
 )
 
 var eventPropertiesData = []byte(`
@@ -67,17 +69,17 @@ func TestEventPropertiesUnmarshalXML(t *testing.T) {
 	assert.Equal(t, FixedTopicSet(true), *res.FixedTopicSet)
 	assert.Equal(t, xsd.AnyURI("http://www.onvif.org/ver10/tev/messageContentFilter/ItemFilter"), *res.MessageContentFilterDialect)
 	assert.Equal(t, xsd.AnyURI("http://www.onvif.org/onvif/ver10/schema/onvif.xsd"), *res.MessageContentSchemaLocation)
-	userAlarm, exists := map[string]interface{}(*res.TopicSet)["tns1:UserAlarm"]
+	userAlarm, exists := map[string]any(*res.TopicSet)["tns1:UserAlarm"]
 	assert.True(t, exists)
-	_, exists = (userAlarm).(map[string]interface{})["tnshik:IllegalAccess"]
+	_, exists = (userAlarm).(map[string]any)["tnshik:IllegalAccess"]
 	assert.True(t, exists)
-	ruleEngine, exists := map[string]interface{}(*res.TopicSet)["tns1:RuleEngine"]
+	ruleEngine, exists := map[string]any(*res.TopicSet)["tns1:RuleEngine"]
 	assert.True(t, exists)
-	tamperDetector, exists := (ruleEngine).(map[string]interface{})["TamperDetector"]
+	tamperDetector, exists := (ruleEngine).(map[string]any)["TamperDetector"]
 	assert.True(t, exists)
-	tamper, exists := (tamperDetector).(map[string]interface{})["Tamper"]
+	tamper, exists := (tamperDetector).(map[string]any)["Tamper"]
 	assert.True(t, exists)
-	_, exists = (tamper).(map[string]interface{})["tt:MessageDescription"]
+	_, exists = (tamper).(map[string]any)["tt:MessageDescription"]
 	assert.True(t, exists)
 }
 

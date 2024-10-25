@@ -18,7 +18,7 @@ HEADER = '''\
 
 '''
 
-BASE_MODULE_NAME = 'github.com/IOTechSystems/onvif'
+BASE_MODULE_NAME = 'github.com/secure-passage/onvif'
 
 SERVICE_NAMES = [
     'analytics',
@@ -44,10 +44,10 @@ class FunctionsGenerator:
         return '''\
 type %sFunction struct{}
 
-func (_ *%sFunction) Request() interface{} {
+func (_ *%sFunction) Request() any {
 \treturn &%s{}
 }
-func (_ *%sFunction) Response() interface{} {
+func (_ *%sFunction) Response() any {
 \treturn &%sResponse{}
 }
 

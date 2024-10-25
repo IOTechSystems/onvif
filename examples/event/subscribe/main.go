@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/event"
-	"github.com/IOTechSystems/onvif/xsd"
-	"io/ioutil"
+	"io"
 	"log"
+
+	"github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/event"
+	"github.com/secure-passage/onvif/xsd"
 )
 
 // === Geovision ===
@@ -80,8 +81,8 @@ import (
 func main() {
 	dev, err := onvif.NewDevice(onvif.DeviceParams{
 		Xaddr: "192.168.12.148", // BOSCH
-		//Xaddr:    "192.168.12.149", // Geovision
-		//Xaddr: "192.168.12.123", //Hikvision
+		// Xaddr:    "192.168.12.149", // Geovision
+		// Xaddr: "192.168.12.123", //Hikvision
 		Username: "administrator",
 		Password: "Password1!",
 		AuthMode: onvif.UsernameTokenAuth,
@@ -91,20 +92,22 @@ func main() {
 	}
 
 	consumerAddress := event.AttributedURIType("http://192.168.12.112:8080/ping")
-	//terminationTime:= xsd.String("2021-12-03T15:50:03Z")
+	// terminationTime:= xsd.String("2021-12-03T15:50:03Z")
 	terminationTime := xsd.String("PT180S")
-	res, err := dev.CallMethod(event.Subscribe{
-		ConsumerReference: &event.EndpointReferenceType{
-			Address: consumerAddress,
+	res, err := dev.CallMethod(
+		event.Subscribe{
+			ConsumerReference: &event.EndpointReferenceType{
+				Address: consumerAddress,
+			},
+			TerminationTime: &terminationTime,
 		},
-		TerminationTime: &terminationTime,
-	},
+		nil,
 	)
 	if err != nil {
 		log.Fatalln("fail to CallMethod:", err)
 	}
 	log.Printf(">> Status Code: %+v \n", res.StatusCode)
-	bs, _ := ioutil.ReadAll(res.Body)
+	bs, _ := io.ReadAll(res.Body)
 
 	log.Printf(">> Result: %+v \n %s", res.StatusCode, bs)
 }

@@ -3,8 +3,9 @@ package gosoap
 import (
 	"crypto/sha1"
 	"encoding/base64"
-	"encoding/xml"
 	"time"
+
+	"github.com/nbio/xml"
 
 	"github.com/elgs/gostrgen"
 )
@@ -23,19 +24,19 @@ const (
 
 // Security type :XMLName xml.Name `xml:"http://purl.org/rss/1.0/modules/content/ encoded"`
 type Security struct {
-	//XMLName xml.Name  `xml:"wsse:Security"`
+	// XMLName xml.Name  `xml:"wsse:Security"`
 	XMLName xml.Name `xml:"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd Security"`
 	Auth    wsAuth
 }
 
 type password struct {
-	//XMLName xml.Name `xml:"wsse:Password"`
+	// XMLName xml.Name `xml:"wsse:Password"`
 	Type     string `xml:"Type,attr"`
 	Password string `xml:",chardata"`
 }
 
 type nonce struct {
-	//XMLName xml.Name `xml:"wsse:Nonce"`
+	// XMLName xml.Name `xml:"wsse:Nonce"`
 	Type  string `xml:"EncodingType,attr"`
 	Nonce string `xml:",chardata"`
 }
@@ -86,7 +87,7 @@ func NewSecurity(username, passwd string) Security {
 }
 
 // Digest = B64ENCODE( SHA1( B64DECODE( Nonce ) + Date + Password ) )
-func generateToken(Username string, Nonce string, Created string, Password string) string {
+func generateToken(_ string, Nonce string, Created string, Password string) string {
 	sDec, _ := base64.StdEncoding.DecodeString(Nonce)
 
 	hasher := sha1.New()

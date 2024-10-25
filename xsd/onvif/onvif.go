@@ -1,26 +1,26 @@
 package onvif
 
 import (
-	"github.com/IOTechSystems/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd"
 )
 
 // BUG(r): Enum types implemented as simple string
 
-//TODO: enumerations
-//TODO: type <typeName> struct {Any string} convert to type <typeName> AnyType
-//TODO: process restrictions
+// TODO: enumerations
+// TODO: type <typeName> struct {Any string} convert to type <typeName> AnyType
+// TODO: process restrictions
 
-//todo посмотреть все Extensions (Any string)
-//todo что делать с xs:any = Any
-//todo IntList и ему подобные. Проверить нужен ли слайс. Изменить на slice
-//todo посмотреть можно ли заменить StreamType и ему подобные типы на вмтроенные типы
-//todo оттестировать тип VideoSourceMode из-за Description-а
+// todo посмотреть все Extensions (Any string)
+// todo что делать с xs:any = Any
+// todo IntList и ему подобные. Проверить нужен ли слайс. Изменить на slice
+// todo посмотреть можно ли заменить StreamType и ему подобные типы на вмтроенные типы
+// todo оттестировать тип VideoSourceMode из-за Description-а
 
-//todo в документации описать, что Capabilities повторяеся у каждого сервиса, поэтому у каждого свой Capabilities (MediaCapabilities)
-//todo AuxiliaryData и другие simpleTypes, как реализовать рестрикшн
-//todo Name и ему подобные необходимо изучить на наличие "List of..." ошибок
+// todo в документации описать, что Capabilities повторяеся у каждого сервиса, поэтому у каждого свой Capabilities (MediaCapabilities)
+// todo AuxiliaryData и другие simpleTypes, как реализовать рестрикшн
+// todo Name и ему подобные необходимо изучить на наличие "List of..." ошибок
 
-//todo Add in buit in
+// todo Add in buit in
 
 type ContentType string // minLength value="3"
 type DNSName xsd.Token
@@ -1045,7 +1045,7 @@ type OSDImgOptionsExtension xsd.AnyType
 
 type OSDConfigurationOptionsExtension xsd.AnyType
 
-//PTZ
+// PTZ
 
 type PTZNode struct {
 	DeviceEntity
@@ -1246,7 +1246,7 @@ type PTZPresetTourPresetDetailOptions struct {
 
 type PTZPresetTourPresetDetailOptionsExtension xsd.AnyType
 
-//Device
+// Device
 
 type OnvifVersion struct {
 	Major int

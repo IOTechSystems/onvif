@@ -1,10 +1,10 @@
 package recording
 
 import (
-	"encoding/xml"
+	"github.com/nbio/xml"
 
-	"github.com/IOTechSystems/onvif/xsd"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	"github.com/secure-passage/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 // TrackType type

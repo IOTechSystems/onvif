@@ -3,8 +3,8 @@ package media
 //go:generate python3 ../python/gen_commands.py
 
 import (
-	"github.com/IOTechSystems/onvif/xsd"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	"github.com/secure-passage/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 type Capabilities struct {
@@ -30,7 +30,7 @@ type StreamingCapabilities struct {
 	NoRTSPStreaming     bool `xml:"NoRTSPStreaming,attr"`
 }
 
-//Media main types
+// Media main types
 
 type GetServiceCapabilities struct {
 	XMLName string `xml:"trt:GetServiceCapabilities"`

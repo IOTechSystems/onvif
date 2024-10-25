@@ -1,6 +1,6 @@
 package onvif
 
 type Function interface {
-	Request() interface{}
-	Response() interface{}
+	Request() any
+	Response() any
 }

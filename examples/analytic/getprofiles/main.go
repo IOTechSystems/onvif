@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/media2"
-	"io/ioutil"
+	"io"
 	"log"
+
+	"github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/media2"
 )
 
 func main() {
@@ -18,11 +19,11 @@ func main() {
 		log.Fatalln("fail to new device:", err)
 	}
 
-	res, err := dev.CallMethod(media2.GetProfiles{})
+	res, err := dev.CallMethod(media2.GetProfiles{}, nil)
 	if err != nil {
 		log.Fatalln("fail to CallMethod:", err)
 	}
-	bs, _ := ioutil.ReadAll(res.Body)
+	bs, _ := io.ReadAll(res.Body)
 
 	log.Printf(">> Result: %+v \n %s", res.StatusCode, bs)
 }

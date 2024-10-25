@@ -3,19 +3,20 @@ package api
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"path"
 	"reflect"
 	"regexp"
 	"strings"
 
-	"github.com/IOTechSystems/onvif"
-	"github.com/IOTechSystems/onvif/gosoap"
-	"github.com/IOTechSystems/onvif/networking"
-	wsdiscovery "github.com/IOTechSystems/onvif/ws-discovery"
 	"github.com/beevik/etree"
 	"github.com/gin-gonic/gin"
+
+	"github.com/secure-passage/onvif"
+	"github.com/secure-passage/onvif/gosoap"
+	"github.com/secure-passage/onvif/networking"
+	wsdiscovery "github.com/secure-passage/onvif/ws-discovery"
 )
 
 func RunApi() {
@@ -23,7 +24,7 @@ func RunApi() {
 
 	router.POST("/:service/:method", func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
-		//c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+		// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 		serviceName := c.Param("service")
 		methodName := c.Param("method")
@@ -58,7 +59,6 @@ func RunApi() {
 			if err := doc.ReadFromString(j); err != nil {
 				context.XML(http.StatusBadRequest, err.Error())
 			} else {
-
 				endpoints := doc.Root().FindElements("./Body/ProbeMatches/ProbeMatch/XAddrs")
 				scopes := doc.Root().FindElements("./Body/ProbeMatches/ProbeMatch/Scopes")
 
@@ -82,9 +82,7 @@ func RunApi() {
 					response += `"name":"` + path.Base(match[0]) + `"`
 				}
 				response += "},"
-
 			}
-
 		}
 		response = strings.TrimRight(response, ",")
 		response += "]"
@@ -93,10 +91,10 @@ func RunApi() {
 		}
 	})
 
-	router.Run()
+	_ = router.Run()
 }
 
-//func soapHandling(tp interface{}, tags* map[string]string)  {
+// func soapHandling(tp any, tags* map[string]string)  {
 //	ifaceValue := reflect.ValueOf(tp).Elem()
 //	typeOfStruct := ifaceValue.Type()
 //	if ifaceValue.Kind() != reflect.Struct {
@@ -113,10 +111,10 @@ func RunApi() {
 //		subStruct := reflect.New(reflect.TypeOf( field.Interface() ))
 //		soapHandling(subStruct.Interface(), tags)
 //	}
-//}
+// }
 
 func callNecessaryMethod(serviceName, methodName, acceptedData, username, password, xaddr string) (string, error) {
-	var methodStruct interface{}
+	var methodStruct any
 	var err error
 
 	switch strings.ToLower(serviceName) {
@@ -129,7 +127,7 @@ func callNecessaryMethod(serviceName, methodName, acceptedData, username, passwo
 	default:
 		return "", errors.New("there is no such service")
 	}
-	if err != nil { //done
+	if err != nil { // done
 		return "", err
 	}
 
@@ -153,7 +151,9 @@ func callNecessaryMethod(serviceName, methodName, acceptedData, username, passwo
 		return "", err
 	}
 
-	rsp, err := ioutil.ReadAll(servResp.Body)
+	defer servResp.Body.Close()
+
+	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
 		return "", err
 	}
@@ -184,10 +184,10 @@ func getEndpoint(service, xaddr string) (string, error) {
 	return endpoint, nil
 }
 
-func xmlAnalize(methodStruct interface{}, acceptedData *string) (*string, error) {
-	test := make([]map[string]string, 0)      //tags
-	testunMarshal := make([][]interface{}, 0) //data
-	var mas []string                          //idnt
+func xmlAnalize(methodStruct any, acceptedData *string) (*string, error) {
+	test := make([]map[string]string, 0) // tags
+	testunMarshal := make([][]any, 0)    // data
+	var mas []string                     // idnt
 
 	soapHandling(methodStruct, &test)
 	test = mapProcessing(test)
@@ -211,7 +211,7 @@ func xmlAnalize(methodStruct interface{}, acceptedData *string) (*string, error)
 			return nil, err
 		}
 
-		if mas[lstIndex] == "Push" && lstIndex == 0 { //done
+		if mas[lstIndex] == "Push" && lstIndex == 0 { // done
 			el = document.CreateElement(elemName)
 			el.SetText(value)
 			if len(attr) != 0 {
@@ -258,7 +258,7 @@ func xmlAnalize(methodStruct interface{}, acceptedData *string) (*string, error)
 	return &resp, err
 }
 
-func xmlMaker(lst *[]interface{}, tags *[]map[string]string, lstIndex int) (string, map[string]string, string, error) {
+func xmlMaker(lst *[]any, tags *[]map[string]string, lstIndex int) (string, map[string]string, string, error) {
 	var elemName, value string
 	attr := make(map[string]string)
 	for tgIndx, tg := range *tags {
@@ -304,19 +304,18 @@ func xmlProcessing(tg string) (string, error) {
 	attrOmit := strings.Index(str[1], ",attr,omitempty")
 	omitAttr := strings.Index(str[1], ",omitempty,attr")
 
-	if attr > -1 && attrOmit == -1 && omitAttr == -1 {
+	switch {
+	case attr > -1 && attrOmit == -1 && omitAttr == -1:
 		return str[1][0:attr], nil
-	} else if omit > -1 && attrOmit == -1 && omitAttr == -1 {
+	case omit > -1 && attrOmit == -1 && omitAttr == -1:
 		return str[1][0:omit], nil
-	} else if attr == -1 && omit == -1 {
+	case attr == -1 && omit == -1:
 		return str[1], nil
-	} else if attrOmit > -1 {
+	case attrOmit > -1:
 		return str[1][0:attrOmit], nil
-	} else {
+	default:
 		return str[1][0:omitAttr], nil
 	}
-
-	return "", errors.New("something went wrong")
 }
 
 func mapProcessing(mapVar []map[string]string) []map[string]string {
@@ -327,7 +326,7 @@ func mapProcessing(mapVar []map[string]string) []map[string]string {
 				mapVar = append(mapVar[:indx], mapVar[indx+1:]...)
 				indx--
 			}
-			if strings.Index(value, ",attr") != -1 {
+			if strings.Contains(value, ",attr") {
 				mapVar = append(mapVar[:indx], mapVar[indx+1:]...)
 				indx--
 			}
@@ -336,7 +335,7 @@ func mapProcessing(mapVar []map[string]string) []map[string]string {
 	return mapVar
 }
 
-func soapHandling(tp interface{}, tags *[]map[string]string) {
+func soapHandling(tp any, tags *[]map[string]string) {
 	s := reflect.ValueOf(tp).Elem()
 	typeOfT := s.Type()
 	if s.Kind() != reflect.Struct {
@@ -345,7 +344,7 @@ func soapHandling(tp interface{}, tags *[]map[string]string) {
 	for i := 0; i < s.NumField(); i++ {
 		f := s.Field(i)
 		tmp, err := typeOfT.FieldByName(typeOfT.Field(i).Name)
-		if err == false {
+		if !err {
 			fmt.Println(err)
 		}
 		*tags = append(*tags, map[string]string{typeOfT.Field(i).Name: string(tmp.Tag)})
@@ -354,9 +353,9 @@ func soapHandling(tp interface{}, tags *[]map[string]string) {
 	}
 }
 
-func xmlUnmarshal(elems []*etree.Element, data *[][]interface{}, mas *[]string) {
+func xmlUnmarshal(elems []*etree.Element, data *[][]any, mas *[]string) {
 	for _, elem := range elems {
-		*data = append(*data, []interface{}{elem.Tag, elem.Attr, elem.Text()})
+		*data = append(*data, []any{elem.Tag, elem.Attr, elem.Text()})
 		*mas = append(*mas, "Push")
 		xmlUnmarshal(elem.FindElements("./*"), data, mas)
 		*mas = append(*mas, "Pop")

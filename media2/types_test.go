@@ -1,14 +1,16 @@
 package media2
 
 import (
-	"encoding/xml"
 	"fmt"
 	"testing"
 
-	"github.com/IOTechSystems/onvif/xsd"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	"github.com/nbio/xml"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/secure-passage/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 func TestUnmarshalGetProfilesResponse(t *testing.T) {

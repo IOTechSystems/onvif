@@ -3,8 +3,8 @@ package device
 //go:generate python3 ../python/gen_commands.py
 
 import (
-	"github.com/IOTechSystems/onvif/xsd"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	"github.com/secure-passage/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 type Service struct {
@@ -111,7 +111,7 @@ type UserCredential struct {
 	Extension xsd.AnyType `xml:"tds:Extension"`
 }
 
-//Device main types
+// Device main types
 
 type GetServices struct {
 	XMLName           string      `xml:"tds:GetServices"`

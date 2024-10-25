@@ -1,0 +1,26 @@
+---
+name: Pull Request Validation
+on:
+  pull_request:
+    branches:
+      - main
+      - beta
+      - alpha
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+jobs:
+  shared-pr-title-validation:
+    name: Shared PR Title Validation
+    uses: secure-passage/git-actions-core/.github/workflows/shared-pr-validation-title.yaml@stable
+    permissions:
+      pull-requests: read
+      contents: read
+    secrets: inherit
+  shared-yaml-lint:
+    name: Shared PR Validation Yaml Lint
+    uses: secure-passage/git-actions-core/.github/workflows/shared-pr-validation-yaml-lint.yaml@stable
+    permissions:
+      contents: read

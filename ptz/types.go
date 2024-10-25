@@ -3,8 +3,8 @@ package ptz
 //go:generate python3 ../python/gen_commands.py
 
 import (
-	"github.com/IOTechSystems/onvif/xsd"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
+	"github.com/secure-passage/onvif/xsd"
+	"github.com/secure-passage/onvif/xsd/onvif"
 )
 
 type Capabilities struct {
@@ -15,7 +15,7 @@ type Capabilities struct {
 	StatusPosition              xsd.Boolean `xml:"StatusPosition,attr"`
 }
 
-//PTZ main types
+// PTZ main types
 
 type GetServiceCapabilities struct {
 	XMLName string `xml:"tptz:GetServiceCapabilities"`
