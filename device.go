@@ -187,13 +187,17 @@ func NewDevice(params DeviceParams) (*Device, error) {
 
 	resp, err := dev.CallMethod(getCapabilities, &getCapabilitiesResponse)
 
-	if err != nil || resp.StatusCode != http.StatusOK {
+	if err != nil {
 		return nil, errors.New("camera is not available at " + dev.params.Xaddr + " or it does not support ONVIF services")
 	}
 
-	defer resp.Body.Close()
+	switch actual := resp.(type) {
+	case *http.Response:
+		dev.getSupportedServices(actual)
+	default:
+		return nil, errors.New("unexpected response")
+	}
 
-	dev.getSupportedServices(resp)
 	return dev, nil
 }
 
@@ -258,7 +262,7 @@ func (dev *Device) getEndpoint(endpoint string) (string, error) {
 
 // CallMethod functions call an method, defined <method> struct.
 // You should use Authenticate method to call authorized requests.
-func (dev *Device) CallMethod(request, response any) (*http.Response, error) {
+func (dev *Device) CallMethod(request, response any) (any, error) {
 	pkgPath := strings.Split(reflect.TypeOf(request).PkgPath(), "/")
 	pkg := strings.ToLower(pkgPath[len(pkgPath)-1])
 
@@ -288,7 +292,25 @@ func (dev *Device) CallMethod(request, response any) (*http.Response, error) {
 		return nil, err
 	}
 
-	return rawResponse, xml.Unmarshal(data, response)
+	responseEnvelope := gosoap.NewSOAPEnvelope(response)
+	err = xml.Unmarshal(data, responseEnvelope)
+	if err != nil {
+		return nil, err
+	}
+
+	switch rawResponse.StatusCode {
+	case http.StatusUnauthorized:
+		return nil, fmt.Errorf("fail to verify the authentication. Onvif error: %s",
+			responseEnvelope.Body.Fault.String())
+	case http.StatusBadRequest:
+		return nil, fmt.Errorf("invalid request. Onvif error: %s",
+			responseEnvelope.Body.Fault.String())
+	case http.StatusNoContent:
+		return nil, fmt.Errorf("failed to execute the request. Onvif error: %s",
+			responseEnvelope.Body.Fault.String())
+	default:
+		return responseEnvelope.Body.Content, nil
+	}
 }
 
 func (dev *Device) GetDeviceParams() DeviceParams {
