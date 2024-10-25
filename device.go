@@ -272,23 +272,23 @@ func (dev *Device) CallMethod(request, response any) (*http.Response, error) {
 		return nil, err
 	}
 
-	responseBody, err := dev.SendSoap(endpoint, string(requestBody))
-	if err != nil {
-		return responseBody, err
+	rawResponse, err := dev.SendSoap(endpoint, string(requestBody))
+	if err != nil || rawResponse.StatusCode != http.StatusOK {
+		return rawResponse, err
 	}
 
 	if response == nil {
-		return responseBody, nil
+		return rawResponse, nil
 	}
 
-	defer responseBody.Body.Close()
+	defer rawResponse.Body.Close()
 
-	data, err := io.ReadAll(responseBody.Body)
+	data, err := io.ReadAll(rawResponse.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	return responseBody, xml.Unmarshal(data, response)
+	return rawResponse, xml.Unmarshal(data, response)
 }
 
 func (dev *Device) GetDeviceParams() DeviceParams {
