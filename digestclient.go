@@ -37,7 +37,11 @@ func (dc *DigestClient) Do(httpMethod string, endpoint string, soap string) (*ht
 		return nil, err
 	}
 	if dc.snonce != "" {
-		req.Header.Set("Authorization", dc.getDigestAuth(req.Method, req.URL.String()))
+		digestAuth, err := dc.getDigestAuth(req.Method, req.URL.String())
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("Authorization", digestAuth)
 	}
 
 	// Attempt the request using the underlying client
@@ -58,7 +62,11 @@ func (dc *DigestClient) Do(httpMethod string, endpoint string, soap string) (*ht
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", dc.getDigestAuth(req.Method, req.URL.String()))
+	digestAuth, err := dc.getDigestAuth(req.Method, req.URL.String())
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Authorization", digestAuth)
 
 	authedResp, err := dc.client.Do(req)
 	if err != nil {
@@ -93,19 +101,25 @@ func getMD5(text string) string {
 	return hex.EncodeToString(hasher.Sum(nil))
 }
 
-func getCnonce() string {
+func getCnonce() (string, error) {
 	b := make([]byte, 8)
-	io.ReadFull(rand.Reader, b)
-	return fmt.Sprintf("%x", b)[:16]
+	_, err := io.ReadFull(rand.Reader, b)
+	if err != nil {
+		return "", fmt.Errorf("generate random number failed: %w", err)
+	}
+	return fmt.Sprintf("%x", b)[:16], nil
 }
 
-func (dc *DigestClient) getDigestAuth(method string, uri string) string {
+func (dc *DigestClient) getDigestAuth(method string, uri string) (string, error) {
 	ha1 := getMD5(dc.username + ":" + dc.realm + ":" + dc.password)
 	ha2 := getMD5(method + ":" + uri)
-	cnonce := getCnonce()
+	cnonce, err := getCnonce()
+	if err != nil {
+		return "", fmt.Errorf("get DigestAuth failed: %w", err)
+	}
 	dc.nonceCount++
 	response := getMD5(fmt.Sprintf("%s:%s:%v:%s:%s:%s", ha1, dc.snonce, dc.nonceCount, cnonce, dc.qop, ha2))
 	authorization := fmt.Sprintf(`Digest username="%s", realm="%s", nonce="%s", uri="%s", cnonce="%s", nc="%v", qop="%s", response="%s"`,
 		dc.username, dc.realm, dc.snonce, uri, cnonce, dc.nonceCount, dc.qop, response)
-	return authorization
+	return authorization, nil
 }

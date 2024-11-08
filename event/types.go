@@ -243,7 +243,6 @@ type GetServiceCapabilitiesResponse struct {
 // SubscriptionPolicy action
 type SubscriptionPolicy struct { //tev http://www.onvif.org/ver10/events/wsdl
 	ChangedOnly xsd.Boolean `xml:"ChangedOnly,attr"`
-	string
 }
 
 // Subscribe action for subscribe event topic

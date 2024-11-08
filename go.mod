@@ -1,12 +1,11 @@
 module github.com/IOTechSystems/onvif
 
-go 1.21
-toolchain go1.22.5
+go 1.23
 
 require (
 	github.com/beevik/etree v1.4.1
 	github.com/clbanning/mxj/v2 v2.7.0
-	github.com/elgs/gostrgen v0.0.0-20161222160715-9d61ae07eeae
+	github.com/elgs/gostrgen v0.0.0-20220325073726-0c3e00d082f6
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.9.0

@@ -1,13 +1,11 @@
-package wsdiscovery
+package main
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	"fmt"
+	"github.com/IOTechSystems/onvif/ws-discovery"
 )
 
-func TestDevicesFromProbeResponses(t *testing.T) {
+func main() {
 	probeResponses := []string{
 		`<env:Envelope>
 			<env:Header></env:Header>
@@ -46,11 +44,14 @@ func TestDevicesFromProbeResponses(t *testing.T) {
 		</SOAP-ENV:Envelope>`,
 	}
 
-	devices, err := DevicesFromProbeResponses(probeResponses)
-	require.NoError(t, err)
-	require.Equal(t, 2, len(devices))
-	assert.Equal(t, devices[0].GetDeviceParams().Xaddr, "192.168.12.123")
-	assert.Equal(t, devices[0].GetDeviceParams().EndpointRefAddress, "cea94000-fb96-11b3-8260-686dbc5cb15d")
-	assert.Equal(t, devices[1].GetDeviceParams().Xaddr, "192.168.12.128:2020")
-	assert.Equal(t, devices[1].GetDeviceParams().EndpointRefAddress, "3fa1fe68-b915-4053-a3e1-c006c3afec0e")
+	devices, err := wsdiscovery.DevicesFromProbeResponses(probeResponses)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, device := range devices {
+		fmt.Printf("Device Xaddr %s", device.GetDeviceParams().Xaddr)
+		fmt.Printf("Device EndpointRefAddress %s", device.GetDeviceParams().EndpointRefAddress)
+	}
 }

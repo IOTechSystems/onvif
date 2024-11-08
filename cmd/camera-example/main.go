@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/IOTechSystems/onvif"
@@ -39,6 +39,10 @@ func RunApi() {
 			Username: username,
 			Password: pass,
 		})
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		message, err := CallOnvifFunction(dev, serviceName, functionName, string(acceptedData))
 		if err != nil {
 			c.XML(http.StatusBadRequest, err.Error())
@@ -47,7 +51,10 @@ func RunApi() {
 		}
 	})
 
-	router.Run()
+	err := router.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func CallOnvifFunction(dev *onvif.Device, serviceName, functionName, acceptedData string) (string, error) {
@@ -77,14 +84,17 @@ func CallOnvifFunction(dev *onvif.Device, serviceName, functionName, acceptedDat
 	soap := gosoap.NewEmptySOAP()
 	soap.AddStringBodyContent(string(requestBody))
 	soap.AddRootNamespaces(onvif.Xlmns)
-	soap.AddWSSecurity(dev.GetDeviceParams().Username, dev.GetDeviceParams().Password)
+	err = soap.AddWSSecurity(dev.GetDeviceParams().Username, dev.GetDeviceParams().Password)
+	if err != nil {
+		return "", fmt.Errorf("call Onvif fucntion failed: %w", err)
+	}
 
 	servResp, err := networking.SendSoap(new(http.Client), endpoint, soap.String())
 	if err != nil {
 		return "", err
 	}
 
-	rsp, err := ioutil.ReadAll(servResp.Body)
+	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
 		return "", err
 	}

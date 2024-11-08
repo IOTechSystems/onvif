@@ -6,8 +6,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/IOTechSystems/onvif/xsd/onvif"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -16,6 +15,8 @@ import (
 
 	"github.com/IOTechSystems/onvif/device"
 	"github.com/IOTechSystems/onvif/gosoap"
+	"github.com/IOTechSystems/onvif/xsd/onvif"
+
 	"github.com/beevik/etree"
 )
 
@@ -138,18 +139,10 @@ func (dev *Device) SetDeviceInfoFromScopes(scopes []string) {
 	dev.info = newInfo
 }
 
-func readResponse(resp *http.Response) string {
-	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		panic(err)
-	}
-	return string(b)
-}
-
 func (dev *Device) getSupportedServices(resp *http.Response) {
 	doc := etree.NewDocument()
 
-	data, _ := ioutil.ReadAll(resp.Body)
+	data, _ := io.ReadAll(resp.Body)
 
 	if err := doc.ReadFromBytes(data); err != nil {
 		//log.Println(err.Error())
@@ -214,21 +207,6 @@ func (dev *Device) GetEndpoint(name string) string {
 	return dev.endpoints[name]
 }
 
-func (dev *Device) buildMethodSOAP(msg string) (gosoap.SoapMessage, error) {
-	doc := etree.NewDocument()
-	if err := doc.ReadFromString(msg); err != nil {
-		//log.Println("Got error")
-
-		return "", err
-	}
-	element := doc.Root()
-
-	soap := gosoap.NewEmptySOAP()
-	soap.AddBodyContent(element)
-
-	return soap, nil
-}
-
 // getEndpoint functions get the target service endpoint in a better way
 func (dev *Device) getEndpoint(endpoint string) (string, error) {
 
@@ -287,7 +265,10 @@ func (dev *Device) SendSoap(endpoint string, xmlRequestBody string) (resp *http.
 	soap.AddStringBodyContent(xmlRequestBody)
 	soap.AddRootNamespaces(Xlmns)
 	if dev.params.AuthMode == UsernameTokenAuth || dev.params.AuthMode == Both {
-		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		if err != nil {
+			return nil, fmt.Errorf("send soap request failed: %w", err)
+		}
 	}
 
 	if dev.params.AuthMode == DigestAuth || dev.params.AuthMode == Both {
@@ -339,7 +320,7 @@ func (dev *Device) CallOnvifFunction(serviceName, functionName string, data []by
 	}
 	defer servResp.Body.Close()
 
-	rsp, err := ioutil.ReadAll(servResp.Body)
+	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +370,10 @@ func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err 
 	soap := gosoap.NewEmptySOAP()
 	soap.AddRootNamespaces(Xlmns)
 	if dev.params.AuthMode == UsernameTokenAuth {
-		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		if err != nil {
+			return nil, fmt.Errorf("send GetSnapshotRequest failed: %w", err)
+		}
 		var req *http.Request
 		req, err = createHttpRequest(http.MethodGet, url, soap.String())
 		if err != nil {
@@ -400,7 +384,10 @@ func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err 
 		resp, err = dev.params.HttpClient.Do(req)
 
 	} else if dev.params.AuthMode == DigestAuth || dev.params.AuthMode == Both {
-		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		if err != nil {
+			return nil, fmt.Errorf("send GetSnapshotRequest failed: %w", err)
+		}
 		resp, err = dev.digestClient.Do(http.MethodGet, url, soap.String())
 
 	} else {

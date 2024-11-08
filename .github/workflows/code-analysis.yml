@@ -1,0 +1,24 @@
+###########################################################
+# Copyright (C) 2022 IOTech Ltd
+###########################################################
+
+name: code-analysis
+on:
+  # Trigger the workflow on pull request,
+  # but only for the v[0-9]+.[0-9]+-branch (e.g. v2.0-branch)
+  pull_request:
+    # By default, a pull_request's activity type is opened, synchronize, or reopened
+    branches:
+      - v[0-9]+.[0-9]+-branch
+      - main
+
+jobs:
+  call-go-lint:
+    uses: IOTechSystems/github-action-workflow/.github/workflows/reusable-golangci-lint.yml@main
+    with:
+      GO_LINT_CONFIG_PATH: .golangci.yml
+  call-sonar-scan:
+    uses: IOTechSystems/github-action-workflow/.github/workflows/reusable-sonarqube-scan.yml@main
+    with:
+      PROJECT_NAME: onvif
+    secrets: inherit

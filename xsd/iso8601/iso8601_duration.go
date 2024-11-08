@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-//Duration of iso8601
+// Duration of iso8601
 type Duration struct {
 	years  string //= number of years
 	months string //= number of months
@@ -16,7 +16,7 @@ type Duration struct {
 	seconds string //= the number of seconds
 }
 
-//NewDuration return duration
+// NewDuration return duration
 func NewDuration(years, months, days, hours, minutes, seconds string) (*Duration, error) {
 	// Pattern for Years, Months, Days, Hours and Minutes components
 	pattern1 := "^$|[0-9]+"
@@ -68,7 +68,7 @@ func NewDuration(years, months, days, hours, minutes, seconds string) (*Duration
 	return &Duration{years: years, months: months, hours: hours, days: days, minutes: minutes, seconds: seconds}, nil
 }
 
-//ISO8601Duration to string
+// ISO8601Duration to string
 func (duration Duration) ISO8601Duration() string {
 	var result string
 	result += "P" // time duration designator

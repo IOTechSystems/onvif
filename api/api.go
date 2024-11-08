@@ -3,7 +3,7 @@ package api
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"path"
 	"reflect"
@@ -14,6 +14,7 @@ import (
 	"github.com/IOTechSystems/onvif/gosoap"
 	"github.com/IOTechSystems/onvif/networking"
 	wsdiscovery "github.com/IOTechSystems/onvif/ws-discovery"
+
 	"github.com/beevik/etree"
 	"github.com/gin-gonic/gin"
 )
@@ -93,7 +94,10 @@ func RunApi() {
 		}
 	})
 
-	router.Run()
+	err := router.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 //func soapHandling(tp interface{}, tags* map[string]string)  {
@@ -146,14 +150,17 @@ func callNecessaryMethod(serviceName, methodName, acceptedData, username, passwo
 	soap := gosoap.NewEmptySOAP()
 	soap.AddStringBodyContent(*resp)
 	soap.AddRootNamespaces(onvif.Xlmns)
-	soap.AddWSSecurity(username, password)
+	err = soap.AddWSSecurity(username, password)
+	if err != nil {
+		return "", fmt.Errorf("call necessary method failed: %w", err)
+	}
 
 	servResp, err := networking.SendSoap(new(http.Client), endpoint, soap.String())
 	if err != nil {
 		return "", err
 	}
 
-	rsp, err := ioutil.ReadAll(servResp.Body)
+	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
 		return "", err
 	}
@@ -315,8 +322,6 @@ func xmlProcessing(tg string) (string, error) {
 	} else {
 		return str[1][0:omitAttr], nil
 	}
-
-	return "", errors.New("something went wrong")
 }
 
 func mapProcessing(mapVar []map[string]string) []map[string]string {
@@ -327,7 +332,7 @@ func mapProcessing(mapVar []map[string]string) []map[string]string {
 				mapVar = append(mapVar[:indx], mapVar[indx+1:]...)
 				indx--
 			}
-			if strings.Index(value, ",attr") != -1 {
+			if strings.Contains(value, ",attr") {
 				mapVar = append(mapVar[:indx], mapVar[indx+1:]...)
 				indx--
 			}
@@ -345,7 +350,7 @@ func soapHandling(tp interface{}, tags *[]map[string]string) {
 	for i := 0; i < s.NumField(); i++ {
 		f := s.Field(i)
 		tmp, err := typeOfT.FieldByName(typeOfT.Field(i).Name)
-		if err == false {
+		if !err {
 			fmt.Println(err)
 		}
 		*tags = append(*tags, map[string]string{typeOfT.Field(i).Name: string(tmp.Tag)})

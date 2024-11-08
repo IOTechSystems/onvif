@@ -47,13 +47,15 @@ import (
 //
 // Response:
 // <tev:PullMessagesResponse><tev:CurrentTime>2021-12-02T06:08:35Z</tev:CurrentTime>
-//   <tev:TerminationTime>2021-12-02T06:18:40Z</tev:TerminationTime>
-//    <wsnt:NotificationMessage><wsnt:Topic Dialect="http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet">tns1:RuleEngine/CellMotionDetector/Motion</wsnt:Topic>
-//     ...
-//    </wsnt:NotificationMessage>
-//  </tev:PullMessagesResponse>
+//
+//	 <tev:TerminationTime>2021-12-02T06:18:40Z</tev:TerminationTime>
+//	  <wsnt:NotificationMessage><wsnt:Topic Dialect="http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet">tns1:RuleEngine/CellMotionDetector/Motion</wsnt:Topic>
+//	   ...
+//	  </wsnt:NotificationMessage>
+//	</tev:PullMessagesResponse>
 //
 // Test Summary:
+//
 //	the TerminationTime increase ten minutes
 func main() {
 	dev, err := onvif.NewDevice(onvif.DeviceParams{
