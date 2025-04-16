@@ -1,6 +1,8 @@
 module github.com/IOTechSystems/onvif
 
 go 1.23
+toolchain go1.24.1
+
 require (
 	github.com/beevik/etree v1.5.0
 	github.com/clbanning/mxj/v2 v2.7.0
@@ -8,7 +10,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/net v0.37.0
+	golang.org/x/net v0.38.0
 )
 
 require (
