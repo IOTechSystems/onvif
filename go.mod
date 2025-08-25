@@ -3,7 +3,7 @@ module github.com/IOTechSystems/onvif
 go 1.23.0
 
 require (
-	github.com/beevik/etree v1.5.1
+	github.com/beevik/etree v1.6.0
 	github.com/clbanning/mxj/v2 v2.7.0
 	github.com/elgs/gostrgen v0.0.0-20220325073726-0c3e00d082f6
 	github.com/gin-gonic/gin v1.10.1
