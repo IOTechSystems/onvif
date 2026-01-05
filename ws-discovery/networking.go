@@ -15,6 +15,7 @@ package wsdiscovery
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -124,7 +125,12 @@ func SendUDPMulticast(msg string, interfaceName string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer c.Close()
+	defer func(c net.PacketConn) {
+		err := c.Close()
+		if err != nil {
+			log.Printf("Failed to close connection, %s", err.Error())
+		}
+	}(c)
 
 	p := ipv4.NewPacketConn(c)
 
