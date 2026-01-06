@@ -2,11 +2,12 @@ package main
 
 import (
 	"encoding/xml"
+	"io"
+	"log"
+
 	"github.com/IOTechSystems/onvif"
 	"github.com/IOTechSystems/onvif/event"
 	"github.com/IOTechSystems/onvif/xsd"
-	"io/ioutil"
-	"log"
 )
 
 // === Geovision ===
@@ -88,7 +89,10 @@ func main() {
 	if err != nil {
 		log.Fatalln("fail to CallMethod:", err)
 	}
-	bs, _ := ioutil.ReadAll(res.Body)
+	bs, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalln("fail to read CallMethod response:", err)
+	}
 
 	log.Printf(">> Result: %+v \n %s", res.StatusCode, bs)
 }

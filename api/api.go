@@ -373,7 +373,7 @@ func ident(mas *[]string) {
 	for _, j := range *mas {
 		buffer += j + " "
 	}
-	buffer = strings.Replace(buffer, "Push Pop ", "PushPop ", -1)
+	buffer = strings.ReplaceAll(buffer, "Push Pop ", "PushPop ")
 	buffer = strings.TrimSpace(buffer)
 	*mas = strings.Split(buffer, " ")
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -56,7 +57,12 @@ func (dc *DigestClient) Do(httpMethod string, endpoint string, soap string) (*ht
 
 	dc.getDigestParts(resp)
 	// We will need to return the response from another request, so defer a close on this one
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Printf("Failed to close io reader, %s", err.Error())
+		}
+	}(resp.Body)
 
 	req, err = createHttpRequest(httpMethod, endpoint, soap)
 	if err != nil {

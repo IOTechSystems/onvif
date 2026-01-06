@@ -2,12 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"log"
 	"path"
 	"regexp"
 	"strings"
-	"testing"
 
 	"github.com/IOTechSystems/onvif"
 	"github.com/IOTechSystems/onvif/device"
@@ -15,10 +14,9 @@ import (
 	"github.com/beevik/etree"
 )
 
-func TestGetAvailableDevicesAtSpecificEthernetInterface(t *testing.T) {
-
-	// client()
-	// runDiscovery("en0")
+func main() {
+	client()
+	runDiscovery("en0")
 	s, _ := wsdiscovery.GetAvailableDevicesAtSpecificEthernetInterface("en0")
 
 	log.Printf("%v", s)
@@ -33,7 +31,11 @@ func client() {
 	log.Printf("output %+v", dev.GetServices())
 
 	res, _ := dev.CallMethod(device.GetUsers{})
-	bs, _ := ioutil.ReadAll(res.Body)
+	bs, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalln("fail to read CallMethod response:", err)
+	}
+
 	log.Printf("output %+v %s", res.StatusCode, bs)
 }
 

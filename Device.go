@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -318,7 +319,12 @@ func (dev *Device) CallOnvifFunction(serviceName, functionName string, data []by
 	if err != nil {
 		return nil, fmt.Errorf("fail to send the '%s' request for the web service '%s', %v", functionName, serviceName, err)
 	}
-	defer servResp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Printf("Failed to close io reader, %s", err.Error())
+		}
+	}(servResp.Body)
 
 	rsp, err := io.ReadAll(servResp.Body)
 	if err != nil {
@@ -369,7 +375,8 @@ func createResponse(function Function, data []byte) (*gosoap.SOAPEnvelope, error
 func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err error) {
 	soap := gosoap.NewEmptySOAP()
 	soap.AddRootNamespaces(Xlmns)
-	if dev.params.AuthMode == UsernameTokenAuth {
+	switch dev.params.AuthMode {
+	case UsernameTokenAuth:
 		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
 		if err != nil {
 			return nil, fmt.Errorf("send GetSnapshotRequest failed: %w", err)
@@ -382,15 +389,13 @@ func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err 
 		// Basic auth might work for some camera
 		req.SetBasicAuth(dev.params.Username, dev.params.Password)
 		resp, err = dev.params.HttpClient.Do(req)
-
-	} else if dev.params.AuthMode == DigestAuth || dev.params.AuthMode == Both {
+	case DigestAuth, Both:
 		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
 		if err != nil {
 			return nil, fmt.Errorf("send GetSnapshotRequest failed: %w", err)
 		}
 		resp, err = dev.digestClient.Do(http.MethodGet, url, soap.String())
-
-	} else {
+	default:
 		var req *http.Request
 		req, err = createHttpRequest(http.MethodGet, url, soap.String())
 		if err != nil {

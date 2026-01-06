@@ -1,5 +1,5 @@
 ###########################################################
-# Copyright (C) 2022 IOTech Ltd
+# Copyright (C) 2022-2026 IOTech Ltd
 ###########################################################
 
 name: code-analysis
@@ -17,3 +17,4 @@ jobs:
     uses: IOTechSystems/github-action-workflow/.github/workflows/reusable-golangci-lint.yml@main
     with:
       GO_LINT_CONFIG_PATH: .golangci.yml
+      GO_LINT_VERSION: v2.5.0

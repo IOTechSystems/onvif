@@ -586,7 +586,7 @@ type NonPositiveInteger int64
 
 func (tp NonPositiveInteger) NewNonPositiveInteger(data int64) (NonPositiveInteger, error) {
 	if data > 0 {
-		return 0, errors.New("Value must be less or equal to 0")
+		return 0, errors.New("value must be less or equal to 0")
 	}
 	return NonPositiveInteger(data), nil
 }
@@ -595,7 +595,7 @@ type NegativeInteger int64
 
 func (tp NegativeInteger) NewNegativeInteger(data int64) (NegativeInteger, error) {
 	if data >= 0 {
-		return 0, errors.New("Value must be less than 0")
+		return 0, errors.New("value must be less than 0")
 	}
 	return NegativeInteger(data), nil
 }
@@ -628,7 +628,7 @@ type NonNegativeInteger int64
 
 func (tp NonNegativeInteger) NewNonNegativeInteger(data int64) (NonNegativeInteger, error) {
 	if data > 0 {
-		return 0, errors.New("Value must be more or equal to 0")
+		return 0, errors.New("value must be more or equal to 0")
 	}
 	return NonNegativeInteger(data), nil
 }
@@ -661,7 +661,7 @@ type PositiveInteger int64
 
 func (tp PositiveInteger) NewPositiveInteger(data int64) (PositiveInteger, error) {
 	if data >= 0 {
-		return 0, errors.New("Value must be more than 0")
+		return 0, errors.New("value must be more than 0")
 	}
 	return PositiveInteger(data), nil
 }
