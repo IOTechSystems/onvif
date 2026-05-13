@@ -1638,8 +1638,8 @@ support streaming video data of such a profile.<br/>
 		<wsdl:operation name="GetVideoEncoderConfigurationOptions">
 			<wsdl:documentation>This operation returns the available options (supported values and ranges for video encoder 
 				configuration parameters) when the video encoder parameters are reconfigured. <br/>
-				For JPEG, MPEG4 and H264 extension elements have been defined that provide additional information. A device must provide the 
-				XxxOption information for all encodings supported and should additionally provide the corresponding XxxOption2 information.<br/>
+				The response is a list of VideoEncoder2ConfigurationOptions entries, one per supported encoding type (e.g. H264, H265, JPEG).
+				Each entry identifies its codec via the Encoding field and carries the supported ranges for that codec (resolutions, frame rates, bitrate, GOP length, profiles, etc.).<br/>
 				This response contains the available video encoder configuration options. If a video encoder configuration is specified, 
 				the options shall concern that particular configuration. If a media profile is specified, the options shall be 
 				compatible with that media profile. If no tokens are specified, the options shall be considered generic for the device.

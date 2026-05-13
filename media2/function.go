@@ -35,6 +35,24 @@ func (_ *GetProfilesFunction) Response() interface{} {
 	return &GetProfilesResponse{}
 }
 
+type GetVideoEncoderConfigurationOptionsFunction struct{}
+
+func (_ *GetVideoEncoderConfigurationOptionsFunction) Request() interface{} {
+	return &GetVideoEncoderConfigurationOptions{}
+}
+func (_ *GetVideoEncoderConfigurationOptionsFunction) Response() interface{} {
+	return &GetVideoEncoderConfigurationOptionsResponse{}
+}
+
+type GetVideoEncoderConfigurationsFunction struct{}
+
+func (_ *GetVideoEncoderConfigurationsFunction) Request() interface{} {
+	return &GetVideoEncoderConfigurations{}
+}
+func (_ *GetVideoEncoderConfigurationsFunction) Response() interface{} {
+	return &GetVideoEncoderConfigurationsResponse{}
+}
+
 type RemoveConfigurationFunction struct{}
 
 func (_ *RemoveConfigurationFunction) Request() interface{} {
@@ -42,4 +60,13 @@ func (_ *RemoveConfigurationFunction) Request() interface{} {
 }
 func (_ *RemoveConfigurationFunction) Response() interface{} {
 	return &RemoveConfigurationResponse{}
+}
+
+type SetVideoEncoderConfigurationFunction struct{}
+
+func (_ *SetVideoEncoderConfigurationFunction) Request() interface{} {
+	return &SetVideoEncoderConfiguration{}
+}
+func (_ *SetVideoEncoderConfigurationFunction) Response() interface{} {
+	return &SetVideoEncoderConfigurationResponse{}
 }
