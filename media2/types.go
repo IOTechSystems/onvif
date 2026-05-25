@@ -7,6 +7,33 @@ import (
 	"github.com/IOTechSystems/onvif/xsd/onvif"
 )
 
+type GetVideoEncoderConfigurations struct {
+	XMLName            string               `xml:"tr2:GetVideoEncoderConfigurations"`
+	ConfigurationToken onvif.ReferenceToken `xml:"tr2:ConfigurationToken,omitempty"`
+	ProfileToken       onvif.ReferenceToken `xml:"tr2:ProfileToken,omitempty"`
+}
+
+type GetVideoEncoderConfigurationsResponse struct {
+	Configurations []onvif.VideoEncoder2Configuration
+}
+
+type SetVideoEncoderConfiguration struct {
+	XMLName       string                                  `xml:"tr2:SetVideoEncoderConfiguration"`
+	Configuration onvif.VideoEncoder2ConfigurationRequest `xml:"tr2:Configuration"`
+}
+
+type SetVideoEncoderConfigurationResponse struct{}
+
+type GetVideoEncoderConfigurationOptions struct {
+	XMLName            string               `xml:"tr2:GetVideoEncoderConfigurationOptions"`
+	ConfigurationToken onvif.ReferenceToken `xml:"tr2:ConfigurationToken,omitempty"`
+	ProfileToken       onvif.ReferenceToken `xml:"tr2:ProfileToken,omitempty"`
+}
+
+type GetVideoEncoderConfigurationOptionsResponse struct {
+	Options []onvif.VideoEncoder2ConfigurationOptions
+}
+
 type GetProfiles struct {
 	XMLName string `xml:"tr2:GetProfiles"`
 }

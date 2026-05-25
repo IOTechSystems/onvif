@@ -468,6 +468,20 @@ type VideoRateControlRequest struct {
 	BitrateLimit     *xsd.Int `xml:"onvif:BitrateLimit,omitempty"`
 }
 
+type VideoRateControl2 struct {
+	FrameRateLimit   *xsd.Float   `json:",omitempty"`
+	EncodingInterval *xsd.Int     `json:",omitempty"`
+	BitrateLimit     *xsd.Int     `json:",omitempty"`
+	ConstantBitRate  *xsd.Boolean `json:",omitempty"`
+}
+
+type VideoRateControl2Request struct {
+	FrameRateLimit   *xsd.Float   `xml:"onvif:FrameRateLimit,omitempty"`
+	EncodingInterval *xsd.Int     `xml:"onvif:EncodingInterval,omitempty"`
+	BitrateLimit     *xsd.Int     `xml:"onvif:BitrateLimit,omitempty"`
+	ConstantBitRate  *xsd.Boolean `xml:"onvif:ConstantBitRate,omitempty"`
+}
+
 type Mpeg4Configuration struct {
 	GovLength    *xsd.Int      `json:",omitempty"`
 	Mpeg4Profile *Mpeg4Profile `json:",omitempty"`
@@ -491,6 +505,28 @@ type H264ConfigurationRequest struct {
 }
 
 type H264Profile xsd.String
+
+type VideoEncoder2Configuration struct {
+	ConfigurationEntity
+	Encoding    *xsd.String             `json:",omitempty"`
+	Resolution  *VideoResolution        `json:",omitempty"`
+	RateControl *VideoRateControl2      `json:",omitempty"`
+	Multicast   *MulticastConfiguration `json:",omitempty"`
+	Quality     float64                 `json:",omitempty"`
+	GovLength   *xsd.Int                `json:",omitempty"`
+	Profile     *xsd.String             `json:",omitempty"`
+}
+
+type VideoEncoder2ConfigurationRequest struct {
+	ConfigurationEntityRequest
+	Encoding    *xsd.String                    `xml:"onvif:Encoding,omitempty"`
+	Resolution  *VideoResolutionRequest        `xml:"onvif:Resolution,omitempty"`
+	RateControl *VideoRateControl2Request      `xml:"onvif:RateControl,omitempty"`
+	Multicast   *MulticastConfigurationRequest `xml:"onvif:Multicast,omitempty"`
+	Quality     *xsd.Float                     `xml:"onvif:Quality,omitempty"`
+	GovLength   *xsd.Int                       `xml:"onvif:GovLength,omitempty"`
+	Profile     *xsd.String                    `xml:"onvif:Profile,omitempty"`
+}
 
 type MulticastConfiguration struct {
 	Address   *IPAddress   `json:",omitempty"`
@@ -866,6 +902,18 @@ type H264Options2 struct {
 }
 
 type VideoEncoderOptionsExtension2 xsd.AnyType
+
+type VideoEncoder2ConfigurationOptions struct {
+	Encoding                 *xsd.String       `json:",omitempty"`
+	QualityRange             *FloatRange       `json:",omitempty"`
+	ResolutionsAvailable     []VideoResolution `json:",omitempty"`
+	BitrateRange             *IntRange         `json:",omitempty"`
+	FrameRateRange           *FloatRange       `json:",omitempty"`
+	EncodingIntervalRange    *IntRange         `json:",omitempty"`
+	GovLengthRange           *IntRange         `json:",omitempty"`
+	ProfilesSupported        []xsd.String      `json:",omitempty"`
+	ConstantBitRateSupported *xsd.Boolean      `json:",omitempty"`
+}
 
 type AudioSourceConfigurationOptions struct {
 	InputTokensAvailable ReferenceToken
