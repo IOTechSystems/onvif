@@ -21,7 +21,7 @@ type GetImagingSettings struct {
 }
 
 type GetImagingSettingsResponse struct {
-	ImagingSettings onvif.ImagingSettings20 `xml:"timg:ImagingSettings"`
+	ImagingSettings onvif.ImagingSettings20
 }
 
 type SetImagingSettings struct {
