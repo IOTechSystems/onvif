@@ -471,9 +471,9 @@ type GetCompatibleAudioDecoderConfigurationsResponse struct {
 }
 
 type SetVideoSourceConfiguration struct {
-	XMLName          string                         `xml:"trt:SetVideoSourceConfiguration"`
-	Configuration    onvif.VideoSourceConfiguration `xml:"trt:Configuration"`
-	ForcePersistence xsd.Boolean                    `xml:"trt:ForcePersistence"`
+	XMLName          string                                `xml:"trt:SetVideoSourceConfiguration"`
+	Configuration    onvif.VideoSourceConfigurationRequest `xml:"trt:Configuration"`
+	ForcePersistence xsd.Boolean                           `xml:"trt:ForcePersistence"`
 }
 
 type SetVideoSourceConfigurationResponse struct {

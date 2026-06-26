@@ -400,6 +400,22 @@ type VideoSourceConfigurationExtension2 struct {
 	SceneOrientation SceneOrientation `xml:"SceneOrientation"`
 }
 
+type VideoSourceConfigurationRequest struct {
+	ConfigurationEntityRequest
+	SourceToken *ReferenceToken                           `xml:"onvif:SourceToken,omitempty"`
+	Bounds      *IntRectangle                             `xml:"onvif:Bounds,omitempty"`
+	Extension   *VideoSourceConfigurationExtensionRequest `xml:"onvif:Extension,omitempty"`
+}
+
+type VideoSourceConfigurationExtensionRequest struct {
+	Rotate *RotateRequest `xml:"onvif:Rotate,omitempty"`
+}
+
+type RotateRequest struct {
+	Mode   RotateMode `xml:"onvif:Mode"`
+	Degree xsd.Int    `xml:"onvif:Degree,omitempty"`
+}
+
 type LensDescription struct {
 	FocalLength float64        `xml:"FocalLength,attr"`
 	Offset      LensOffset     `xml:"Offset"`
