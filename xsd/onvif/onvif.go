@@ -488,14 +488,14 @@ type VideoRateControl2 struct {
 	FrameRateLimit   *xsd.Float   `json:",omitempty"`
 	EncodingInterval *xsd.Int     `json:",omitempty"`
 	BitrateLimit     *xsd.Int     `json:",omitempty"`
-	ConstantBitRate  *xsd.Boolean `json:",omitempty"`
+	ConstantBitRate  *xsd.Boolean `json:",omitempty" xml:"ConstantBitRate,attr,omitempty"`
 }
 
 type VideoRateControl2Request struct {
 	FrameRateLimit   *xsd.Float   `xml:"onvif:FrameRateLimit,omitempty"`
 	EncodingInterval *xsd.Int     `xml:"onvif:EncodingInterval,omitempty"`
 	BitrateLimit     *xsd.Int     `xml:"onvif:BitrateLimit,omitempty"`
-	ConstantBitRate  *xsd.Boolean `xml:"onvif:ConstantBitRate,omitempty"`
+	ConstantBitRate  *xsd.Boolean `xml:"ConstantBitRate,attr,omitempty"`
 }
 
 type Mpeg4Configuration struct {
@@ -529,8 +529,8 @@ type VideoEncoder2Configuration struct {
 	RateControl *VideoRateControl2      `json:",omitempty"`
 	Multicast   *MulticastConfiguration `json:",omitempty"`
 	Quality     float64                 `json:",omitempty"`
-	GovLength   *xsd.Int                `json:",omitempty"`
-	Profile     *xsd.String             `json:",omitempty"`
+	GovLength   *xsd.Int                `json:",omitempty" xml:"GovLength,attr,omitempty"`
+	Profile     *xsd.String             `json:",omitempty" xml:"Profile,attr,omitempty"`
 }
 
 type VideoEncoder2ConfigurationRequest struct {
@@ -540,8 +540,8 @@ type VideoEncoder2ConfigurationRequest struct {
 	RateControl *VideoRateControl2Request      `xml:"onvif:RateControl,omitempty"`
 	Multicast   *MulticastConfigurationRequest `xml:"onvif:Multicast,omitempty"`
 	Quality     *xsd.Float                     `xml:"onvif:Quality,omitempty"`
-	GovLength   *xsd.Int                       `xml:"onvif:GovLength,omitempty"`
-	Profile     *xsd.String                    `xml:"onvif:Profile,omitempty"`
+	GovLength   *xsd.Int                       `xml:"GovLength,attr,omitempty"`
+	Profile     *xsd.String                    `xml:"Profile,attr,omitempty"`
 }
 
 type MulticastConfiguration struct {

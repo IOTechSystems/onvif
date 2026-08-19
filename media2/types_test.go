@@ -132,6 +132,8 @@ func TestMarshalSetVideoEncoderConfigurationRequest(t *testing.T) {
 	height := xsd.Int(1080)
 	frameRate := xsd.Float(25)
 
+	constantBitRate := xsd.Boolean(false)
+
 	request := SetVideoEncoderConfiguration{
 		Configuration: onvif.VideoEncoder2ConfigurationRequest{
 			ConfigurationEntityRequest: onvif.ConfigurationEntityRequest{
@@ -143,20 +145,22 @@ func TestMarshalSetVideoEncoderConfigurationRequest(t *testing.T) {
 				Height: &height,
 			},
 			RateControl: &onvif.VideoRateControl2Request{
-				FrameRateLimit: &frameRate,
+				FrameRateLimit:  &frameRate,
+				ConstantBitRate: &constantBitRate,
 			},
 			GovLength: &govLength,
 			Profile:   &profile,
 		},
 	}
-	expected := fmt.Sprintf(`<tr2:SetVideoEncoderConfiguration><tr2:Configuration token="%s"><onvif:Encoding>%s</onvif:Encoding><onvif:Resolution><onvif:Width>%d</onvif:Width><onvif:Height>%d</onvif:Height></onvif:Resolution><onvif:RateControl><onvif:FrameRateLimit>%g</onvif:FrameRateLimit></onvif:RateControl><onvif:GovLength>%d</onvif:GovLength><onvif:Profile>%s</onvif:Profile></tr2:Configuration></tr2:SetVideoEncoderConfiguration>`,
+	expected := fmt.Sprintf(`<tr2:SetVideoEncoderConfiguration><tr2:Configuration token="%s" GovLength="%d" Profile="%s"><onvif:Encoding>%s</onvif:Encoding><onvif:Resolution><onvif:Width>%d</onvif:Width><onvif:Height>%d</onvif:Height></onvif:Resolution><onvif:RateControl ConstantBitRate="%t"><onvif:FrameRateLimit>%g</onvif:FrameRateLimit></onvif:RateControl></tr2:Configuration></tr2:SetVideoEncoderConfiguration>`,
 		request.Configuration.Token,
+		*request.Configuration.GovLength,
+		*request.Configuration.Profile,
 		*request.Configuration.Encoding,
 		*request.Configuration.Resolution.Width,
 		*request.Configuration.Resolution.Height,
-		*request.Configuration.RateControl.FrameRateLimit,
-		*request.Configuration.GovLength,
-		*request.Configuration.Profile)
+		*request.Configuration.RateControl.ConstantBitRate,
+		*request.Configuration.RateControl.FrameRateLimit)
 
 	data, err := xml.Marshal(request)
 	require.NoError(t, err)
@@ -183,26 +187,26 @@ func TestUnmarshalGetVideoEncoderConfigurationsResponse(t *testing.T) {
 	config1Height := xsd.Int(1080)
 	config1GovLength := xsd.Int(30)
 	config1Profile := xsd.String("Main")
+	config1ConstantBitRate := xsd.Boolean(false)
 	config2Ref := "enc_2"
 	config2Encoding := xsd.String("H264")
 
 	responseData := fmt.Sprintf(`
 		<tr2:GetVideoEncoderConfigurationsResponse>
-			<tr2:Configurations token="%s">
+			<tr2:Configurations token="%s" GovLength="%d" Profile="%s">
 				<tt:Name>%s</tt:Name>
 				<tt:Encoding>%s</tt:Encoding>
 				<tt:Resolution>
 					<tt:Width>%d</tt:Width>
 					<tt:Height>%d</tt:Height>
 				</tt:Resolution>
-				<tt:GovLength>%d</tt:GovLength>
-				<tt:Profile>%s</tt:Profile>
+				<tt:RateControl ConstantBitRate="%t"></tt:RateControl>
 			</tr2:Configurations>
 			<tr2:Configurations token="%s">
 				<tt:Encoding>%s</tt:Encoding>
 			</tr2:Configurations>
 		</tr2:GetVideoEncoderConfigurationsResponse>
-	`, config1Ref, config1Name, config1Encoding, config1Width, config1Height, config1GovLength, config1Profile,
+	`, config1Ref, config1GovLength, config1Profile, config1Name, config1Encoding, config1Width, config1Height, config1ConstantBitRate,
 		config2Ref, config2Encoding)
 
 	response := &GetVideoEncoderConfigurationsResponse{}
@@ -218,6 +222,8 @@ func TestUnmarshalGetVideoEncoderConfigurationsResponse(t *testing.T) {
 	assert.Equal(t, response.Configurations[0].Resolution.Height, &config1Height)
 	assert.Equal(t, response.Configurations[0].GovLength, &config1GovLength)
 	assert.Equal(t, response.Configurations[0].Profile, &config1Profile)
+	require.NotNil(t, response.Configurations[0].RateControl)
+	assert.Equal(t, response.Configurations[0].RateControl.ConstantBitRate, &config1ConstantBitRate)
 	assert.Equal(t, response.Configurations[1].Token, onvif.ReferenceToken(config2Ref))
 	assert.Equal(t, response.Configurations[1].Encoding, &config2Encoding)
 }
