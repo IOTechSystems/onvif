@@ -309,3 +309,57 @@ func TestMarshalGetStreamUri(t *testing.T) {
 
 	assert.Equal(t, `<tr2:GetStreamUri><tr2:Protocol>RTSP</tr2:Protocol><tr2:ProfileToken>Profilee8a6</tr2:ProfileToken></tr2:GetStreamUri>`, string(output))
 }
+
+func TestMarshalGetProfiles(t *testing.T) {
+	request := GetProfiles{}
+	output, err := xml.Marshal(request)
+	require.NoError(t, err)
+	assert.Equal(t, `<tr2:GetProfiles></tr2:GetProfiles>`, string(output))
+}
+
+func TestMarshalGetProfilesWithTypeAndToken(t *testing.T) {
+	request := GetProfiles{
+		Token: onvif.ReferenceToken("Profilee8a6"),
+		Type:  []xsd.String{"All", "VideoEncoder"},
+	}
+	output, err := xml.Marshal(request)
+	require.NoError(t, err)
+	assert.Equal(t, `<tr2:GetProfiles><tr2:Token>Profilee8a6</tr2:Token><tr2:Type>All</tr2:Type><tr2:Type>VideoEncoder</tr2:Type></tr2:GetProfiles>`, string(output))
+}
+
+func TestUnmarshalGetProfilesResponseWithConfigurations(t *testing.T) {
+	profileToken := "Profilee8a6"
+	encoderToken := "VideoEnc_1"
+	width := 1920
+	height := 1080
+	GetProfilesResponseData := fmt.Sprintf(`
+		<tr2:GetProfilesResponse>
+			<tr2:Profiles token="%s" fixed="false">
+				<tr2:Name>MainStream</tr2:Name>
+				<tr2:Configurations>
+					<tr2:VideoEncoder token="%s">
+						<tt:Encoding>H264</tt:Encoding>
+						<tt:Resolution>
+							<tt:Width>%d</tt:Width>
+							<tt:Height>%d</tt:Height>
+						</tt:Resolution>
+					</tr2:VideoEncoder>
+				</tr2:Configurations>
+			</tr2:Profiles>
+		</tr2:GetProfilesResponse>
+	`, profileToken, encoderToken, width, height)
+
+	getProfilesResponse := &GetProfilesResponse{}
+	err := xml.Unmarshal([]byte(GetProfilesResponseData), getProfilesResponse)
+	require.NoError(t, err)
+
+	require.Len(t, getProfilesResponse.Profiles, 1)
+	profile := getProfilesResponse.Profiles[0]
+	assert.Equal(t, profileToken, profile.Token)
+	require.NotNil(t, profile.Configurations)
+	require.NotNil(t, profile.Configurations.VideoEncoder)
+	assert.Equal(t, onvif.ReferenceToken(encoderToken), profile.Configurations.VideoEncoder.Token)
+	require.NotNil(t, profile.Configurations.VideoEncoder.Resolution)
+	assert.Equal(t, width, int(*profile.Configurations.VideoEncoder.Resolution.Width))
+	assert.Equal(t, height, int(*profile.Configurations.VideoEncoder.Resolution.Height))
+}

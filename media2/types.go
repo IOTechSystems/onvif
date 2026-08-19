@@ -35,7 +35,9 @@ type GetVideoEncoderConfigurationOptionsResponse struct {
 }
 
 type GetProfiles struct {
-	XMLName string `xml:"tr2:GetProfiles"`
+	XMLName string               `xml:"tr2:GetProfiles"`
+	Token   onvif.ReferenceToken `xml:"tr2:Token,omitempty"`
+	Type    []xsd.String         `xml:"tr2:Type,omitempty"`
 }
 
 type GetProfilesResponse struct {
@@ -43,9 +45,17 @@ type GetProfilesResponse struct {
 }
 
 type Profile struct {
-	Token string `xml:"token,attr"`
-	Fixed bool   `xml:"fixed,attr"`
-	Name  string
+	Token          string `xml:"token,attr"`
+	Fixed          bool   `xml:"fixed,attr"`
+	Name           string
+	Configurations *ProfileConfigurations `xml:"Configurations,omitempty"`
+}
+
+// ProfileConfigurations is returned per-profile when GetProfiles is called with
+// a Type filter; each element mirrors the corresponding GetXConfigurations
+// response's Configurations element.
+type ProfileConfigurations struct {
+	VideoEncoder *onvif.VideoEncoder2Configuration `xml:"VideoEncoder,omitempty"`
 }
 
 type GetAnalyticsConfigurations struct {
