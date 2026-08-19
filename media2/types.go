@@ -118,3 +118,21 @@ type Configuration struct {
 	Type    *xsd.String `xml:"tr2:Type,omitempty"`
 	Token   *xsd.String `xml:"tr2:Token,omitempty"`
 }
+
+// GetStreamUri and its properties are defined in the Onvif specification:
+// https://www.onvif.org/ver20/media/wsdl/media.wsdl#op.GetStreamUri
+type GetStreamUri struct {
+	XMLName      string               `xml:"tr2:GetStreamUri"`
+	Protocol     string               `xml:"tr2:Protocol"`
+	ProfileToken onvif.ReferenceToken `xml:"tr2:ProfileToken"`
+}
+
+// GetStreamUriResponse holds the ver20 response. The Media2 WSDL returns a bare
+// Uri element (unlike ver10, which wraps a tt:MediaUri); the remaining MediaUri
+// fields are accepted as optional for devices that still send them.
+type GetStreamUriResponse struct {
+	Uri                 string
+	InvalidAfterConnect bool
+	InvalidAfterReboot  bool
+	Timeout             string
+}

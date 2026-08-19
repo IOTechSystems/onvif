@@ -240,6 +240,7 @@ var Media2FunctionMap = map[string]Function{
 	AddConfiguration:                    &media2.AddConfigurationFunction{},
 	GetAnalyticsConfigurations:          &media2.GetAnalyticsConfigurationsFunction{},
 	GetProfiles:                         &media2.GetProfilesFunction{},
+	GetStreamUri:                        &media2.GetStreamUriFunction{},
 	GetVideoEncoderConfigurationOptions: &media2.GetVideoEncoderConfigurationOptionsFunction{},
 	GetVideoEncoderConfigurations:       &media2.GetVideoEncoderConfigurationsFunction{},
 	RemoveConfiguration:                 &media2.RemoveConfigurationFunction{},

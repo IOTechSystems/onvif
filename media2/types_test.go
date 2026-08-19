@@ -282,3 +282,30 @@ func TestMarshalRemoveConfigurationRequest(t *testing.T) {
 
 	assert.Equal(t, expected, string(data))
 }
+
+func TestUnmarshalGetStreamUriResponse(t *testing.T) {
+	uri := "rtsp://192.168.1.64:554/live1s1.sdp"
+	getStreamUriResponseData := fmt.Sprintf(`
+		<tr2:GetStreamUriResponse xmlns:tr2="http://www.onvif.org/ver20/media/wsdl">
+			<tr2:Uri>%s</tr2:Uri>
+		</tr2:GetStreamUriResponse>
+	`, uri)
+
+	getStreamUriResponse := &GetStreamUriResponse{}
+	err := xml.Unmarshal([]byte(getStreamUriResponseData), getStreamUriResponse)
+	require.NoError(t, err)
+
+	assert.Equal(t, uri, getStreamUriResponse.Uri)
+}
+
+func TestMarshalGetStreamUri(t *testing.T) {
+	request := GetStreamUri{
+		Protocol:     "RTSP",
+		ProfileToken: onvif.ReferenceToken("Profilee8a6"),
+	}
+
+	output, err := xml.Marshal(request)
+	require.NoError(t, err)
+
+	assert.Equal(t, `<tr2:GetStreamUri><tr2:Protocol>RTSP</tr2:Protocol><tr2:ProfileToken>Profilee8a6</tr2:ProfileToken></tr2:GetStreamUri>`, string(output))
+}

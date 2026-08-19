@@ -70,3 +70,12 @@ func (_ *SetVideoEncoderConfigurationFunction) Request() interface{} {
 func (_ *SetVideoEncoderConfigurationFunction) Response() interface{} {
 	return &SetVideoEncoderConfigurationResponse{}
 }
+
+type GetStreamUriFunction struct{}
+
+func (_ *GetStreamUriFunction) Request() interface{} {
+	return &GetStreamUri{}
+}
+func (_ *GetStreamUriFunction) Response() interface{} {
+	return &GetStreamUriResponse{}
+}
