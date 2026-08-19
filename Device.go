@@ -160,6 +160,62 @@ func (dev *Device) getSupportedServices(resp *http.Response) {
 	}
 }
 
+// namespaceToWebService maps the ONVIF WSDL namespaces reported by GetServices
+// to the web service keys used to key dev.endpoints (see addEndpoint).
+var namespaceToWebService = map[string]string{
+	"http://www.onvif.org/ver10/device/wsdl":    DeviceWebService,
+	"http://www.onvif.org/ver10/media/wsdl":     MediaWebService,
+	"http://www.onvif.org/ver20/media/wsdl":     Media2WebService,
+	"http://www.onvif.org/ver10/events/wsdl":    EventWebService,
+	"http://www.onvif.org/ver20/ptz/wsdl":       PTZWebService,
+	"http://www.onvif.org/ver20/imaging/wsdl":   ImagingWebService,
+	"http://www.onvif.org/ver20/analytics/wsdl": AnalyticsWebService,
+	"http://www.onvif.org/ver10/recording/wsdl": RecordingWebService,
+}
+
+// getServicesFromGetServices parses a tds:GetServices response and overlays the
+// reported services onto dev.endpoints, keyed the same way getSupportedServices
+// keys GetCapabilities results. GetServices is authoritative for the XAddrs it
+// reports, but it is only ever an overlay: namespaces absent from this response
+// (and namespaces this map doesn't recognize) keep whatever GetCapabilities
+// already discovered for them.
+func (dev *Device) getServicesFromGetServices(resp *http.Response) {
+	doc := etree.NewDocument()
+
+	data, _ := io.ReadAll(resp.Body)
+
+	if err := doc.ReadFromBytes(data); err != nil {
+		return
+	}
+
+	services := doc.FindElements("./Envelope/Body/GetServicesResponse/Service")
+	for _, s := range services {
+		namespaceEl := s.FindElement("Namespace")
+		xaddrEl := s.FindElement("XAddr")
+		if namespaceEl == nil || xaddrEl == nil {
+			continue
+		}
+		webService, ok := namespaceToWebService[namespaceEl.Text()]
+		if !ok {
+			continue
+		}
+		dev.addEndpoint(webService, xaddrEl.Text())
+	}
+}
+
+// fillMediaFallback makes Media2 reuse Media's endpoint only when neither
+// GetServices nor GetCapabilities reported a distinct Media2 (ver20 media)
+// endpoint. Some older/simpler cameras genuinely share one endpoint for both.
+func (dev *Device) fillMediaFallback() {
+	media2Key := strings.ToLower(Media2WebService)
+	if _, ok := dev.endpoints[media2Key]; ok {
+		return
+	}
+	if mediaURL, ok := dev.endpoints[strings.ToLower(MediaWebService)]; ok {
+		dev.endpoints[media2Key] = mediaURL
+	}
+}
+
 // NewDevice function construct a ONVIF Device entity
 func NewDevice(params DeviceParams) (*Device, error) {
 	dev := new(Device)
@@ -181,7 +237,31 @@ func NewDevice(params DeviceParams) (*Device, error) {
 	}
 
 	dev.getSupportedServices(resp)
+	closeBody(resp)
+
+	// GetServices is the modern replacement for GetCapabilities and is the only
+	// call that can report a genuinely distinct Media2 (ver20 media) XAddr, which
+	// GetCapabilities cannot express. Devices predating it simply fault here and
+	// keep the GetCapabilities results untouched.
+	getServices := device.GetServices{IncludeCapability: true}
+	if servicesResp, err := dev.CallMethod(getServices); err == nil {
+		if servicesResp.StatusCode == http.StatusOK {
+			dev.getServicesFromGetServices(servicesResp)
+		}
+		closeBody(servicesResp)
+	}
+
+	dev.fillMediaFallback()
 	return dev, nil
+}
+
+func closeBody(resp *http.Response) {
+	if resp == nil || resp.Body == nil {
+		return
+	}
+	if err := resp.Body.Close(); err != nil {
+		log.Printf("Failed to close response body, %s", err.Error())
+	}
 }
 
 func (dev *Device) addEndpoint(Key, Value string) {
@@ -196,11 +276,6 @@ func (dev *Device) addEndpoint(Key, Value string) {
 	}
 
 	dev.endpoints[lowCaseKey] = Value
-
-	if lowCaseKey == strings.ToLower(MediaWebService) {
-		// Media2 uses the same endpoint but different XML name space
-		dev.endpoints[strings.ToLower(Media2WebService)] = Value
-	}
 }
 
 // GetEndpoint returns specific ONVIF service endpoint address
