@@ -60,9 +60,9 @@ type GetConfigurationsResponse struct {
 }
 
 type SetConfiguration struct {
-	XMLName          string                 `xml:"tptz:SetConfiguration"`
-	PTZConfiguration onvif.PTZConfiguration `xml:"tptz:PTZConfiguration"`
-	ForcePersistence xsd.Boolean            `xml:"tptz:ForcePersistence"`
+	XMLName          string                        `xml:"tptz:SetConfiguration"`
+	PTZConfiguration onvif.PTZConfigurationRequest `xml:"tptz:PTZConfiguration"`
+	ForcePersistence xsd.Boolean                   `xml:"tptz:ForcePersistence"`
 }
 
 type SetConfigurationResponse struct {
@@ -117,19 +117,19 @@ type RemovePresetResponse struct {
 }
 
 type GotoPreset struct {
-	XMLName      string                `xml:"tptz:GotoPreset,omitempty"`
-	ProfileToken *onvif.ReferenceToken `xml:"tptz:ProfileToken,omitempty"`
-	PresetToken  *onvif.ReferenceToken `xml:"tptz:PresetToken,omitempty"`
-	Speed        *onvif.PTZSpeed       `xml:"tptz:Speed,omitempty"`
+	XMLName      string                 `xml:"tptz:GotoPreset,omitempty"`
+	ProfileToken *onvif.ReferenceToken  `xml:"tptz:ProfileToken,omitempty"`
+	PresetToken  *onvif.ReferenceToken  `xml:"tptz:PresetToken,omitempty"`
+	Speed        *onvif.PTZSpeedRequest `xml:"tptz:Speed,omitempty"`
 }
 
 type GotoPresetResponse struct {
 }
 
 type GotoHomePosition struct {
-	XMLName      string                `xml:"tptz:GotoHomePosition"`
-	ProfileToken *onvif.ReferenceToken `xml:"tptz:ProfileToken,omitempty"`
-	Speed        *onvif.PTZSpeed       `xml:"tptz:Speed,omitempty"`
+	XMLName      string                 `xml:"tptz:GotoHomePosition"`
+	ProfileToken *onvif.ReferenceToken  `xml:"tptz:ProfileToken,omitempty"`
+	Speed        *onvif.PTZSpeedRequest `xml:"tptz:Speed,omitempty"`
 }
 
 type GotoHomePositionResponse struct {
@@ -144,10 +144,10 @@ type SetHomePositionResponse struct {
 }
 
 type ContinuousMove struct {
-	XMLName      string                `xml:"tptz:ContinuousMove"`
-	ProfileToken *onvif.ReferenceToken `xml:"tptz:ProfileToken,omitempty"`
-	Velocity     *onvif.PTZSpeed       `xml:"tptz:Velocity,omitempty"`
-	Timeout      *xsd.Duration         `xml:"tptz:Timeout,omitempty"`
+	XMLName      string                 `xml:"tptz:ContinuousMove"`
+	ProfileToken *onvif.ReferenceToken  `xml:"tptz:ProfileToken,omitempty"`
+	Velocity     *onvif.PTZSpeedRequest `xml:"tptz:Velocity,omitempty"`
+	Timeout      *xsd.Duration          `xml:"tptz:Timeout,omitempty"`
 }
 
 type ContinuousMoveResponse struct {
@@ -193,12 +193,12 @@ type AbsoluteMoveResponse struct {
 }
 
 type GeoMove struct {
-	XMLName      string               `xml:"tptz:GeoMove"`
-	ProfileToken onvif.ReferenceToken `xml:"tptz:ProfileToken"`
-	Target       onvif.GeoLocation    `xml:"tptz:Target"`
-	Speed        onvif.PTZSpeed       `xml:"tptz:Speed"`
-	AreaHeight   xsd.Float            `xml:"tptz:AreaHeight"`
-	AreaWidth    xsd.Float            `xml:"tptz:AreaWidth"`
+	XMLName      string                `xml:"tptz:GeoMove"`
+	ProfileToken onvif.ReferenceToken  `xml:"tptz:ProfileToken"`
+	Target       onvif.GeoLocation     `xml:"tptz:Target"`
+	Speed        onvif.PTZSpeedRequest `xml:"tptz:Speed"`
+	AreaHeight   xsd.Float             `xml:"tptz:AreaHeight"`
+	AreaWidth    xsd.Float             `xml:"tptz:AreaWidth"`
 }
 
 type GeoMoveResponse struct {

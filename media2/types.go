@@ -123,9 +123,12 @@ type RemoveConfiguration struct {
 
 type RemoveConfigurationResponse struct{}
 
+// Configuration mirrors tr2:ConfigurationRef, whose Type is required
+// (minOccurs defaults to 1) while Token is minOccurs="0" -- omitting Token asks
+// the device to pick a configuration of that type itself.
 type Configuration struct {
 	XMLName xsd.String  `xml:"tr2:Configuration"`
-	Type    *xsd.String `xml:"tr2:Type,omitempty"`
+	Type    xsd.String  `xml:"tr2:Type"`
 	Token   *xsd.String `xml:"tr2:Token,omitempty"`
 }
 

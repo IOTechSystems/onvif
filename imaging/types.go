@@ -25,10 +25,10 @@ type GetImagingSettingsResponse struct {
 }
 
 type SetImagingSettings struct {
-	XMLName          string                  `xml:"timg:SetImagingSettings"`
-	VideoSourceToken onvif.ReferenceToken    `xml:"timg:VideoSourceToken"`
-	ImagingSettings  onvif.ImagingSettings20 `xml:"timg:ImagingSettings"`
-	ForcePersistence xsd.Boolean             `xml:"timg:ForcePersistence"`
+	XMLName          string                         `xml:"timg:SetImagingSettings"`
+	VideoSourceToken onvif.ReferenceToken           `xml:"timg:VideoSourceToken"`
+	ImagingSettings  onvif.ImagingSettings20Request `xml:"timg:ImagingSettings"`
+	ForcePersistence xsd.Boolean                    `xml:"timg:ForcePersistence"`
 }
 
 type SetImagingSettingsResponse struct {
@@ -44,9 +44,9 @@ type GetOptionsResponse struct {
 }
 
 type Move struct {
-	XMLName          string               `xml:"timg:Move"`
-	VideoSourceToken onvif.ReferenceToken `xml:"timg:VideoSourceToken"`
-	Focus            onvif.FocusMove      `xml:"timg:Focus"`
+	XMLName          string                 `xml:"timg:Move"`
+	VideoSourceToken onvif.ReferenceToken   `xml:"timg:VideoSourceToken"`
+	Focus            onvif.FocusMoveRequest `xml:"timg:Focus"`
 }
 
 // todo: fill in response type

@@ -97,13 +97,13 @@ func TestMarshalAddConfigurationRequest(t *testing.T) {
 		ProfileToken: "profile_1",
 		Configuration: []Configuration{
 			{
-				Type:  &analyticsType,
+				Type:  analyticsType,
 				Token: &analyticsToken,
 			},
 		},
 	}
 	expected := fmt.Sprintf("<tr2:AddConfiguration><tr2:ProfileToken>%s</tr2:ProfileToken><tr2:Configuration><tr2:Type>%s</tr2:Type><tr2:Token>%s</tr2:Token></tr2:Configuration></tr2:AddConfiguration>",
-		request.ProfileToken, *request.Configuration[0].Type, *request.Configuration[0].Token)
+		request.ProfileToken, request.Configuration[0].Type, *request.Configuration[0].Token)
 
 	data, err := xml.Marshal(request)
 	require.NoError(t, err)
@@ -233,20 +233,20 @@ func TestUnmarshalGetVideoEncoderConfigurationOptionsResponse(t *testing.T) {
 	width := xsd.Int(1920)
 	height := xsd.Int(1080)
 
+	// tt:VideoEncoder2ConfigurationOptions declares only four child ELEMENTS
+	// (Encoding, QualityRange, ResolutionsAvailable, BitrateRange). GovLengthRange,
+	// ProfilesSupported, FrameRatesSupported and ConstantBitRateSupported are
+	// ATTRIBUTES, the list-valued ones being whitespace-separated xs:list values.
+	// This is the wire format a real device emits.
 	responseData := fmt.Sprintf(`
 		<tr2:GetVideoEncoderConfigurationOptionsResponse>
-			<tr2:Options>
+			<tr2:Options GovLengthRange="1 300" ProfilesSupported="Main Main10"
+			             FrameRatesSupported="30 25 12.5" ConstantBitRateSupported="true">
 				<tt:Encoding>%s</tt:Encoding>
 				<tt:ResolutionsAvailable>
 					<tt:Width>%d</tt:Width>
 					<tt:Height>%d</tt:Height>
 				</tt:ResolutionsAvailable>
-				<tt:GovLengthRange>
-					<tt:Min>1</tt:Min>
-					<tt:Max>300</tt:Max>
-				</tt:GovLengthRange>
-				<tt:ProfilesSupported>Main</tt:ProfilesSupported>
-				<tt:ProfilesSupported>Main10</tt:ProfilesSupported>
 			</tr2:Options>
 		</tr2:GetVideoEncoderConfigurationOptionsResponse>
 	`, encoding, width, height)
@@ -256,16 +256,117 @@ func TestUnmarshalGetVideoEncoderConfigurationOptionsResponse(t *testing.T) {
 	require.NoError(t, err)
 
 	require.Len(t, response.Options, 1)
-	assert.Equal(t, response.Options[0].Encoding, &encoding)
-	require.Len(t, response.Options[0].ResolutionsAvailable, 1)
-	assert.Equal(t, response.Options[0].ResolutionsAvailable[0].Width, &width)
-	assert.Equal(t, response.Options[0].ResolutionsAvailable[0].Height, &height)
-	require.NotNil(t, response.Options[0].GovLengthRange)
-	assert.Equal(t, response.Options[0].GovLengthRange.Min, 1)
-	assert.Equal(t, response.Options[0].GovLengthRange.Max, 300)
-	require.Len(t, response.Options[0].ProfilesSupported, 2)
-	assert.Equal(t, response.Options[0].ProfilesSupported[0], xsd.String("Main"))
-	assert.Equal(t, response.Options[0].ProfilesSupported[1], xsd.String("Main10"))
+	options := response.Options[0]
+	assert.Equal(t, options.Encoding, &encoding)
+	require.Len(t, options.ResolutionsAvailable, 1)
+	assert.Equal(t, options.ResolutionsAvailable[0].Width, &width)
+	assert.Equal(t, options.ResolutionsAvailable[0].Height, &height)
+
+	assert.Equal(t, onvif.IntAttrList{1, 300}, options.GovLengthRange)
+	assert.Equal(t, onvif.StringAttrList{"Main", "Main10"}, options.ProfilesSupported)
+	assert.Equal(t, onvif.FloatAttrList{30, 25, 12.5}, options.FrameRatesSupported)
+
+	require.NotNil(t, options.ConstantBitRateSupported)
+	assert.Equal(t, xsd.Boolean(true), *options.ConstantBitRateSupported)
+}
+
+// tt:VideoRateControl2 has no EncodingInterval (that is the ver10
+// VideoRateControl) and does have an optional AverageBitRate. Sending
+// EncodingInterval draws a fault from validating cameras, and the missing
+// AverageBitRate meant a get-modify-set silently wiped the configured value.
+func TestUnmarshalVideoRateControl2AverageBitRate(t *testing.T) {
+	responseData := `
+		<tr2:GetVideoEncoderConfigurationsResponse>
+			<tr2:Configurations token="enc_1">
+				<tt:RateControl ConstantBitRate="false">
+					<tt:FrameRateLimit>25</tt:FrameRateLimit>
+					<tt:BitrateLimit>4096</tt:BitrateLimit>
+					<tt:AverageBitRate>2048</tt:AverageBitRate>
+				</tt:RateControl>
+			</tr2:Configurations>
+		</tr2:GetVideoEncoderConfigurationsResponse>
+	`
+
+	response := &GetVideoEncoderConfigurationsResponse{}
+	err := xml.Unmarshal([]byte(responseData), response)
+	require.NoError(t, err)
+
+	require.Len(t, response.Configurations, 1)
+	rateControl := response.Configurations[0].RateControl
+	require.NotNil(t, rateControl)
+	require.NotNil(t, rateControl.AverageBitRate)
+	assert.Equal(t, xsd.Int(2048), *rateControl.AverageBitRate)
+	require.NotNil(t, rateControl.BitrateLimit)
+	assert.Equal(t, xsd.Int(4096), *rateControl.BitrateLimit)
+}
+
+func TestMarshalVideoRateControl2RequestAverageBitRate(t *testing.T) {
+	frameRate := xsd.Float(25)
+	bitrateLimit := xsd.Int(4096)
+	averageBitRate := xsd.Int(2048)
+
+	request := SetVideoEncoderConfiguration{
+		Configuration: onvif.VideoEncoder2ConfigurationRequest{
+			ConfigurationEntityRequest: onvif.ConfigurationEntityRequest{Token: "enc_1"},
+			RateControl: &onvif.VideoRateControl2Request{
+				FrameRateLimit: &frameRate,
+				BitrateLimit:   &bitrateLimit,
+				AverageBitRate: &averageBitRate,
+			},
+		},
+	}
+
+	data, err := xml.Marshal(request)
+	require.NoError(t, err)
+
+	assert.Contains(t, string(data),
+		`<onvif:RateControl><onvif:FrameRateLimit>25</onvif:FrameRateLimit>`+
+			`<onvif:BitrateLimit>4096</onvif:BitrateLimit>`+
+			`<onvif:AverageBitRate>2048</onvif:AverageBitRate></onvif:RateControl>`)
+	assert.NotContains(t, string(data), `EncodingInterval`)
+}
+
+// GuaranteedFrameRate and AnchorFrameDistance are attributes of
+// tt:VideoEncoder2Configuration. Go drops unknown attributes silently, so
+// without these fields a get-modify-set erased whatever the camera had set.
+func TestUnmarshalVideoEncoder2ConfigurationExtraAttrs(t *testing.T) {
+	responseData := `
+		<tr2:GetVideoEncoderConfigurationsResponse>
+			<tr2:Configurations token="enc_1" GovLength="30" Profile="Main"
+			                    GuaranteedFrameRate="true" AnchorFrameDistance="5">
+				<tt:Encoding>H264</tt:Encoding>
+			</tr2:Configurations>
+		</tr2:GetVideoEncoderConfigurationsResponse>
+	`
+
+	response := &GetVideoEncoderConfigurationsResponse{}
+	err := xml.Unmarshal([]byte(responseData), response)
+	require.NoError(t, err)
+
+	require.Len(t, response.Configurations, 1)
+	config := response.Configurations[0]
+
+	require.NotNil(t, config.GuaranteedFrameRate)
+	assert.Equal(t, xsd.Boolean(true), *config.GuaranteedFrameRate)
+	require.NotNil(t, config.AnchorFrameDistance)
+	assert.Equal(t, xsd.Int(5), *config.AnchorFrameDistance)
+}
+
+// tr2:ConfigurationRef declares Type as required (minOccurs defaults to 1) and
+// Token as minOccurs="0". Type must therefore always be on the wire.
+func TestMarshalAddConfigurationAlwaysSendsType(t *testing.T) {
+	request := AddConfiguration{
+		ProfileToken: "profile_1",
+		Configuration: []Configuration{
+			{Type: "VideoEncoder"},
+		},
+	}
+
+	data, err := xml.Marshal(request)
+	require.NoError(t, err)
+
+	assert.Contains(t, string(data), `<tr2:Type>VideoEncoder</tr2:Type>`)
+	assert.NotContains(t, string(data), `<tr2:Token>`)
 }
 
 func TestMarshalRemoveConfigurationRequest(t *testing.T) {
@@ -275,13 +376,13 @@ func TestMarshalRemoveConfigurationRequest(t *testing.T) {
 		ProfileToken: "profile_1",
 		Configuration: []Configuration{
 			{
-				Type:  &analyticsType,
+				Type:  analyticsType,
 				Token: &analyticsToken,
 			},
 		},
 	}
 	expected := fmt.Sprintf("<tr2:RemoveConfiguration><tr2:ProfileToken>%s</tr2:ProfileToken><tr2:Configuration><tr2:Type>%s</tr2:Type><tr2:Token>%s</tr2:Token></tr2:Configuration></tr2:RemoveConfiguration>",
-		request.ProfileToken, *request.Configuration[0].Type, *request.Configuration[0].Token)
+		request.ProfileToken, request.Configuration[0].Type, *request.Configuration[0].Token)
 
 	data, err := xml.Marshal(request)
 	require.NoError(t, err)

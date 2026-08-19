@@ -45,7 +45,7 @@ type GetVideoSources struct {
 }
 
 type GetVideoSourcesResponse struct {
-	VideoSources onvif.VideoSource
+	VideoSources []onvif.VideoSource
 }
 
 type GetAudioSources struct {
@@ -53,7 +53,7 @@ type GetAudioSources struct {
 }
 
 type GetAudioSourcesResponse struct {
-	AudioSources onvif.AudioSource
+	AudioSources []onvif.AudioSource
 }
 
 type GetAudioOutputs struct {
@@ -61,13 +61,13 @@ type GetAudioOutputs struct {
 }
 
 type GetAudioOutputsResponse struct {
-	AudioOutputs onvif.AudioOutput
+	AudioOutputs []onvif.AudioOutput
 }
 
 type CreateProfile struct {
-	XMLName string               `xml:"trt:CreateProfile"`
-	Name    onvif.Name           `xml:"trt:Name"`
-	Token   onvif.ReferenceToken `xml:"trt:Token"`
+	XMLName string                `xml:"trt:CreateProfile"`
+	Name    onvif.Name            `xml:"trt:Name"`
+	Token   *onvif.ReferenceToken `xml:"trt:Token,omitempty"`
 }
 
 type CreateProfileResponse struct {
@@ -259,7 +259,7 @@ type GetVideoSourceConfigurations struct {
 }
 
 type GetVideoSourceConfigurationsResponse struct {
-	Configurations onvif.VideoSourceConfiguration
+	Configurations []onvif.VideoSourceConfiguration
 }
 
 type GetVideoEncoderConfigurations struct {
@@ -267,7 +267,7 @@ type GetVideoEncoderConfigurations struct {
 }
 
 type GetVideoEncoderConfigurationsResponse struct {
-	Configurations onvif.VideoEncoderConfiguration
+	Configurations []onvif.VideoEncoderConfiguration
 }
 
 type GetAudioSourceConfigurations struct {
@@ -275,7 +275,7 @@ type GetAudioSourceConfigurations struct {
 }
 
 type GetAudioSourceConfigurationsResponse struct {
-	Configurations onvif.AudioSourceConfiguration
+	Configurations []onvif.AudioSourceConfiguration
 }
 
 type GetAudioEncoderConfigurations struct {
@@ -283,7 +283,7 @@ type GetAudioEncoderConfigurations struct {
 }
 
 type GetAudioEncoderConfigurationsResponse struct {
-	Configurations onvif.AudioEncoderConfiguration
+	Configurations []onvif.AudioEncoderConfiguration
 }
 
 type GetVideoAnalyticsConfigurations struct {
@@ -291,7 +291,7 @@ type GetVideoAnalyticsConfigurations struct {
 }
 
 type GetVideoAnalyticsConfigurationsResponse struct {
-	Configurations onvif.VideoAnalyticsConfiguration
+	Configurations []onvif.VideoAnalyticsConfiguration
 }
 
 // GetMetadataConfigurations and its properties are defined in the Onvif specification:
@@ -301,7 +301,7 @@ type GetMetadataConfigurations struct {
 }
 
 type GetMetadataConfigurationsResponse struct {
-	Configurations onvif.MetadataConfiguration
+	Configurations []onvif.MetadataConfiguration
 }
 
 type GetAudioOutputConfigurations struct {
@@ -309,7 +309,7 @@ type GetAudioOutputConfigurations struct {
 }
 
 type GetAudioOutputConfigurationsResponse struct {
-	Configurations onvif.AudioOutputConfiguration
+	Configurations []onvif.AudioOutputConfiguration
 }
 
 type GetAudioDecoderConfigurations struct {
@@ -317,7 +317,7 @@ type GetAudioDecoderConfigurations struct {
 }
 
 type GetAudioDecoderConfigurationsResponse struct {
-	Configurations onvif.AudioDecoderConfiguration
+	Configurations []onvif.AudioDecoderConfiguration
 }
 
 type GetVideoSourceConfiguration struct {
@@ -402,7 +402,7 @@ type GetCompatibleVideoEncoderConfigurations struct {
 }
 
 type GetCompatibleVideoEncoderConfigurationsResponse struct {
-	Configurations onvif.VideoEncoderConfiguration
+	Configurations []onvif.VideoEncoderConfiguration
 }
 
 type GetCompatibleVideoSourceConfigurations struct {
@@ -411,7 +411,7 @@ type GetCompatibleVideoSourceConfigurations struct {
 }
 
 type GetCompatibleVideoSourceConfigurationsResponse struct {
-	Configurations onvif.VideoSourceConfiguration
+	Configurations []onvif.VideoSourceConfiguration
 }
 
 type GetCompatibleAudioEncoderConfigurations struct {
@@ -420,7 +420,7 @@ type GetCompatibleAudioEncoderConfigurations struct {
 }
 
 type GetCompatibleAudioEncoderConfigurationsResponse struct {
-	Configurations onvif.AudioEncoderConfiguration
+	Configurations []onvif.AudioEncoderConfiguration
 }
 
 type GetCompatibleAudioSourceConfigurations struct {
@@ -429,7 +429,7 @@ type GetCompatibleAudioSourceConfigurations struct {
 }
 
 type GetCompatibleAudioSourceConfigurationsResponse struct {
-	Configurations onvif.AudioSourceConfiguration
+	Configurations []onvif.AudioSourceConfiguration
 }
 
 type GetCompatibleVideoAnalyticsConfigurations struct {
@@ -438,7 +438,7 @@ type GetCompatibleVideoAnalyticsConfigurations struct {
 }
 
 type GetCompatibleVideoAnalyticsConfigurationsResponse struct {
-	Configurations onvif.VideoAnalyticsConfiguration
+	Configurations []onvif.VideoAnalyticsConfiguration
 }
 
 // GetCompatibleMetadataConfigurations and its properties are defined in the Onvif specification:
@@ -449,7 +449,7 @@ type GetCompatibleMetadataConfigurations struct {
 }
 
 type GetCompatibleMetadataConfigurationsResponse struct {
-	Configurations onvif.MetadataConfiguration
+	Configurations []onvif.MetadataConfiguration
 }
 
 type GetCompatibleAudioOutputConfigurations struct {
@@ -458,7 +458,7 @@ type GetCompatibleAudioOutputConfigurations struct {
 }
 
 type GetCompatibleAudioOutputConfigurationsResponse struct {
-	Configurations onvif.AudioOutputConfiguration
+	Configurations []onvif.AudioOutputConfiguration
 }
 
 type GetCompatibleAudioDecoderConfigurations struct {
@@ -467,7 +467,7 @@ type GetCompatibleAudioDecoderConfigurations struct {
 }
 
 type GetCompatibleAudioDecoderConfigurationsResponse struct {
-	Configurations onvif.AudioDecoderConfiguration
+	Configurations []onvif.AudioDecoderConfiguration
 }
 
 type SetVideoSourceConfiguration struct {
@@ -489,27 +489,27 @@ type SetVideoEncoderConfigurationResponse struct {
 }
 
 type SetAudioSourceConfiguration struct {
-	XMLName          string                         `xml:"trt:SetAudioSourceConfiguration"`
-	Configuration    onvif.AudioSourceConfiguration `xml:"trt:Configuration"`
-	ForcePersistence xsd.Boolean                    `xml:"trt:ForcePersistence"`
+	XMLName          string                                `xml:"trt:SetAudioSourceConfiguration"`
+	Configuration    onvif.AudioSourceConfigurationRequest `xml:"trt:Configuration"`
+	ForcePersistence xsd.Boolean                           `xml:"trt:ForcePersistence"`
 }
 
 type SetAudioSourceConfigurationResponse struct {
 }
 
 type SetAudioEncoderConfiguration struct {
-	XMLName          string                          `xml:"trt:SetAudioEncoderConfiguration"`
-	Configuration    onvif.AudioEncoderConfiguration `xml:"trt:Configuration"`
-	ForcePersistence xsd.Boolean                     `xml:"trt:ForcePersistence"`
+	XMLName          string                                 `xml:"trt:SetAudioEncoderConfiguration"`
+	Configuration    onvif.AudioEncoderConfigurationRequest `xml:"trt:Configuration"`
+	ForcePersistence xsd.Boolean                            `xml:"trt:ForcePersistence"`
 }
 
 type SetAudioEncoderConfigurationResponse struct {
 }
 
 type SetVideoAnalyticsConfiguration struct {
-	XMLName          string                            `xml:"trt:SetVideoAnalyticsConfiguration"`
-	Configuration    onvif.VideoAnalyticsConfiguration `xml:"trt:Configuration"`
-	ForcePersistence bool                              `xml:"trt:ForcePersistence"`
+	XMLName          string                                   `xml:"trt:SetVideoAnalyticsConfiguration"`
+	Configuration    onvif.VideoAnalyticsConfigurationRequest `xml:"trt:Configuration"`
+	ForcePersistence bool                                     `xml:"trt:ForcePersistence"`
 }
 
 type SetVideoAnalyticsConfigurationResponse struct {
@@ -527,27 +527,27 @@ type SetMetadataConfigurationResponse struct {
 }
 
 type SetAudioOutputConfiguration struct {
-	XMLName          string                         `xml:"trt:SetAudioOutputConfiguration"`
-	Configuration    onvif.AudioOutputConfiguration `xml:"trt:Configuration"`
-	ForcePersistence bool                           `xml:"trt:ForcePersistence"`
+	XMLName          string                                `xml:"trt:SetAudioOutputConfiguration"`
+	Configuration    onvif.AudioOutputConfigurationRequest `xml:"trt:Configuration"`
+	ForcePersistence bool                                  `xml:"trt:ForcePersistence"`
 }
 
 type SetAudioOutputConfigurationResponse struct {
 }
 
 type SetAudioDecoderConfiguration struct {
-	XMLName          string                          `xml:"trt:SetAudioDecoderConfiguration"`
-	Configuration    onvif.AudioDecoderConfiguration `xml:"trt:Configuration"`
-	ForcePersistence xsd.Boolean                     `xml:"trt:ForcePersistence"`
+	XMLName          string                                 `xml:"trt:SetAudioDecoderConfiguration"`
+	Configuration    onvif.AudioDecoderConfigurationRequest `xml:"trt:Configuration"`
+	ForcePersistence xsd.Boolean                            `xml:"trt:ForcePersistence"`
 }
 
 type SetAudioDecoderConfigurationResponse struct {
 }
 
 type GetVideoSourceConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetVideoSourceConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetVideoSourceConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetVideoSourceConfigurationOptionsResponse struct {
@@ -557,9 +557,9 @@ type GetVideoSourceConfigurationOptionsResponse struct {
 // GetVideoEncoderConfigurationOptions and its properties are defined in the Onvif specification:
 // https://www.onvif.org/ver10/media/wsdl/media.wsdl#op.GetVideoEncoderConfigurationOptions
 type GetVideoEncoderConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetVideoEncoderConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetVideoEncoderConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetVideoEncoderConfigurationOptionsResponse struct {
@@ -567,9 +567,9 @@ type GetVideoEncoderConfigurationOptionsResponse struct {
 }
 
 type GetAudioSourceConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetAudioSourceConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetAudioSourceConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetAudioSourceConfigurationOptionsResponse struct {
@@ -577,9 +577,9 @@ type GetAudioSourceConfigurationOptionsResponse struct {
 }
 
 type GetAudioEncoderConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetAudioEncoderConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetAudioEncoderConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetAudioEncoderConfigurationOptionsResponse struct {
@@ -587,9 +587,9 @@ type GetAudioEncoderConfigurationOptionsResponse struct {
 }
 
 type GetMetadataConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetMetadataConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetMetadataConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetMetadataConfigurationOptionsResponse struct {
@@ -597,9 +597,9 @@ type GetMetadataConfigurationOptionsResponse struct {
 }
 
 type GetAudioOutputConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetAudioOutputConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetAudioOutputConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetAudioOutputConfigurationOptionsResponse struct {
@@ -607,9 +607,9 @@ type GetAudioOutputConfigurationOptionsResponse struct {
 }
 
 type GetAudioDecoderConfigurationOptions struct {
-	XMLName            string               `xml:"trt:GetAudioDecoderConfigurationOptions"`
-	ProfileToken       onvif.ReferenceToken `xml:"trt:ProfileToken"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetAudioDecoderConfigurationOptions"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
+	ProfileToken       *onvif.ReferenceToken `xml:"trt:ProfileToken,omitempty"`
 }
 
 type GetAudioDecoderConfigurationOptionsResponse struct {
@@ -679,7 +679,7 @@ type GetVideoSourceModes struct {
 }
 
 type GetVideoSourceModesResponse struct {
-	VideoSourceModes onvif.VideoSourceMode
+	VideoSourceModes []onvif.VideoSourceMode
 }
 
 type SetVideoSourceMode struct {
@@ -693,12 +693,12 @@ type SetVideoSourceModeResponse struct {
 }
 
 type GetOSDs struct {
-	XMLName            string               `xml:"trt:GetOSDs"`
-	ConfigurationToken onvif.ReferenceToken `xml:"trt:ConfigurationToken"`
+	XMLName            string                `xml:"trt:GetOSDs"`
+	ConfigurationToken *onvif.ReferenceToken `xml:"trt:ConfigurationToken,omitempty"`
 }
 
 type GetOSDsResponse struct {
-	OSDs onvif.OSDConfiguration
+	OSDs []onvif.OSDConfiguration
 }
 
 type GetOSD struct {
@@ -720,16 +720,16 @@ type GetOSDOptionsResponse struct {
 }
 
 type SetOSD struct {
-	XMLName string                 `xml:"trt:SetOSD"`
-	OSD     onvif.OSDConfiguration `xml:"trt:OSD"`
+	XMLName string                        `xml:"trt:SetOSD"`
+	OSD     onvif.OSDConfigurationRequest `xml:"trt:OSD"`
 }
 
 type SetOSDResponse struct {
 }
 
 type CreateOSD struct {
-	XMLName string                 `xml:"trt:CreateOSD"`
-	OSD     onvif.OSDConfiguration `xml:"trt:OSD"`
+	XMLName string                        `xml:"trt:CreateOSD"`
+	OSD     onvif.OSDConfigurationRequest `xml:"trt:OSD"`
 }
 
 type CreateOSDResponse struct {

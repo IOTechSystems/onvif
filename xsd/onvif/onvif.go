@@ -259,6 +259,8 @@ type FocusConfiguration20 struct {
 	NearLimit     float64                       `xml:"NearLimit"`
 	FarLimit      float64                       `xml:"FarLimit"`
 	Extension     FocusConfiguration20Extension `xml:"Extension"`
+	// AFMode is a tt:StringAttrList attribute listing the supported AF sub-modes.
+	AFMode StringAttrList `xml:"AFMode,attr,omitempty"`
 }
 
 type FocusConfiguration20Extension xsd.AnyType
@@ -293,7 +295,8 @@ type ImageStabilizationMode xsd.String
 type ImageStabilizationExtension xsd.AnyType
 
 type ImagingSettingsExtension202 struct {
-	IrCutFilterAutoAdjustment IrCutFilterAutoAdjustment   `xml:"IrCutFilterAutoAdjustment"`
+	// maxOccurs="unbounded": a device may report a boundary per zoom range.
+	IrCutFilterAutoAdjustment []IrCutFilterAutoAdjustment `xml:"IrCutFilterAutoAdjustment"`
 	Extension                 ImagingSettingsExtension203 `xml:"Extension"`
 }
 
@@ -322,9 +325,9 @@ type ToneCompensation struct {
 type ToneCompensationExtension xsd.AnyType
 
 type Defogging struct {
-	Mode      string
-	Level     float64
-	Extension DefoggingExtension
+	Mode      string             `xml:"Mode"`
+	Level     float64            `xml:"Level"`
+	Extension DefoggingExtension `xml:"Extension"`
 }
 
 type DefoggingExtension xsd.AnyType
@@ -484,18 +487,21 @@ type VideoRateControlRequest struct {
 	BitrateLimit     *xsd.Int `xml:"onvif:BitrateLimit,omitempty"`
 }
 
+// VideoRateControl2 mirrors tt:VideoRateControl2. Unlike the ver10
+// VideoRateControl it has no EncodingInterval, and it adds an optional
+// AverageBitRate. ConstantBitRate is an attribute.
 type VideoRateControl2 struct {
-	FrameRateLimit   *xsd.Float   `json:",omitempty"`
-	EncodingInterval *xsd.Int     `json:",omitempty"`
-	BitrateLimit     *xsd.Int     `json:",omitempty"`
-	ConstantBitRate  *xsd.Boolean `json:",omitempty" xml:"ConstantBitRate,attr,omitempty"`
+	FrameRateLimit  *xsd.Float   `json:",omitempty"`
+	BitrateLimit    *xsd.Int     `json:",omitempty"`
+	AverageBitRate  *xsd.Int     `json:",omitempty"`
+	ConstantBitRate *xsd.Boolean `json:",omitempty" xml:"ConstantBitRate,attr,omitempty"`
 }
 
 type VideoRateControl2Request struct {
-	FrameRateLimit   *xsd.Float   `xml:"onvif:FrameRateLimit,omitempty"`
-	EncodingInterval *xsd.Int     `xml:"onvif:EncodingInterval,omitempty"`
-	BitrateLimit     *xsd.Int     `xml:"onvif:BitrateLimit,omitempty"`
-	ConstantBitRate  *xsd.Boolean `xml:"ConstantBitRate,attr,omitempty"`
+	FrameRateLimit  *xsd.Float   `xml:"onvif:FrameRateLimit,omitempty"`
+	BitrateLimit    *xsd.Int     `xml:"onvif:BitrateLimit,omitempty"`
+	AverageBitRate  *xsd.Int     `xml:"onvif:AverageBitRate,omitempty"`
+	ConstantBitRate *xsd.Boolean `xml:"ConstantBitRate,attr,omitempty"`
 }
 
 type Mpeg4Configuration struct {
@@ -529,8 +535,11 @@ type VideoEncoder2Configuration struct {
 	RateControl *VideoRateControl2      `json:",omitempty"`
 	Multicast   *MulticastConfiguration `json:",omitempty"`
 	Quality     float64                 `json:",omitempty"`
-	GovLength   *xsd.Int                `json:",omitempty" xml:"GovLength,attr,omitempty"`
-	Profile     *xsd.String             `json:",omitempty" xml:"Profile,attr,omitempty"`
+	// The ver20 schema encodes the remaining knobs as attributes, not elements.
+	GovLength           *xsd.Int     `json:",omitempty" xml:"GovLength,attr,omitempty"`
+	Profile             *xsd.String  `json:",omitempty" xml:"Profile,attr,omitempty"`
+	AnchorFrameDistance *xsd.Int     `json:",omitempty" xml:"AnchorFrameDistance,attr,omitempty"`
+	GuaranteedFrameRate *xsd.Boolean `json:",omitempty" xml:"GuaranteedFrameRate,attr,omitempty"`
 }
 
 type VideoEncoder2ConfigurationRequest struct {
@@ -540,8 +549,11 @@ type VideoEncoder2ConfigurationRequest struct {
 	RateControl *VideoRateControl2Request      `xml:"onvif:RateControl,omitempty"`
 	Multicast   *MulticastConfigurationRequest `xml:"onvif:Multicast,omitempty"`
 	Quality     *xsd.Float                     `xml:"onvif:Quality,omitempty"`
-	GovLength   *xsd.Int                       `xml:"GovLength,attr,omitempty"`
-	Profile     *xsd.String                    `xml:"Profile,attr,omitempty"`
+	// Attributes in the ver20 schema, so unqualified and marshaled as attributes.
+	GovLength           *xsd.Int     `xml:"GovLength,attr,omitempty"`
+	Profile             *xsd.String  `xml:"Profile,attr,omitempty"`
+	AnchorFrameDistance *xsd.Int     `xml:"AnchorFrameDistance,attr,omitempty"`
+	GuaranteedFrameRate *xsd.Boolean `xml:"GuaranteedFrameRate,attr,omitempty"`
 }
 
 type MulticastConfiguration struct {
@@ -612,7 +624,9 @@ type Parameters struct {
 }
 
 type AnalyticsEngineConfigurationRequest struct {
-	AnalyticsModule *ConfigRequest                         `xml:"onvif:AnalyticsEngineConfigurationRequest,omitempty"`
+	// tt:AnalyticsEngineConfiguration declares AnalyticsModule with
+	// maxOccurs="unbounded".
+	AnalyticsModule []ConfigRequest                        `xml:"onvif:AnalyticsModule,omitempty"`
 	Extension       *AnalyticsEngineConfigurationExtension `xml:"onvif:Extension,omitempty"`
 }
 
@@ -682,11 +696,10 @@ type RuleEngineConfigurationExtension xsd.AnyType
 
 type PTZConfiguration struct {
 	PTZConfigurationEntity
-	Token                                  ReferenceToken             `xml:"token,attr"`
 	MoveRamp                               int                        `json:",omitempty" xml:"MoveRamp,attr,omitempty"`
 	PresetRamp                             int                        `json:",omitempty" xml:"PresetRamp,attr,omitempty"`
 	PresetTourRamp                         int                        `json:",omitempty" xml:"PresetTourRamp,attr,omitempty"`
-	NodeToken                              *ReferenceToken            `json:",omitempty" xml:"tptz:NodeToken,omitempty"`
+	NodeToken                              *ReferenceToken            `json:",omitempty" xml:",omitempty"`
 	DefaultAbsolutePantTiltPositionSpace   *xsd.AnyURI                `json:",omitempty" xml:",omitempty"`
 	DefaultAbsoluteZoomPositionSpace       *xsd.AnyURI                `json:",omitempty" xml:",omitempty"`
 	DefaultRelativePanTiltTranslationSpace *xsd.AnyURI                `json:",omitempty" xml:",omitempty"`
@@ -700,15 +713,19 @@ type PTZConfiguration struct {
 	Extension                              *PTZConfigurationExtension `json:",omitempty" xml:",omitempty"`
 }
 
+// PTZConfigurationEntity is a tt: type (tt:ConfigurationEntity), so its children
+// must not be tagged in the tptz: namespace -- Go enforces the namespace half of a
+// tag on unmarshal, which silently left these at their zero value.
 type PTZConfigurationEntity struct {
 	Token    ReferenceToken `json:",omitempty" xml:"token,attr,omitempty"`
-	Name     Name           `json:",omitempty" xml:"tptz:Name,omitempty"`
-	UseCount int            `json:",omitempty" xml:"tptz:UseCount,omitempty"`
+	Name     Name           `json:",omitempty" xml:",omitempty"`
+	UseCount int            `json:",omitempty" xml:",omitempty"`
 }
 
+// PTZSpeed is a read-side tt: type; compare PTZVector below.
 type PTZSpeed struct {
-	PanTilt *Vector2D `json:",omitempty" xml:"onvif:PanTilt,omitempty"`
-	Zoom    *Vector1D `json:",omitempty" xml:"onvif:Zoom,omitempty"`
+	PanTilt *Vector2D `json:",omitempty" xml:",omitempty"`
+	Zoom    *Vector1D `json:",omitempty" xml:",omitempty"`
 }
 
 type Vector2D struct {
@@ -781,13 +798,14 @@ type MetadataConfiguration struct {
 }
 
 type MetadataConfigurationRequest struct {
-	ConfigurationEntity
-	CompressionType              string                               `xml:"onvif:CompressionType,attr,omitempty"`
+	ConfigurationEntityRequest
+	// Attributes are unqualified: onvif.xsd sets no attributeFormDefault.
+	CompressionType              string                               `xml:"CompressionType,attr,omitempty"`
 	PTZStatus                    *PTZFilterRequest                    `xml:"onvif:PTZStatus,omitempty"`
 	Events                       *EventSubscriptionRequest            `xml:"onvif:Events,omitempty"`
 	Analytics                    *xsd.Boolean                         `xml:"onvif:Analytics,omitempty"`
 	Multicast                    *MulticastConfigurationRequest       `xml:"onvif:Multicast,omitempty"`
-	SessionTimeout               *xsd.Duration                        `xml:"onvif:CompressionType,omitempty"`
+	SessionTimeout               *xsd.Duration                        `xml:"onvif:SessionTimeout,omitempty"`
 	AnalyticsEngineConfiguration *AnalyticsEngineConfigurationRequest `xml:"onvif:AnalyticsEngineConfiguration,omitempty"`
 	Extension                    *MetadataConfigurationExtension      `xml:"onvif:Extension,omitempty"`
 }
@@ -797,9 +815,12 @@ type PTZFilter struct {
 	Position bool `xml:"Position"`
 }
 
+// PTZFilterRequest mirrors tt:PTZFilter, whose Status and Position are both
+// required -- ",omitempty" would drop them when disabling PTZ metadata, leaving
+// an empty and schema-invalid <PTZStatus/>.
 type PTZFilterRequest struct {
-	Status   bool `xml:"onvif:Status,omitempty"`
-	Position bool `xml:"onvif:Position,omitempty"`
+	Status   bool `xml:"onvif:Status"`
+	Position bool `xml:"onvif:Position"`
 }
 
 type EventSubscription struct {
@@ -919,16 +940,27 @@ type H264Options2 struct {
 
 type VideoEncoderOptionsExtension2 xsd.AnyType
 
+// VideoEncoder2ConfigurationOptions mirrors tt:VideoEncoder2ConfigurationOptions,
+// which declares only four child elements; every other knob is an attribute. The
+// list-valued attributes are whitespace-separated xs:list values, so a device
+// sends GovLengthRange="1 300" rather than a Min/Max element pair. Note this type
+// has no FrameRateRange or EncodingIntervalRange -- those belong to the ver10
+// H264Options2/Mpeg4Options2 types; the ver20 equivalent is FrameRatesSupported.
 type VideoEncoder2ConfigurationOptions struct {
-	Encoding                 *xsd.String       `json:",omitempty"`
-	QualityRange             *FloatRange       `json:",omitempty"`
-	ResolutionsAvailable     []VideoResolution `json:",omitempty"`
-	BitrateRange             *IntRange         `json:",omitempty"`
-	FrameRateRange           *FloatRange       `json:",omitempty"`
-	EncodingIntervalRange    *IntRange         `json:",omitempty"`
-	GovLengthRange           *IntRange         `json:",omitempty"`
-	ProfilesSupported        []xsd.String      `json:",omitempty"`
-	ConstantBitRateSupported *xsd.Boolean      `json:",omitempty"`
+	Encoding             *xsd.String       `json:",omitempty"`
+	QualityRange         *FloatRange       `json:",omitempty"`
+	ResolutionsAvailable []VideoResolution `json:",omitempty"`
+	BitrateRange         *IntRange         `json:",omitempty"`
+
+	GovLengthRange                    IntAttrList    `json:",omitempty" xml:"GovLengthRange,attr,omitempty"`
+	MaxAnchorFrameDistance            *xsd.Int       `json:",omitempty" xml:"MaxAnchorFrameDistance,attr,omitempty"`
+	FrameRatesSupported               FloatAttrList  `json:",omitempty" xml:"FrameRatesSupported,attr,omitempty"`
+	ProfilesSupported                 StringAttrList `json:",omitempty" xml:"ProfilesSupported,attr,omitempty"`
+	ConstantBitRateSupported          *xsd.Boolean   `json:",omitempty" xml:"ConstantBitRateSupported,attr,omitempty"`
+	AverageBitRateSupported           *xsd.Boolean   `json:",omitempty" xml:"AverageBitRateSupported,attr,omitempty"`
+	GuaranteedFrameRateSupported      *xsd.Boolean   `json:",omitempty" xml:"GuaranteedFrameRateSupported,attr,omitempty"`
+	SecureStreamingProtocolAlgorithms StringAttrList `json:",omitempty" xml:"SecureStreamingProtocolAlgorithms,attr,omitempty"`
+	SigningSupported                  *xsd.Boolean   `json:",omitempty" xml:"SigningSupported,attr,omitempty"`
 }
 
 type AudioSourceConfigurationOptions struct {
@@ -1103,7 +1135,8 @@ type OSDImgOptions struct {
 	Extension OSDImgOptionsExtension
 }
 
-type StringAttrList []string
+// StringAttrList is declared in attrlist.go, alongside the other xs:list
+// attribute types and their attribute codecs.
 
 type OSDImgOptionsExtension xsd.AnyType
 
@@ -1164,7 +1197,8 @@ type PTZConfigurationOptions struct {
 	Extension          *PTZConfigurationOptions2  `json:",omitempty" xml:",omitempty"`
 }
 
-type IntAttrList []int
+// IntAttrList is declared in attrlist.go, alongside the other xs:list attribute
+// types and their attribute codecs.
 
 type DurationRange struct {
 	Min xsd.Duration
