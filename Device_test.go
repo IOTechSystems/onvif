@@ -60,9 +60,9 @@ func TestDevice_UsesNowForWSSecurityCreated(t *testing.T) {
 	// Every sender that builds a WS-UsernameToken header must go through dev.now().
 	resp, err := dev.SendSoap(srv.URL, "<tds:GetSystemDateAndTime/>")
 	require.NoError(t, err)
-	resp.Body.Close()
+	require.NoError(t, resp.Body.Close())
 
 	resp, err = dev.SendGetSnapshotRequest(srv.URL)
 	require.NoError(t, err)
-	resp.Body.Close()
+	require.NoError(t, resp.Body.Close())
 }
