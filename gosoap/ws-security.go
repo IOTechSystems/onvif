@@ -61,12 +61,18 @@ type wsAuth struct {
 
 // NewSecurity get a new security
 func NewSecurity(username, passwd string) Security {
+	return NewSecurityAt(username, passwd, time.Now())
+}
+
+// NewSecurityAt builds a security header with Created set to now.
+// Pass a time adjusted to the camera's clock when it is skewed from ours.
+func NewSecurityAt(username, passwd string, now time.Time) Security {
 	/** Generating Nonce sequence **/
 	charsToGenerate := 32
 	charSet := gostrgen.Lower | gostrgen.Digit
 
 	nonceSeq := gostrgen.RandGen(charsToGenerate, charSet, "", "")
-	created := time.Now().UTC().Format(time.RFC3339Nano)
+	created := now.UTC().Format(time.RFC3339Nano)
 	auth := Security{
 		Auth: wsAuth{
 			Username: username,

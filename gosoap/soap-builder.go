@@ -3,6 +3,7 @@ package gosoap
 import (
 	"encoding/xml"
 	"log"
+	"time"
 
 	"github.com/beevik/etree"
 )
@@ -246,14 +247,15 @@ func buildSoapRoot() *etree.Document {
 
 // AddWSSecurity Header for soapMessage
 func (msg *SoapMessage) AddWSSecurity(username, password string) error {
-	//doc := etree.NewDocument()
-	//if err := doc.ReadFromString(msg.String()); err != nil {
-	//	log.Println(err.Error())
-	//}
+	return msg.AddWSSecurityAt(username, password, time.Now())
+}
+
+// AddWSSecurityAt is AddWSSecurity with an explicit Created time.
+func (msg *SoapMessage) AddWSSecurityAt(username, password string, now time.Time) error {
 	/*
 		Getting an WS-Security struct representation
 	*/
-	auth := NewSecurity(username, password)
+	auth := NewSecurityAt(username, password, now)
 
 	/*
 		Adding WS-Security namespaces to root element of SOAP message

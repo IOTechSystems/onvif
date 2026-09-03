@@ -13,6 +13,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/IOTechSystems/onvif/device"
 	"github.com/IOTechSystems/onvif/gosoap"
@@ -100,6 +101,14 @@ type DeviceParams struct {
 	Password           string
 	HttpClient         *http.Client
 	AuthMode           string
+	Now                func() time.Time
+}
+
+func (dev *Device) now() time.Time {
+	if dev.params.Now != nil {
+		return dev.params.Now()
+	}
+	return time.Now()
 }
 
 // GetServices return available endpoints
@@ -266,7 +275,7 @@ func (dev *Device) SendSoap(endpoint string, xmlRequestBody string) (resp *http.
 	soap.AddStringBodyContent(xmlRequestBody)
 	soap.AddRootNamespaces(Xlmns)
 	if dev.params.AuthMode == UsernameTokenAuth || dev.params.AuthMode == Both {
-		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		err = soap.AddWSSecurityAt(dev.params.Username, dev.params.Password, dev.now())
 		if err != nil {
 			return nil, fmt.Errorf("send soap request failed: %w", err)
 		}
@@ -377,7 +386,7 @@ func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err 
 	soap.AddRootNamespaces(Xlmns)
 	switch dev.params.AuthMode {
 	case UsernameTokenAuth:
-		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		err = soap.AddWSSecurityAt(dev.params.Username, dev.params.Password, dev.now())
 		if err != nil {
 			return nil, fmt.Errorf("send GetSnapshotRequest failed: %w", err)
 		}
@@ -390,7 +399,7 @@ func (dev *Device) SendGetSnapshotRequest(url string) (resp *http.Response, err 
 		req.SetBasicAuth(dev.params.Username, dev.params.Password)
 		resp, err = dev.params.HttpClient.Do(req)
 	case DigestAuth, Both:
-		err = soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+		err = soap.AddWSSecurityAt(dev.params.Username, dev.params.Password, dev.now())
 		if err != nil {
 			return nil, fmt.Errorf("send GetSnapshotRequest failed: %w", err)
 		}
