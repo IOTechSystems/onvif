@@ -8,8 +8,12 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 )
+
+// digestParam matches key=value pairs in a WWW-Authenticate challenge, value quoted or bare.
+var digestParam = regexp.MustCompile(`(\w+)=(?:"([^"]*)"|([^,\s]*))`)
 
 // DigestClient represents an HTTP client used for making requests authenticated
 // with http digest authentication.
@@ -20,6 +24,7 @@ type DigestClient struct {
 	snonce     string
 	realm      string
 	qop        string
+	opaque     string
 	nonceCount uint32
 }
 
@@ -38,7 +43,7 @@ func (dc *DigestClient) Do(httpMethod string, endpoint string, soap string) (*ht
 		return nil, err
 	}
 	if dc.snonce != "" {
-		digestAuth, err := dc.getDigestAuth(req.Method, req.URL.String())
+		digestAuth, err := dc.getDigestAuth(req.Method, req.URL.RequestURI())
 		if err != nil {
 			return nil, err
 		}
@@ -68,7 +73,7 @@ func (dc *DigestClient) Do(httpMethod string, endpoint string, soap string) (*ht
 	if err != nil {
 		return nil, err
 	}
-	digestAuth, err := dc.getDigestAuth(req.Method, req.URL.String())
+	digestAuth, err := dc.getDigestAuth(req.Method, req.URL.RequestURI())
 	if err != nil {
 		return nil, err
 	}
@@ -83,21 +88,21 @@ func (dc *DigestClient) Do(httpMethod string, endpoint string, soap string) (*ht
 
 func (dc *DigestClient) getDigestParts(resp *http.Response) {
 	result := map[string]string{}
-	authHeader := resp.Header.Get("WWW-Authenticate")
-	if len(authHeader) > 0 {
-		wantedHeaders := []string{"nonce", "realm", "qop"}
-		responseHeaders := strings.Split(authHeader, ",")
-		for _, r := range responseHeaders {
-			for _, w := range wantedHeaders {
-				if strings.Contains(r, w) {
-					result[w] = strings.Split(r, `"`)[1]
-				}
-			}
-		}
+	authHeader := strings.TrimPrefix(resp.Header.Get("WWW-Authenticate"), "Digest ")
+	for _, m := range digestParam.FindAllStringSubmatch(authHeader, -1) {
+		result[m[1]] = m[2] + m[3] // exactly one of the two groups matched
 	}
 	dc.snonce = result["nonce"]
 	dc.realm = result["realm"]
+	dc.opaque = result["opaque"]
 	dc.qop = result["qop"]
+	// ponytail: only qop=auth is implemented; pick it when the server offers "auth,auth-int"
+	for _, q := range strings.Split(dc.qop, ",") {
+		if strings.TrimSpace(q) == "auth" {
+			dc.qop = "auth"
+			break
+		}
+	}
 	dc.nonceCount = 0
 }
 
@@ -124,8 +129,12 @@ func (dc *DigestClient) getDigestAuth(method string, uri string) (string, error)
 		return "", fmt.Errorf("get DigestAuth failed: %w", err)
 	}
 	dc.nonceCount++
-	response := getMD5(fmt.Sprintf("%s:%s:%v:%s:%s:%s", ha1, dc.snonce, dc.nonceCount, cnonce, dc.qop, ha2))
-	authorization := fmt.Sprintf(`Digest username="%s", realm="%s", nonce="%s", uri="%s", cnonce="%s", nc="%v", qop="%s", response="%s"`,
-		dc.username, dc.realm, dc.snonce, uri, cnonce, dc.nonceCount, dc.qop, response)
+	nc := fmt.Sprintf("%08x", dc.nonceCount)
+	response := getMD5(fmt.Sprintf("%s:%s:%s:%s:%s:%s", ha1, dc.snonce, nc, cnonce, dc.qop, ha2))
+	authorization := fmt.Sprintf(`Digest username="%s", realm="%s", nonce="%s", uri="%s", cnonce="%s", nc=%s, qop=%s, response="%s"`,
+		dc.username, dc.realm, dc.snonce, uri, cnonce, nc, dc.qop, response)
+	if dc.opaque != "" {
+		authorization += fmt.Sprintf(`, opaque="%s"`, dc.opaque)
+	}
 	return authorization, nil
 }
