@@ -12,8 +12,11 @@ type DigestClient struct {
 	client *http.Client
 }
 
-// NewDigestClient returns a DigestClient that wraps a given standard library http Client with the given username and password
+// NewDigestClient returns a DigestClient that uses a copy of the provided http.Client configured for digest authentication.
 func NewDigestClient(stdClient *http.Client, username string, password string) *DigestClient {
+	if stdClient == nil {
+		stdClient = http.DefaultClient
+	}
 	c := *stdClient
 	c.Transport = &digest.Transport{
 		Username:  username,
