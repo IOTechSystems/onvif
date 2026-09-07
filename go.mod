@@ -8,6 +8,7 @@ require (
 	github.com/elgs/gostrgen v0.0.0-20251010065124-dce324c66371
 	github.com/gin-gonic/gin v1.12.0
 	github.com/google/uuid v1.6.0
+	github.com/icholy/digest v1.2.0
 	github.com/stretchr/testify v1.12.1
 	golang.org/x/net v0.58.0
 )
