@@ -102,6 +102,9 @@ type DeviceParams struct {
 	HttpClient         *http.Client
 	AuthMode           string
 	Now                func() time.Time
+	// ProbeCameraClock makes NewDevice read the camera's clock (pre-auth)
+	// and sign WS-UsernameToken with it
+	ProbeCameraClock bool
 }
 
 func (dev *Device) now() time.Time {
@@ -181,6 +184,19 @@ func NewDevice(params DeviceParams) (*Device, error) {
 	}
 	dev.digestClient = NewDigestClient(dev.params.HttpClient, dev.params.Username, dev.params.Password)
 
+	if dev.params.ProbeCameraClock && (dev.params.AuthMode == UsernameTokenAuth || dev.params.AuthMode == Both) {
+		offset, err := dev.cameraClockOffset()
+		if err != nil {
+			log.Printf("Failed to read camera clock, signing with local clock, %s", err.Error())
+		} else {
+			base := dev.params.Now
+			if base == nil {
+				base = time.Now
+			}
+			dev.params.Now = func() time.Time { return base().Add(offset) }
+		}
+	}
+
 	getCapabilities := device.GetCapabilities{Category: []onvif.CapabilityCategory{"All"}}
 
 	resp, err := dev.CallMethod(getCapabilities)
@@ -191,6 +207,49 @@ func NewDevice(params DeviceParams) (*Device, error) {
 
 	dev.getSupportedServices(resp)
 	return dev, nil
+}
+
+// cameraClockOffset returns the camera's clock minus ours, using the
+// unauthenticated GetSystemDateAndTime that ONVIF requires devices to allow.
+func (dev *Device) cameraClockOffset() (time.Duration, error) {
+	body, err := xml.Marshal(device.GetSystemDateAndTime{})
+	if err != nil {
+		return 0, err
+	}
+	soap := gosoap.NewEmptySOAP()
+	soap.AddStringBodyContent(string(body))
+	soap.AddRootNamespaces(Xlmns)
+	req, err := createHttpRequest(http.MethodPost, dev.endpoints["device"], soap.String())
+	if err != nil {
+		return 0, err
+	}
+	resp, err := dev.params.HttpClient.Do(req)
+	if err != nil {
+		return 0, err
+	}
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Printf("Failed to close io reader, %s", err.Error())
+		}
+	}(resp.Body)
+	if resp.StatusCode != http.StatusOK {
+		return 0, fmt.Errorf("GetSystemDateAndTime returned status %s", resp.Status)
+	}
+
+	var envelope struct {
+		Resp device.GetSystemDateAndTimeResponse `xml:"Body>GetSystemDateAndTimeResponse"`
+	}
+	if err := xml.NewDecoder(resp.Body).Decode(&envelope); err != nil {
+		return 0, err
+	}
+	utc := envelope.Resp.SystemDateAndTime.UTCDateTime
+	if utc.Date.Year == 0 {
+		return 0, errors.New("GetSystemDateAndTime response has no UTCDateTime")
+	}
+	camTime := time.Date(int(utc.Date.Year), time.Month(utc.Date.Month), int(utc.Date.Day),
+		int(utc.Time.Hour), int(utc.Time.Minute), int(utc.Time.Second), 0, time.UTC)
+	return time.Until(camTime), nil
 }
 
 func (dev *Device) addEndpoint(Key, Value string) {
