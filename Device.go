@@ -188,10 +188,12 @@ func NewDevice(params DeviceParams) (*Device, error) {
 	if err != nil {
 		return nil, fmt.Errorf("camera is not available at %s or it does not support ONVIF services: %w", dev.params.Xaddr, err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	defer func() {
 		if err := resp.Body.Close(); err != nil {
 			log.Printf("Failed to close io reader, %s", err.Error())
 		}
+	}()
+	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("camera is not available at %s or it does not support ONVIF services: status %s", dev.params.Xaddr, resp.Status)
 	}
 
