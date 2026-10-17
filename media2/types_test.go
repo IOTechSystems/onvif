@@ -113,7 +113,7 @@ func TestMarshalAddConfigurationRequest(t *testing.T) {
 }
 
 func TestMarshalGetVideoEncoderConfigurationsRequest(t *testing.T) {
-	request := GetVideoEncoderConfigurations{
+	request := GetVideoEncoderConfigurations{ // #nosec G101 -- ONVIF configuration token, not a credential
 		ConfigurationToken: "enc_token_1",
 	}
 	expected := fmt.Sprintf("<tr2:GetVideoEncoderConfigurations><tr2:ConfigurationToken>%s</tr2:ConfigurationToken></tr2:GetVideoEncoderConfigurations>",
@@ -134,7 +134,7 @@ func TestMarshalSetVideoEncoderConfigurationRequest(t *testing.T) {
 
 	request := SetVideoEncoderConfiguration{
 		Configuration: onvif.VideoEncoder2ConfigurationRequest{
-			ConfigurationEntityRequest: onvif.ConfigurationEntityRequest{
+			ConfigurationEntityRequest: onvif.ConfigurationEntityRequest{ // #nosec G101 -- ONVIF configuration token, not a credential
 				Token: "enc_token_1",
 			},
 			Encoding: &encoding,

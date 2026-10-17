@@ -17,4 +17,4 @@ jobs:
     uses: IOTechSystems/github-action-workflow/.github/workflows/reusable-golangci-lint.yml@main
     with:
       GO_LINT_CONFIG_PATH: .golangci.yml
-      GO_LINT_VERSION: v2.5.0
+      GO_LINT_VERSION: v2.14.0
