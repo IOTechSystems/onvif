@@ -1,9 +1,13 @@
 package onvif
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"regexp"
+	"strings"
 	"testing"
 	"time"
 
@@ -65,4 +69,44 @@ func TestDevice_UsesNowForWSSecurityCreated(t *testing.T) {
 	resp, err = dev.SendGetSnapshotRequest(srv.URL)
 	require.NoError(t, err)
 	require.NoError(t, resp.Body.Close())
+}
+
+func TestNewDevice_ProbeCameraClock(t *testing.T) {
+	cameraNow := time.Now().UTC().Add(time.Hour).Truncate(time.Second)
+	createdRe := regexp.MustCompile(`<Created[^>]*>([^<]+)</Created>`)
+
+	var capabilitiesCreated time.Time
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, _ := io.ReadAll(r.Body)
+		switch {
+		case strings.Contains(string(body), "GetSystemDateAndTime"):
+			assert.NotContains(t, string(body), "UsernameToken", "clock probe must be unauthenticated")
+			_, _ = fmt.Fprintf(w, `<Envelope><Body><GetSystemDateAndTimeResponse><SystemDateAndTime><UTCDateTime>`+
+				`<Time><Hour>%d</Hour><Minute>%d</Minute><Second>%d</Second></Time>`+
+				`<Date><Year>%d</Year><Month>%d</Month><Day>%d</Day></Date>`+
+				`</UTCDateTime></SystemDateAndTime></GetSystemDateAndTimeResponse></Body></Envelope>`,
+				cameraNow.Hour(), cameraNow.Minute(), cameraNow.Second(),
+				cameraNow.Year(), cameraNow.Month(), cameraNow.Day())
+		case strings.Contains(string(body), "GetCapabilities"):
+			m := createdRe.FindStringSubmatch(string(body))
+			require.Len(t, m, 2)
+			created, err := time.Parse(time.RFC3339Nano, m[1])
+			require.NoError(t, err)
+			capabilitiesCreated = created
+			_, _ = io.WriteString(w, `<Envelope><Body><GetCapabilitiesResponse/></Body></Envelope>`)
+		}
+	}))
+	defer srv.Close()
+
+	u, err := url.Parse(srv.URL)
+	require.NoError(t, err)
+	_, err = NewDevice(DeviceParams{
+		Xaddr:            u.Host,
+		Username:         "admin",
+		Password:         "secret",
+		AuthMode:         UsernameTokenAuth,
+		ProbeCameraClock: true,
+	})
+	require.NoError(t, err)
+	assert.WithinDuration(t, cameraNow, capabilitiesCreated, 5*time.Second)
 }
