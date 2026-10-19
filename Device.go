@@ -249,7 +249,7 @@ func (dev *Device) cameraClockOffset() (time.Duration, error) {
 	}
 	camTime := time.Date(int(utc.Date.Year), time.Month(utc.Date.Month), int(utc.Date.Day),
 		int(utc.Time.Hour), int(utc.Time.Minute), int(utc.Time.Second), 0, time.UTC)
-	return time.Until(camTime), nil
+return camTime.Sub(dev.now()), nil
 }
 
 func (dev *Device) addEndpoint(Key, Value string) {
