@@ -10,7 +10,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/icholy/digest v1.2.0
 	github.com/stretchr/testify v1.12.1
-	golang.org/x/net v0.61.0
+	golang.org/x/net v0.62.0
 )
 
 require (
