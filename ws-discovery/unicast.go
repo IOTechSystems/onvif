@@ -46,6 +46,9 @@ func SendUDPUnicast(ctx context.Context, conn net.PacketConn, msg string, target
 	var sendErr error
 	sent := 0
 	for _, target := range targets {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
 		if _, err := conn.WriteTo(data, target); err != nil {
 			sendErr = fmt.Errorf("failed to write ws-discovery probe to %s: %w", target, err)
 			continue
@@ -59,8 +62,18 @@ func SendUDPUnicast(ctx context.Context, conn net.PacketConn, msg string, target
 	if err := conn.SetReadDeadline(time.Now().Add(timeout)); err != nil {
 		return nil, fmt.Errorf("failed to set read deadline: %w", err)
 	}
-	stop := context.AfterFunc(ctx, func() { _ = conn.SetReadDeadline(time.Now()) })
-	defer stop()
+	fired := make(chan struct{})
+	stop := context.AfterFunc(ctx, func() {
+		_ = conn.SetReadDeadline(time.Now())
+		close(fired)
+	})
+	// net.PacketConn can't report its previous deadline, so clear it rather than restore it.
+	defer func() {
+		if !stop() {
+			<-fired
+		}
+		_ = conn.SetReadDeadline(time.Time{})
+	}()
 
 	var responses []ProbeResponse
 	buf := make([]byte, bufSize)
