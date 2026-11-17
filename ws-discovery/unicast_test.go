@@ -35,7 +35,7 @@ func TestSendUnicastProbe(t *testing.T) {
 	silent := fakeCamera(t)
 	silent.Port++ // nothing listens here
 
-	responses, err := SendUnicastProbe(context.Background(), nil, []*net.UDPAddr{camera, silent},
+	responses, err := SendUnicastProbe(context.Background(), []*net.UDPAddr{camera, silent},
 		200*time.Millisecond, nil, []string{"dn:NetworkVideoTransmitter"}, nil)
 	require.NoError(t, err)
 	require.Len(t, responses, 1)
@@ -47,7 +47,7 @@ func TestSendUnicastProbeCancelled(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 	start := time.Now()
-	_, err := SendUnicastProbe(ctx, nil, []*net.UDPAddr{fakeCamera(t)}, 10*time.Second, nil, nil, nil)
+	_, err := SendUnicastProbe(ctx, []*net.UDPAddr{fakeCamera(t)}, 10*time.Second, nil, nil, nil)
 	assert.ErrorIs(t, err, context.Canceled)
 	assert.Less(t, time.Since(start), time.Second)
 }

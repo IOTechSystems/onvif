@@ -21,59 +21,44 @@ type ProbeResponse struct {
 
 // SendUnicastProbe sends a Probe to each target and collects the replies. It
 // reaches devices multicast can't, such as those across a routed VPN link.
-func SendUnicastProbe(ctx context.Context, conn net.PacketConn, targets []*net.UDPAddr, timeout time.Duration, scopes, types []string, namespaces map[string]string) ([]ProbeResponse, error) {
+func SendUnicastProbe(ctx context.Context, targets []*net.UDPAddr, timeout time.Duration, scopes, types []string, namespaces map[string]string) ([]ProbeResponse, error) {
 	probeSOAP := BuildProbeMessage(uuid.NewString(), scopes, types, namespaces)
-	return SendUDPUnicast(ctx, conn, probeSOAP.String(), targets, timeout)
+	return SendUDPUnicast(ctx, probeSOAP.String(), targets, timeout)
 }
 
-// SendUDPUnicast writes msg to each target and reads replies until timeout or ctx
-// is done. A nil conn listens on an ephemeral udp4 port; a non-nil one is not closed.
-func SendUDPUnicast(ctx context.Context, conn net.PacketConn, msg string, targets []*net.UDPAddr, timeout time.Duration) ([]ProbeResponse, error) {
+// SendUDPUnicast writes msg to each target from an ephemeral udp4 port and reads
+// replies until timeout or ctx is done. Replies collected before a failed write
+// or a cancelled ctx are returned alongside the error.
+func SendUDPUnicast(ctx context.Context, msg string, targets []*net.UDPAddr, timeout time.Duration) ([]ProbeResponse, error) {
 	if len(targets) == 0 {
 		return nil, errors.New("no unicast targets given")
 	}
-	if conn == nil {
-		var lc net.ListenConfig
-		c, err := lc.ListenPacket(ctx, "udp4", "0.0.0.0:0")
-		if err != nil {
-			return nil, err
-		}
-		defer func() { _ = c.Close() }()
-		conn = c
+	var lc net.ListenConfig
+	conn, err := lc.ListenPacket(ctx, "udp4", "0.0.0.0:0")
+	if err != nil {
+		return nil, err
 	}
+	defer func() { _ = conn.Close() }()
 
 	data := []byte(msg)
-	var sendErr error
-	sent := 0
+	var sendErrs []error
 	for _, target := range targets {
 		if err := ctx.Err(); err != nil {
 			return nil, err
 		}
 		if _, err := conn.WriteTo(data, target); err != nil {
-			sendErr = fmt.Errorf("failed to write ws-discovery probe to %s: %w", target, err)
-			continue
+			sendErrs = append(sendErrs, fmt.Errorf("failed to write ws-discovery probe to %s: %w", target, err))
 		}
-		sent++
 	}
-	if sent == 0 {
-		return nil, sendErr
+	if len(sendErrs) == len(targets) {
+		return nil, errors.Join(sendErrs...)
 	}
 
 	if err := conn.SetReadDeadline(time.Now().Add(timeout)); err != nil {
 		return nil, fmt.Errorf("failed to set read deadline: %w", err)
 	}
-	fired := make(chan struct{})
-	stop := context.AfterFunc(ctx, func() {
-		_ = conn.SetReadDeadline(time.Now())
-		close(fired)
-	})
-	// net.PacketConn can't report its previous deadline, so clear it rather than restore it.
-	defer func() {
-		if !stop() {
-			<-fired
-		}
-		_ = conn.SetReadDeadline(time.Time{})
-	}()
+	stop := context.AfterFunc(ctx, func() { _ = conn.SetReadDeadline(time.Now()) })
+	defer stop()
 
 	var responses []ProbeResponse
 	buf := make([]byte, bufSize)
@@ -89,8 +74,5 @@ func SendUDPUnicast(ctx context.Context, conn net.PacketConn, msg string, target
 			responses = append(responses, ProbeResponse{Addr: udpAddr, Body: string(buf[:n])})
 		}
 	}
-	if err := ctx.Err(); err != nil {
-		return responses, err
-	}
-	return responses, nil
+	return responses, errors.Join(append(sendErrs, ctx.Err())...)
 }
